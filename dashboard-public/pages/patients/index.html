@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediLink - Patients</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link active">
+                Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                Settings
+            </a>
+
+        </nav>
+
+
+        <div class="logout">
+
+            <a href="/">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                Search
+
+                <input
+                    type="text"
+                    id="patientSearch"
+                    placeholder="Search patients..."
+                >
+
+            </div>
+
+
+            <div class="user-area">
+
+                <button type="button">
+                    Notifications
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Patients
+                    </h1>
+
+                    <p>
+                        Manage patient registration, profiles and healthcare records.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <a
+                        href="/pages/patients/create.html"
+                        class="filter active"
+                    >
+                        + Add Patient
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        P
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Patients
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            Registered patients
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        A
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Active Patients
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            Active records
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        N
+                    </div>
+
+                    <div>
+
+                        <span>
+                            New Today
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            Registered today
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        A
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Appointments
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            Upcoming appointments
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PATIENT MANAGEMENT -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+                    <h2>
+                        Patient Management
+                    </h2>
+
+
+                    <a
+                        href="/pages/patients/create.html"
+                        class="filter active"
+                    >
+                        Register Patient
+                    </a>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="medicine-input">
+
+                    <input
+                        type="text"
+                        id="patientTableSearch"
+                        placeholder="Search by patient name, phone or patient ID..."
+                    >
+
+                    <button
+                        type="button"
+                        onclick="searchPatients()"
+                    >
+                        Search
+                    </button>
+
+                </div>
+
+
+                <!-- FILTERS -->
+
+                <div class="filters">
+
+                    <button class="filter active">
+                        All Patients
+                    </button>
+
+                    <button class="filter">
+                        Active
+                    </button>
+
+                    <button class="filter">
+                        Inactive
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PATIENT TABLE -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+                    <h2>
+                        Patient Records
+                    </h2>
+
+                    <span>
+                        0 records
+                    </span>
+
+                </div>
+
+
+                <div style="overflow-x:auto;">
+
+                    <table
+                        style="
+                            width:100%;
+                            border-collapse:collapse;
+                        "
+                    >
+
+                        <thead>
+
+                            <tr>
+
+                                <th
+                                    style="
+                                        text-align:left;
+                                        padding:12px;
+                                        border-bottom:1px solid #e5e7eb;
+                                    "
+                                >
+                                    Patient ID
+                                </th>
+
+                                <th
+                                    style="
+                                        text-align:left;
+                                        padding:12px;
+                                        border-bottom:1px solid #e5e7eb;
+                                    "
+                                >
+                                    Patient Name
+                                </th>
+
+                                <th
+                                    style="
+                                        text-align:left;
+                                        padding:12px;
+                                        border-bottom:1px solid #e5e7eb;
+                                    "
+                                >
+                                    Gender
+                                </th>
+
+                                <th
+                                    style="
+                                        text-align:left;
+                                        padding:12px;
+                                        border-bottom:1px solid #e5e7eb;
+                                    "
+                                >
+                                    Phone
+                                </th>
+
+                                <th
+                                    style="
+                                        text-align:left;
+                                        padding:12px;
+                                        border-bottom:1px solid #e5e7eb;
+                                    "
+                                >
+                                    Status
+                                </th>
+
+                                <th
+                                    style="
+                                        text-align:left;
+                                        padding:12px;
+                                        border-bottom:1px solid #e5e7eb;
+                                    "
+                                >
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="patientTable">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    style="
+                                        text-align:center;
+                                        padding:40px;
+                                        color:#64748b;
+                                    "
+                                >
+                                    No patient records available yet.
+                                    <br><br>
+
+                                    <a
+                                        href="/pages/patients/create.html"
+                                        class="filter active"
+                                    >
+                                        Register First Patient
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+<script>
+
+function searchPatients() {
+
+    const search =
+        document.getElementById(
+            "patientTableSearch"
+        ).value.trim();
+
+    if (search === "") {
+
+        alert(
+            "Please enter a patient name, phone number or patient ID."
+        );
+
+        return;
+    }
+
+    console.log(
+        "Searching patients:",
+        search
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

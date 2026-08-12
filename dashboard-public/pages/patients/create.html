@@ -1,0 +1,3411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediLink - Register Patient</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <style>
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .form-group {
+            min-width: 0;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e293b;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .form-control {
+            width: 100%;
+            min-height: 44px;
+            padding: 0 12px;
+            border: 1px solid #dbe1e8;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #0f172a;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        textarea.form-control {
+            padding: 12px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .form-control[readonly] {
+            background: #f8fafc;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc2626;
+            background: #fffafa;
+        }
+
+        .form-control.is-valid {
+            border-color: #16a34a;
+        }
+
+        .error-message {
+            display: none;
+            margin-top: 5px;
+            color: #dc2626;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .help-text {
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .section-divider {
+            border: 0;
+            border-top: 1px solid #e5e7eb;
+            margin: 30px 0;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            min-height: 44px;
+            padding: 0 20px;
+            border: 0;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            opacity: 0.92;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .form-alert {
+            display: none;
+            margin-bottom: 20px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .form-alert.show {
+            display: block;
+        }
+
+        .form-alert.error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        .form-alert.success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        .required-note {
+            margin-bottom: 20px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .required-note span {
+            color: #dc2626;
+        }
+
+        @media (max-width: 900px) {
+            .form-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link active">
+                Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+            <a href="/pages/patients/">
+                Back to Patients
+            </a>
+        </div>
+
+    </aside>
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+        <!-- =================================================
+             TOP BAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <div class="search">
+                Search
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">
+                    Notifications
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- =================================================
+             CONTENT
+             ================================================= -->
+
+        <section class="content">
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Register New Patient
+                    </h1>
+
+                    <p>
+                        Create a new patient record in MediLink.
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <a
+                        href="/pages/patients/"
+                        class="filter"
+                    >
+                        Back to Patients
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- =================================================
+                 ALERT AREA
+                 ================================================= -->
+
+            <div
+                id="formAlert"
+                class="form-alert"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+            <!-- =================================================
+                 PATIENT REGISTRATION FORM
+                 ================================================= -->
+
+            <form
+                id="patientForm"
+                class="card"
+                novalidate
+                autocomplete="off"
+            >
+
+                <p class="required-note">
+                    Fields marked with <span>*</span> are required.
+                </p>
+
+                <!-- =================================================
+                     PERSONAL INFORMATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <h2>
+                        Personal Information
+                    </h2>
+
+                    <p class="help-text" style="margin-bottom:20px;">
+                        Enter the patient's basic identification information.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Patient ID -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="patientId"
+                                class="form-label"
+                            >
+                                Patient ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="patientId"
+                                name="patientId"
+                                placeholder="Generated by server"
+                                readonly
+                                class="form-control"
+                                tabindex="-1"
+                            >
+
+                            <div class="help-text">
+                                Patient ID is generated by the server after registration.
+                            </div>
+
+                        </div>
+
+                        <!-- First Name -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="firstName"
+                                class="form-label"
+                            >
+                                First Name <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                placeholder="Enter first name"
+                                required
+                                maxlength="50"
+                                class="form-control"
+                                autocomplete="given-name"
+                            >
+
+                            <div
+                                id="firstNameError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Middle Name -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="middleName"
+                                class="form-label"
+                            >
+                                Middle Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="middleName"
+                                name="middleName"
+                                placeholder="Enter middle name"
+                                maxlength="50"
+                                class="form-control"
+                                autocomplete="additional-name"
+                            >
+
+                            <div
+                                id="middleNameError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Last Name -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="lastName"
+                                class="form-label"
+                            >
+                                Last Name <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                placeholder="Enter last name"
+                                required
+                                maxlength="50"
+                                class="form-control"
+                                autocomplete="family-name"
+                            >
+
+                            <div
+                                id="lastNameError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Date of Birth -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="dateOfBirth"
+                                class="form-label"
+                            >
+                                Date of Birth <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="dateOfBirth"
+                                name="dateOfBirth"
+                                required
+                                class="form-control"
+                                autocomplete="bday"
+                            >
+
+                            <div class="help-text">
+                                Date cannot be in the future. Maximum accepted age is 120 years.
+                            </div>
+
+                            <div
+                                id="dateOfBirthError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Gender -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="gender"
+                                class="form-label"
+                            >
+                                Gender <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="gender"
+                                name="gender"
+                                required
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select gender
+                                </option>
+
+                                <option value="MALE">
+                                    Male
+                                </option>
+
+                                <option value="FEMALE">
+                                    Female
+                                </option>
+
+                                <option value="OTHER">
+                                    Other
+                                </option>
+
+                                <option value="PREFER_NOT_TO_SAY">
+                                    Prefer not to say
+                                </option>
+
+                            </select>
+
+                            <div
+                                id="genderError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- =================================================
+                     CONTACT INFORMATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <h2>
+                        Contact Information
+                    </h2>
+
+                    <p class="help-text" style="margin-bottom:20px;">
+                        Enter the patient's communication and address details.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Phone -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="phone"
+                                class="form-label"
+                            >
+                                Phone Number <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="+250788123456"
+                                required
+                                maxlength="13"
+                                minlength="13"
+                                inputmode="tel"
+                                class="form-control"
+                                autocomplete="tel"
+                            >
+
+                            <div class="help-text">
+                                Required format: +250 followed by exactly 9 digits.
+                            </div>
+
+                            <div
+                                id="phoneError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Alternative Phone -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="alternativePhone"
+                                class="form-label"
+                            >
+                                Alternative Phone
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="alternativePhone"
+                                name="alternativePhone"
+                                placeholder="+250788123456"
+                                maxlength="13"
+                                minlength="13"
+                                inputmode="tel"
+                                class="form-control"
+                                autocomplete="tel"
+                            >
+
+                            <div
+                                id="alternativePhoneError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Email -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="email"
+                                class="form-label"
+                            >
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="patient@example.com"
+                                maxlength="120"
+                                class="form-control"
+                                autocomplete="email"
+                            >
+
+                            <div
+                                id="emailError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Province -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="province"
+                                class="form-label"
+                            >
+                                Province
+                            </label>
+
+                            <select
+                                id="province"
+                                name="province"
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select province
+                                </option>
+
+                                <option value="KIGALI_CITY">
+                                    Kigali City
+                                </option>
+
+                                <option value="EASTERN">
+                                    Eastern Province
+                                </option>
+
+                                <option value="NORTHERN">
+                                    Northern Province
+                                </option>
+
+                                <option value="SOUTHERN">
+                                    Southern Province
+                                </option>
+
+                                <option value="WESTERN">
+                                    Western Province
+                                </option>
+
+                            </select>
+
+                            <div
+                                id="provinceError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- District -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="district"
+                                class="form-label"
+                            >
+                                District
+                            </label>
+
+                            <select
+                                id="district"
+                                name="district"
+                                class="form-control"
+                                disabled
+                            >
+
+                                <option value="">
+                                    Select district
+                                </option>
+
+                            </select>
+
+                            <div
+                                id="districtError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Sector -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="sector"
+                                class="form-label"
+                            >
+                                Sector
+                            </label>
+
+                            <select
+                                id="sector"
+                                name="sector"
+                                class="form-control"
+                                disabled
+                            >
+
+                                <option value="">
+                                    Select sector
+                                </option>
+
+                            </select>
+
+                            <div
+                                id="sectorError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Address -->
+
+                        <div class="form-group full">
+
+                            <label
+                                for="address"
+                                class="form-label"
+                            >
+                                Full Address <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="address"
+                                name="address"
+                                rows="3"
+                                maxlength="500"
+                                minlength="5"
+                                placeholder="Enter full residential address"
+                                required
+                                class="form-control"
+                                autocomplete="street-address"
+                            ></textarea>
+
+                            <div
+                                id="addressError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- =================================================
+                     IDENTIFICATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <h2>
+                        Identification
+                    </h2>
+
+                    <p class="help-text" style="margin-bottom:20px;">
+                        Provide official identification information where available.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- National ID -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="nationalId"
+                                class="form-label"
+                            >
+                                National ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nationalId"
+                                name="nationalId"
+                                placeholder="16 digit National ID"
+                                maxlength="16"
+                                minlength="16"
+                                inputmode="numeric"
+                                class="form-control"
+                                autocomplete="off"
+                            >
+
+                            <div class="help-text">
+                                If supplied, it must contain exactly 16 digits.
+                            </div>
+
+                            <div
+                                id="nationalIdError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Passport -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="passport"
+                                class="form-label"
+                            >
+                                Passport Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="passport"
+                                name="passport"
+                                placeholder="Passport number"
+                                maxlength="30"
+                                class="form-control"
+                                autocomplete="off"
+                            >
+
+                            <div class="help-text">
+                                Letters and numbers only.
+                            </div>
+
+                            <div
+                                id="passportError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Occupation -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="occupation"
+                                class="form-label"
+                            >
+                                Occupation
+                            </label>
+
+                            <input
+                                type="text"
+                                id="occupation"
+                                name="occupation"
+                                placeholder="Occupation"
+                                maxlength="100"
+                                class="form-control"
+                            >
+
+                            <div
+                                id="occupationError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- =================================================
+                     EMERGENCY CONTACT
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <h2>
+                        Emergency Contact
+                    </h2>
+
+                    <p class="help-text" style="margin-bottom:20px;">
+                        Provide a person who can be contacted during an emergency.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Emergency Name -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="emergencyName"
+                                class="form-label"
+                            >
+                                Contact Name <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="emergencyName"
+                                name="emergencyName"
+                                placeholder="Emergency contact name"
+                                maxlength="100"
+                                required
+                                class="form-control"
+                            >
+
+                            <div
+                                id="emergencyNameError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Relationship -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="emergencyRelationship"
+                                class="form-label"
+                            >
+                                Relationship <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="emergencyRelationship"
+                                name="emergencyRelationship"
+                                required
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select relationship
+                                </option>
+
+                                <option value="PARENT">
+                                    Parent
+                                </option>
+
+                                <option value="SPOUSE">
+                                    Spouse
+                                </option>
+
+                                <option value="SIBLING">
+                                    Sibling
+                                </option>
+
+                                <option value="CHILD">
+                                    Child
+                                </option>
+
+                                <option value="GUARDIAN">
+                                    Guardian
+                                </option>
+
+                                <option value="RELATIVE">
+                                    Relative
+                                </option>
+
+                                <option value="FRIEND">
+                                    Friend
+                                </option>
+
+                                <option value="OTHER">
+                                    Other
+                                </option>
+
+                            </select>
+
+                            <div
+                                id="emergencyRelationshipError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Emergency Phone -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="emergencyPhone"
+                                class="form-label"
+                            >
+                                Contact Phone <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="emergencyPhone"
+                                name="emergencyPhone"
+                                placeholder="+250788123456"
+                                maxlength="13"
+                                minlength="13"
+                                inputmode="tel"
+                                required
+                                class="form-control"
+                            >
+
+                            <div
+                                id="emergencyPhoneError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- =================================================
+                     HEALTH INFORMATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <h2>
+                        Health Information
+                    </h2>
+
+                    <p class="help-text" style="margin-bottom:20px;">
+                        Record relevant health information that is available at registration.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Blood Group -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="bloodGroup"
+                                class="form-label"
+                            >
+                                Blood Group
+                            </label>
+
+                            <select
+                                id="bloodGroup"
+                                name="bloodGroup"
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select blood group
+                                </option>
+
+                                <option value="A_POSITIVE">
+                                    A+
+                                </option>
+
+                                <option value="A_NEGATIVE">
+                                    A-
+                                </option>
+
+                                <option value="B_POSITIVE">
+                                    B+
+                                </option>
+
+                                <option value="B_NEGATIVE">
+                                    B-
+                                </option>
+
+                                <option value="AB_POSITIVE">
+                                    AB+
+                                </option>
+
+                                <option value="AB_NEGATIVE">
+                                    AB-
+                                </option>
+
+                                <option value="O_POSITIVE">
+                                    O+
+                                </option>
+
+                                <option value="O_NEGATIVE">
+                                    O-
+                                </option>
+
+                                <option value="UNKNOWN">
+                                    Unknown
+                                </option>
+
+                            </select>
+
+                            <div
+                                id="bloodGroupError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Allergies -->
+
+                        <div class="form-group full">
+
+                            <label
+                                for="allergies"
+                                class="form-label"
+                            >
+                                Known Allergies
+                            </label>
+
+                            <input
+                                type="text"
+                                id="allergies"
+                                name="allergies"
+                                maxlength="1000"
+                                placeholder="List known allergies"
+                                class="form-control"
+                            >
+
+                            <div
+                                id="allergiesError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                        <!-- Chronic Conditions -->
+
+                        <div class="form-group full">
+
+                            <label
+                                for="conditions"
+                                class="form-label"
+                            >
+                                Chronic Conditions / Medical Notes
+                            </label>
+
+                            <textarea
+                                id="conditions"
+                                name="conditions"
+                                rows="4"
+                                maxlength="5000"
+                                placeholder="Enter relevant medical information"
+                                class="form-control"
+                            ></textarea>
+
+                            <div
+                                id="conditionsError"
+                                class="error-message"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- =================================================
+                     FORM ACTIONS
+                     ================================================= -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="reset"
+                        id="clearButton"
+                        class="btn btn-secondary"
+                    >
+                        Clear
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="submitButton"
+                        class="btn btn-primary"
+                    >
+                        Register Patient
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- =========================================================
+     VALIDATION + FORM SUBMISSION
+     ========================================================= -->
+
+<script>
+"use strict";
+
+/*
+|--------------------------------------------------------------------------
+| MediLink Patient Registration
+|--------------------------------------------------------------------------
+| Frontend validation only.
+|
+| IMPORTANT:
+| The backend MUST validate the same rules again.
+| The browser must never be considered a security boundary.
+|--------------------------------------------------------------------------
+*/
+
+const patientForm = document.getElementById("patientForm");
+const submitButton = document.getElementById("submitButton");
+const clearButton = document.getElementById("clearButton");
+const formAlert = document.getElementById("formAlert");
+
+const firstNameInput = document.getElementById("firstName");
+const middleNameInput = document.getElementById("middleName");
+const lastNameInput = document.getElementById("lastName");
+const dateOfBirthInput = document.getElementById("dateOfBirth");
+const genderInput = document.getElementById("gender");
+
+const phoneInput = document.getElementById("phone");
+const alternativePhoneInput =
+    document.getElementById("alternativePhone");
+const emailInput = document.getElementById("email");
+
+const provinceInput = document.getElementById("province");
+const districtInput = document.getElementById("district");
+const sectorInput = document.getElementById("sector");
+
+const addressInput = document.getElementById("address");
+
+const nationalIdInput = document.getElementById("nationalId");
+const passportInput = document.getElementById("passport");
+const occupationInput = document.getElementById("occupation");
+
+const emergencyNameInput =
+    document.getElementById("emergencyName");
+
+const emergencyRelationshipInput =
+    document.getElementById("emergencyRelationship");
+
+const emergencyPhoneInput =
+    document.getElementById("emergencyPhone");
+
+const bloodGroupInput =
+    document.getElementById("bloodGroup");
+
+const allergiesInput =
+    document.getElementById("allergies");
+
+const conditionsInput =
+    document.getElementById("conditions");
+
+
+/*
+|--------------------------------------------------------------------------
+| Validation constants
+|--------------------------------------------------------------------------
+*/
+
+const NAME_REGEX =
+    /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
+
+const PHONE_REGEX =
+    /^\+250[0-9]{9}$/;
+
+const EMAIL_REGEX =
+    /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
+
+const NATIONAL_ID_REGEX =
+    /^[0-9]{16}$/;
+
+const PASSPORT_REGEX =
+    /^[A-Za-z0-9]+$/;
+
+const OCCUPATION_REGEX =
+    /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
+
+const MAX_AGE = 120;
+
+const ALLOWED_GENDERS = [
+    "MALE",
+    "FEMALE",
+    "OTHER",
+    "PREFER_NOT_TO_SAY"
+];
+
+const ALLOWED_BLOOD_GROUPS = [
+    "A_POSITIVE",
+    "A_NEGATIVE",
+    "B_POSITIVE",
+    "B_NEGATIVE",
+    "AB_POSITIVE",
+    "AB_NEGATIVE",
+    "O_POSITIVE",
+    "O_NEGATIVE",
+    "UNKNOWN"
+];
+
+const ALLOWED_RELATIONSHIPS = [
+    "PARENT",
+    "SPOUSE",
+    "SIBLING",
+    "CHILD",
+    "GUARDIAN",
+    "RELATIVE",
+    "FRIEND",
+    "OTHER"
+];
+
+
+/*
+|--------------------------------------------------------------------------
+| Rwanda administrative data
+|--------------------------------------------------------------------------
+*/
+
+const districtsByProvince = {
+
+    KIGALI_CITY: [
+        {
+            value: "GASABO",
+            label: "Gasabo"
+        },
+        {
+            value: "KICUKIRO",
+            label: "Kicukiro"
+        },
+        {
+            value: "NYARUGENGE",
+            label: "Nyarugenge"
+        }
+    ],
+
+    EASTERN: [
+        {
+            value: "BUGESERA",
+            label: "Bugesera"
+        },
+        {
+            value: "GATSIBO",
+            label: "Gatsibo"
+        },
+        {
+            value: "KAYONZA",
+            label: "Kayonza"
+        },
+        {
+            value: "KIREHE",
+            label: "Kirehe"
+        },
+        {
+            value: "NGOMA",
+            label: "Ngoma"
+        },
+        {
+            value: "NYAGATARE",
+            label: "Nyagatare"
+        },
+        {
+            value: "RWAMAGANA",
+            label: "Rwamagana"
+        }
+    ],
+
+    NORTHERN: [
+        {
+            value: "BURERA",
+            label: "Burera"
+        },
+        {
+            value: "GAKENKE",
+            label: "Gakenke"
+        },
+        {
+            value: "GICUMBI",
+            label: "Gicumbi"
+        },
+        {
+            value: "MUSANZE",
+            label: "Musanze"
+        },
+        {
+            value: "RULINDO",
+            label: "Rulindo"
+        }
+    ],
+
+    SOUTHERN: [
+        {
+            value: "GISAGARA",
+            label: "Gisagara"
+        },
+        {
+            value: "HUYE",
+            label: "Huye"
+        },
+        {
+            value: "KAMONYI",
+            label: "Kamonyi"
+        },
+        {
+            value: "MUHANGA",
+            label: "Muhanga"
+        },
+        {
+            value: "NYAMAGABE",
+            label: "Nyamagabe"
+        },
+        {
+            value: "NYANZA",
+            label: "Nyanza"
+        },
+        {
+            value: "NYARUGURU",
+            label: "Nyaruguru"
+        },
+        {
+            value: "RUHANGO",
+            label: "Ruhango"
+        }
+    ],
+
+    WESTERN: [
+        {
+            value: "KARONGI",
+            label: "Karongi"
+        },
+        {
+            value: "NGORORERO",
+            label: "Ngororero"
+        },
+        {
+            value: "NYABIHU",
+            label: "Nyabihu"
+        },
+        {
+            value: "NYAMASHEKE",
+            label: "Nyamasheke"
+        },
+        {
+            value: "RUBAVU",
+            label: "Rubavu"
+        },
+        {
+            value: "RUSIZI",
+            label: "Rusizi"
+        },
+        {
+            value: "RUTSIRO",
+            label: "Rutsiro"
+        }
+    ]
+};
+
+
+/*
+|--------------------------------------------------------------------------
+| Sector data
+|--------------------------------------------------------------------------
+| Sector is optional. We keep it controlled rather than allowing arbitrary
+| text. More sector mappings can be added without changing the validation.
+|--------------------------------------------------------------------------
+*/
+
+const sectorsByDistrict = {
+
+    GASABO: [
+        ["Bumbogo", "Bumbogo"],
+        ["Gatsata", "Gatsata"],
+        ["Jali", "Jali"],
+        ["Gikomero", "Gikomero"],
+        ["Gisozi", "Gisozi"],
+        ["Jabana", "Jabana"],
+        ["Kacyiru", "Kacyiru"],
+        ["Kimihurura", "Kimihurura"],
+        ["Kimisagara", "Kimisagara"],
+        ["Kinyinya", "Kinyinya"],
+        ["Ndera", "Ndera"],
+        ["Nduba", "Nduba"],
+        ["Remera", "Remera"],
+        ["Rusororo", "Rusororo"],
+        ["Rutunga", "Rutunga"]
+    ],
+
+    KICUKIRO: [
+        ["Gahanga", "Gahanga"],
+        ["Gatenga", "Gatenga"],
+        ["Gikondo", "Gikondo"],
+        ["Kagarama", "Kagarama"],
+        ["Kanombe", "Kanombe"],
+        ["Kicukiro", "Kicukiro"],
+        ["Kigarama", "Kigarama"],
+        ["Masaka", "Masaka"],
+        ["Niboye", "Niboye"],
+        ["Nyarugunga", "Nyarugunga"]
+    ],
+
+    NYARUGENGE: [
+        ["Gitega", "Gitega"],
+        ["Kanyinya", "Kanyinya"],
+        ["Kigali", "Kigali"],
+        ["Kimisagara", "Kimisagara"],
+        ["Mageragere", "Mageragere"],
+        ["Muhima", "Muhima"],
+        ["Nyakabanda", "Nyakabanda"],
+        ["Nyamirambo", "Nyamirambo"],
+        ["Nyarugenge", "Nyarugenge"],
+        ["Rwezamenyo", "Rwezamenyo"]
+    ]
+};
+
+
+/*
+|--------------------------------------------------------------------------
+| Set maximum DOB
+|--------------------------------------------------------------------------
+*/
+
+function setDateOfBirthMaximum() {
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+
+    const month =
+        String(today.getMonth() + 1)
+            .padStart(2, "0");
+
+    const day =
+        String(today.getDate())
+            .padStart(2, "0");
+
+    dateOfBirthInput.max =
+        `${year}-${month}-${day}`;
+}
+
+setDateOfBirthMaximum();
+
+
+/*
+|--------------------------------------------------------------------------
+| Utility functions
+|--------------------------------------------------------------------------
+*/
+
+function cleanText(value) {
+    return String(value || "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+
+function showError(field, message) {
+
+    const input =
+        typeof field === "string"
+            ? document.getElementById(field)
+            : field;
+
+    if (!input) {
+        return;
+    }
+
+    input.classList.add("is-invalid");
+    input.classList.remove("is-valid");
+
+    const errorElement =
+        document.getElementById(`${input.id}Error`);
+
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.classList.add("show");
+    }
+}
+
+
+function clearError(field) {
+
+    const input =
+        typeof field === "string"
+            ? document.getElementById(field)
+            : field;
+
+    if (!input) {
+        return;
+    }
+
+    input.classList.remove("is-invalid");
+
+    const errorElement =
+        document.getElementById(`${input.id}Error`);
+
+    if (errorElement) {
+        errorElement.textContent = "";
+        errorElement.classList.remove("show");
+    }
+}
+
+
+function markValid(field) {
+
+    const input =
+        typeof field === "string"
+            ? document.getElementById(field)
+            : field;
+
+    if (!input) {
+        return;
+    }
+
+    input.classList.remove("is-invalid");
+    input.classList.add("is-valid");
+
+    const errorElement =
+        document.getElementById(`${input.id}Error`);
+
+    if (errorElement) {
+        errorElement.textContent = "";
+        errorElement.classList.remove("show");
+    }
+}
+
+
+function showAlert(message, type = "error") {
+
+    formAlert.textContent = message;
+
+    formAlert.className =
+        `form-alert show ${type}`;
+
+    formAlert.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+function clearAlert() {
+
+    formAlert.textContent = "";
+
+    formAlert.className =
+        "form-alert";
+}
+
+
+function calculateAge(dateString) {
+
+    const birthDate =
+        new Date(`${dateString}T00:00:00`);
+
+    const today =
+        new Date();
+
+    let age =
+        today.getFullYear() -
+        birthDate.getFullYear();
+
+    const monthDifference =
+        today.getMonth() -
+        birthDate.getMonth();
+
+    if (
+        monthDifference < 0 ||
+        (
+            monthDifference === 0 &&
+            today.getDate() < birthDate.getDate()
+        )
+    ) {
+        age--;
+    }
+
+    return age;
+}
+
+
+function isValidDateString(dateString) {
+
+    if (!dateString) {
+        return false;
+    }
+
+    const date =
+        new Date(`${dateString}T00:00:00`);
+
+    return !Number.isNaN(date.getTime());
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Province -> District
+|--------------------------------------------------------------------------
+*/
+
+provinceInput.addEventListener("change", function () {
+
+    const province =
+        this.value;
+
+    districtInput.innerHTML =
+        '<option value="">Select district</option>';
+
+    sectorInput.innerHTML =
+        '<option value="">Select sector</option>';
+
+    sectorInput.disabled = true;
+
+    if (!province) {
+        districtInput.disabled = true;
+        return;
+    }
+
+    const districts =
+        districtsByProvince[province] || [];
+
+    districts.forEach((district) => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            district.value;
+
+        option.textContent =
+            district.label;
+
+        districtInput.appendChild(option);
+    });
+
+    districtInput.disabled =
+        districts.length === 0;
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| District -> Sector
+|--------------------------------------------------------------------------
+*/
+
+districtInput.addEventListener("change", function () {
+
+    const district =
+        this.value;
+
+    sectorInput.innerHTML =
+        '<option value="">Select sector</option>';
+
+    if (!district) {
+        sectorInput.disabled = true;
+        return;
+    }
+
+    const sectors =
+        sectorsByDistrict[district] || [];
+
+    sectors.forEach((sector) => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            sector[0];
+
+        option.textContent =
+            sector[1];
+
+        sectorInput.appendChild(option);
+    });
+
+    /*
+     * If we do not yet have sector data for a district,
+     * keep the field disabled rather than allowing arbitrary
+     * unvalidated text.
+     */
+    sectorInput.disabled =
+        sectors.length === 0;
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Name validation
+|--------------------------------------------------------------------------
+*/
+
+function validateName(input, fieldName, required = false) {
+
+    const value =
+        cleanText(input.value);
+
+    input.value =
+        value;
+
+    clearError(input);
+
+    if (!value && !required) {
+        return true;
+    }
+
+    if (!value && required) {
+
+        showError(
+            input,
+            `${fieldName} is required.`
+        );
+
+        return false;
+    }
+
+    if (value.length < 2) {
+
+        showError(
+            input,
+            `${fieldName} must contain at least 2 characters.`
+        );
+
+        return false;
+    }
+
+    if (value.length > 50) {
+
+        showError(
+            input,
+            `${fieldName} must not exceed 50 characters.`
+        );
+
+        return false;
+    }
+
+    if (!NAME_REGEX.test(value)) {
+
+        showError(
+            input,
+            `${fieldName} may contain letters, spaces, hyphens and apostrophes only.`
+        );
+
+        return false;
+    }
+
+    markValid(input);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Phone validation
+|--------------------------------------------------------------------------
+*/
+
+function validatePhone(input, fieldName, required = false) {
+
+    const value =
+        cleanText(input.value);
+
+    input.value =
+        value;
+
+    clearError(input);
+
+    if (!value && !required) {
+        return true;
+    }
+
+    if (!value && required) {
+
+        showError(
+            input,
+            `${fieldName} is required.`
+        );
+
+        return false;
+    }
+
+    if (!PHONE_REGEX.test(value)) {
+
+        showError(
+            input,
+            `${fieldName} must be exactly +250 followed by 9 digits. Example: +250788123456`
+        );
+
+        return false;
+    }
+
+    markValid(input);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Email validation
+|--------------------------------------------------------------------------
+*/
+
+function validateEmail() {
+
+    const value =
+        cleanText(emailInput.value)
+            .toLowerCase();
+
+    emailInput.value =
+        value;
+
+    clearError(emailInput);
+
+    if (!value) {
+        return true;
+    }
+
+    if (value.length > 120) {
+
+        showError(
+            emailInput,
+            "Email address is too long."
+        );
+
+        return false;
+    }
+
+    if (!EMAIL_REGEX.test(value)) {
+
+        showError(
+            emailInput,
+            "Enter a valid email address."
+        );
+
+        return false;
+    }
+
+    if (value.includes("..")) {
+
+        showError(
+            emailInput,
+            "Email address cannot contain consecutive dots."
+        );
+
+        return false;
+    }
+
+    markValid(emailInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| DOB validation
+|--------------------------------------------------------------------------
+*/
+
+function validateDateOfBirth() {
+
+    const value =
+        dateOfBirthInput.value;
+
+    clearError(dateOfBirthInput);
+
+    if (!value) {
+
+        showError(
+            dateOfBirthInput,
+            "Date of birth is required."
+        );
+
+        return false;
+    }
+
+    if (!isValidDateString(value)) {
+
+        showError(
+            dateOfBirthInput,
+            "Enter a valid date of birth."
+        );
+
+        return false;
+    }
+
+    const birthDate =
+        new Date(`${value}T00:00:00`);
+
+    const today =
+        new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    if (birthDate > today) {
+
+        showError(
+            dateOfBirthInput,
+            "Date of birth cannot be in the future."
+        );
+
+        return false;
+    }
+
+    const age =
+        calculateAge(value);
+
+    if (age > MAX_AGE) {
+
+        showError(
+            dateOfBirthInput,
+            "Patient age cannot exceed 120 years."
+        );
+
+        return false;
+    }
+
+    if (age < 0) {
+
+        showError(
+            dateOfBirthInput,
+            "Invalid date of birth."
+        );
+
+        return false;
+    }
+
+    markValid(dateOfBirthInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Gender validation
+|--------------------------------------------------------------------------
+*/
+
+function validateGender() {
+
+    clearError(genderInput);
+
+    if (!ALLOWED_GENDERS.includes(genderInput.value)) {
+
+        showError(
+            genderInput,
+            "Please select a valid gender."
+        );
+
+        return false;
+    }
+
+    markValid(genderInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| National ID validation
+|--------------------------------------------------------------------------
+*/
+
+function validateNationalId() {
+
+    const value =
+        cleanText(nationalIdInput.value);
+
+    nationalIdInput.value =
+        value;
+
+    clearError(nationalIdInput);
+
+    if (!value) {
+        return true;
+    }
+
+    if (!NATIONAL_ID_REGEX.test(value)) {
+
+        showError(
+            nationalIdInput,
+            "National ID must contain exactly 16 digits."
+        );
+
+        return false;
+    }
+
+    markValid(nationalIdInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Passport validation
+|--------------------------------------------------------------------------
+*/
+
+function validatePassport() {
+
+    const value =
+        cleanText(passportInput.value)
+            .toUpperCase();
+
+    passportInput.value =
+        value;
+
+    clearError(passportInput);
+
+    if (!value) {
+        return true;
+    }
+
+    if (value.length < 5 || value.length > 30) {
+
+        showError(
+            passportInput,
+            "Passport number must contain between 5 and 30 characters."
+        );
+
+        return false;
+    }
+
+    if (!PASSPORT_REGEX.test(value)) {
+
+        showError(
+            passportInput,
+            "Passport number may contain letters and numbers only."
+        );
+
+        return false;
+    }
+
+    markValid(passportInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Occupation validation
+|--------------------------------------------------------------------------
+*/
+
+function validateOccupation() {
+
+    const value =
+        cleanText(occupationInput.value);
+
+    occupationInput.value =
+        value;
+
+    clearError(occupationInput);
+
+    if (!value) {
+        return true;
+    }
+
+    if (value.length < 2 || value.length > 100) {
+
+        showError(
+            occupationInput,
+            "Occupation must contain between 2 and 100 characters."
+        );
+
+        return false;
+    }
+
+    if (!OCCUPATION_REGEX.test(value)) {
+
+        showError(
+            occupationInput,
+            "Occupation may contain letters, spaces, hyphens and apostrophes only."
+        );
+
+        return false;
+    }
+
+    markValid(occupationInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Address validation
+|--------------------------------------------------------------------------
+*/
+
+function validateAddress() {
+
+    const value =
+        cleanText(addressInput.value);
+
+    addressInput.value =
+        value;
+
+    clearError(addressInput);
+
+    if (!value) {
+
+        showError(
+            addressInput,
+            "Full address is required."
+        );
+
+        return false;
+    }
+
+    if (value.length < 5) {
+
+        showError(
+            addressInput,
+            "Address must contain at least 5 characters."
+        );
+
+        return false;
+    }
+
+    if (value.length > 500) {
+
+        showError(
+            addressInput,
+            "Address cannot exceed 500 characters."
+        );
+
+        return false;
+    }
+
+    /*
+     * Reject HTML-like input.
+     * This is not a replacement for server-side sanitization.
+     */
+    if (/<[^>]*>/g.test(value)) {
+
+        showError(
+            addressInput,
+            "Address contains invalid characters."
+        );
+
+        return false;
+    }
+
+    markValid(addressInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Emergency name
+|--------------------------------------------------------------------------
+*/
+
+function validateEmergencyName() {
+
+    return validateName(
+        emergencyNameInput,
+        "Emergency contact name",
+        true
+    );
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Emergency relationship
+|--------------------------------------------------------------------------
+*/
+
+function validateEmergencyRelationship() {
+
+    clearError(emergencyRelationshipInput);
+
+    if (
+        !ALLOWED_RELATIONSHIPS.includes(
+            emergencyRelationshipInput.value
+        )
+    ) {
+
+        showError(
+            emergencyRelationshipInput,
+            "Please select a valid emergency relationship."
+        );
+
+        return false;
+    }
+
+    markValid(emergencyRelationshipInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Blood group
+|--------------------------------------------------------------------------
+*/
+
+function validateBloodGroup() {
+
+    clearError(bloodGroupInput);
+
+    if (!bloodGroupInput.value) {
+        return true;
+    }
+
+    if (
+        !ALLOWED_BLOOD_GROUPS.includes(
+            bloodGroupInput.value
+        )
+    ) {
+
+        showError(
+            bloodGroupInput,
+            "Please select a valid blood group."
+        );
+
+        return false;
+    }
+
+    markValid(bloodGroupInput);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Medical text validation
+|--------------------------------------------------------------------------
+*/
+
+function validateMedicalText(input, fieldName, maxLength) {
+
+    const value =
+        cleanText(input.value);
+
+    input.value =
+        value;
+
+    clearError(input);
+
+    if (!value) {
+        return true;
+    }
+
+    if (value.length > maxLength) {
+
+        showError(
+            input,
+            `${fieldName} cannot exceed ${maxLength} characters.`
+        );
+
+        return false;
+    }
+
+    if (/<script[\s\S]*?>[\s\S]*?<\/script>/i.test(value)) {
+
+        showError(
+            input,
+            `${fieldName} contains invalid content.`
+        );
+
+        return false;
+    }
+
+    markValid(input);
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Province / district validation
+|--------------------------------------------------------------------------
+*/
+
+function validateLocation() {
+
+    let valid = true;
+
+    clearError(provinceInput);
+    clearError(districtInput);
+    clearError(sectorInput);
+
+    /*
+     * Province is optional.
+     */
+
+    if (!provinceInput.value) {
+        return true;
+    }
+
+    if (!districtsByProvince[provinceInput.value]) {
+
+        showError(
+            provinceInput,
+            "Please select a valid province."
+        );
+
+        return false;
+    }
+
+    /*
+     * If province is selected, district must be selected.
+     */
+
+    if (!districtInput.value) {
+
+        showError(
+            districtInput,
+            "Please select a district for the selected province."
+        );
+
+        valid = false;
+    }
+
+    const districts =
+        districtsByProvince[provinceInput.value] || [];
+
+    const districtExists =
+        districts.some(
+            item => item.value === districtInput.value
+        );
+
+    if (
+        districtInput.value &&
+        !districtExists
+    ) {
+
+        showError(
+            districtInput,
+            "Selected district does not belong to the selected province."
+        );
+
+        valid = false;
+    }
+
+    /*
+     * Sector is optional.
+     * If sector data exists for the selected district,
+     * only those sectors can be selected.
+     */
+
+    if (
+        districtInput.value &&
+        sectorInput.value
+    ) {
+
+        const sectors =
+            sectorsByDistrict[districtInput.value] || [];
+
+        const sectorExists =
+            sectors.some(
+                item => item[0] === sectorInput.value
+            );
+
+        if (!sectorExists) {
+
+            showError(
+                sectorInput,
+                "Selected sector does not belong to the selected district."
+            );
+
+            valid = false;
+        }
+    }
+
+    if (valid) {
+
+        if (provinceInput.value) {
+            markValid(provinceInput);
+        }
+
+        if (districtInput.value) {
+            markValid(districtInput);
+        }
+
+        if (sectorInput.value) {
+            markValid(sectorInput);
+        }
+    }
+
+    return valid;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Validate complete form
+|--------------------------------------------------------------------------
+*/
+
+function validateForm() {
+
+    clearAlert();
+
+    let valid = true;
+
+    const validations = [
+
+        validateName(
+            firstNameInput,
+            "First name",
+            true
+        ),
+
+        validateName(
+            middleNameInput,
+            "Middle name",
+            false
+        ),
+
+        validateName(
+            lastNameInput,
+            "Last name",
+            true
+        ),
+
+        validateDateOfBirth(),
+
+        validateGender(),
+
+        validatePhone(
+            phoneInput,
+            "Phone number",
+            true
+        ),
+
+        validatePhone(
+            alternativePhoneInput,
+            "Alternative phone",
+            false
+        ),
+
+        validateEmail(),
+
+        validateLocation(),
+
+        validateAddress(),
+
+        validateNationalId(),
+
+        validatePassport(),
+
+        validateOccupation(),
+
+        validateEmergencyName(),
+
+        validateEmergencyRelationship(),
+
+        validatePhone(
+            emergencyPhoneInput,
+            "Emergency contact phone",
+            true
+        ),
+
+        validateBloodGroup(),
+
+        validateMedicalText(
+            allergiesInput,
+            "Known allergies",
+            1000
+        ),
+
+        validateMedicalText(
+            conditionsInput,
+            "Medical notes",
+            5000
+        )
+    ];
+
+    valid =
+        validations.every(
+            result => result === true
+        );
+
+    /*
+     * Primary phone and emergency phone should not be
+     * identical where an emergency contact is required.
+     */
+
+    if (
+        phoneInput.value &&
+        emergencyPhoneInput.value &&
+        phoneInput.value === emergencyPhoneInput.value
+    ) {
+
+        showError(
+            emergencyPhoneInput,
+            "Emergency contact phone should be different from the patient's primary phone."
+        );
+
+        valid = false;
+    }
+
+    /*
+     * Alternative phone should not be identical to primary.
+     */
+
+    if (
+        alternativePhoneInput.value &&
+        phoneInput.value === alternativePhoneInput.value
+    ) {
+
+        showError(
+            alternativePhoneInput,
+            "Alternative phone must be different from the primary phone."
+        );
+
+        valid = false;
+    }
+
+    if (!valid) {
+
+        showAlert(
+            "Please correct the highlighted fields before registering the patient.",
+            "error"
+        );
+
+        const firstInvalid =
+            patientForm.querySelector(".is-invalid");
+
+        if (firstInvalid) {
+
+            firstInvalid.focus();
+
+            firstInvalid.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        return false;
+    }
+
+    return true;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Build request payload
+|--------------------------------------------------------------------------
+|
+| patientId is intentionally NOT included.
+| The server must generate it.
+|--------------------------------------------------------------------------
+*/
+
+function buildPatientPayload() {
+
+    return {
+
+        firstName:
+            cleanText(firstNameInput.value),
+
+        middleName:
+            cleanText(middleNameInput.value) || null,
+
+        lastName:
+            cleanText(lastNameInput.value),
+
+        dateOfBirth:
+            dateOfBirthInput.value,
+
+        gender:
+            genderInput.value,
+
+        phone:
+            cleanText(phoneInput.value),
+
+        alternativePhone:
+            cleanText(alternativePhoneInput.value) || null,
+
+        email:
+            cleanText(emailInput.value).toLowerCase() || null,
+
+        province:
+            provinceInput.value || null,
+
+        district:
+            districtInput.value || null,
+
+        sector:
+            sectorInput.value || null,
+
+        address:
+            cleanText(addressInput.value),
+
+        nationalId:
+            cleanText(nationalIdInput.value) || null,
+
+        passport:
+            cleanText(passportInput.value).toUpperCase() || null,
+
+        occupation:
+            cleanText(occupationInput.value) || null,
+
+        emergencyName:
+            cleanText(emergencyNameInput.value),
+
+        emergencyRelationship:
+            emergencyRelationshipInput.value,
+
+        emergencyPhone:
+            cleanText(emergencyPhoneInput.value),
+
+        bloodGroup:
+            bloodGroupInput.value || null,
+
+        allergies:
+            cleanText(allergiesInput.value) || null,
+
+        conditions:
+            cleanText(conditionsInput.value) || null
+    };
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Submit
+|--------------------------------------------------------------------------
+*/
+
+patientForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+        clearAlert();
+
+        if (!validateForm()) {
+            return;
+        }
+
+        const payload =
+            buildPatientPayload();
+
+        submitButton.disabled = true;
+
+        clearButton.disabled = true;
+
+        submitButton.textContent =
+            "Registering...";
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/patients",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(payload)
+                    }
+                );
+
+            let result = {};
+
+            try {
+
+                result =
+                    await response.json();
+
+            } catch (jsonError) {
+
+                result = {
+                    message:
+                        "The server returned an invalid response."
+                };
+            }
+
+            if (!response.ok) {
+
+                /*
+                 * Validation error from backend
+                 */
+
+                if (
+                    response.status === 400 ||
+                    response.status === 422
+                ) {
+
+                    showAlert(
+                        result.message ||
+                        "The submitted patient information is invalid.",
+                        "error"
+                    );
+
+                    if (
+                        Array.isArray(
+                            result.errors
+                        )
+                    ) {
+
+                        result.errors.forEach(
+                            (error) => {
+
+                                if (
+                                    error.field &&
+                                    error.message
+                                ) {
+
+                                    showError(
+                                        error.field,
+                                        error.message
+                                    );
+                                }
+                            }
+                        );
+                    }
+
+                    return;
+                }
+
+                /*
+                 * Duplicate patient
+                 */
+
+                if (response.status === 409) {
+
+                    showAlert(
+                        result.message ||
+                        "A patient with some of these details already exists.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+                throw new Error(
+                    result.message ||
+                    "Unable to register patient."
+                );
+            }
+
+            /*
+             * Success
+             */
+
+            const patientNumber =
+                result.patient?.patientNumber ||
+                result.patientNumber ||
+                "";
+
+            const successMessage =
+                patientNumber
+                    ? `Patient registered successfully. Patient ID: ${patientNumber}`
+                    : (
+                        result.message ||
+                        "Patient registered successfully."
+                    );
+
+            showAlert(
+                successMessage,
+                "success"
+            );
+
+            /*
+             * Show generated ID if server returned one.
+             */
+
+            if (patientNumber) {
+
+                patientIdInput.value =
+                    patientNumber;
+            }
+
+            /*
+             * Clear all user-entered data after successful save,
+             * while preserving the generated ID for visibility.
+             */
+
+            const generatedId =
+                patientNumber;
+
+            patientForm.reset();
+
+            patientIdInput.value =
+                generatedId;
+
+            /*
+             * Reset dependent selects.
+             */
+
+            districtInput.innerHTML =
+                '<option value="">Select district</option>';
+
+            districtInput.disabled =
+                true;
+
+            sectorInput.innerHTML =
+                '<option value="">Select sector</option>';
+
+            sectorInput.disabled =
+                true;
+
+            /*
+             * Clear validation classes.
+             */
+
+            patientForm
+                .querySelectorAll(
+                    ".is-valid, .is-invalid"
+                )
+                .forEach(
+                    element => {
+                        element.classList.remove(
+                            "is-valid",
+                            "is-invalid"
+                        );
+                    }
+                );
+
+        } catch (error) {
+
+            console.error(
+                "Patient registration error:",
+                error
+            );
+
+            showAlert(
+                error.message ||
+                "Unable to register patient. Please try again.",
+                "error"
+            );
+
+        } finally {
+
+            submitButton.disabled =
+                false;
+
+            clearButton.disabled =
+                false;
+
+            submitButton.textContent =
+                "Register Patient";
+        }
+    }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Clear button
+|--------------------------------------------------------------------------
+*/
+
+clearButton.addEventListener(
+    "click",
+    function () {
+
+        setTimeout(
+            function () {
+
+                clearAlert();
+
+                patientForm
+                    .querySelectorAll(
+                        ".is-valid, .is-invalid"
+                    )
+                    .forEach(
+                        element => {
+                            element.classList.remove(
+                                "is-valid",
+                                "is-invalid"
+                            );
+                        }
+                    );
+
+                document
+                    .querySelectorAll(
+                        ".error-message"
+                    )
+                    .forEach(
+                        error => {
+                            error.textContent = "";
+                            error.classList.remove(
+                                "show"
+                            );
+                        }
+                    );
+
+                districtInput.innerHTML =
+                    '<option value="">Select district</option>';
+
+                districtInput.disabled =
+                    true;
+
+                sectorInput.innerHTML =
+                    '<option value="">Select sector</option>';
+
+                sectorInput.disabled =
+                    true;
+
+                /*
+                 * The patient ID is generated server-side,
+                 * therefore it should remain empty before submission.
+                 */
+
+                patientIdInput.value = "";
+
+            },
+            0
+        );
+    }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Real-time validation
+|--------------------------------------------------------------------------
+*/
+
+firstNameInput.addEventListener(
+    "blur",
+    () => validateName(
+        firstNameInput,
+        "First name",
+        true
+    )
+);
+
+middleNameInput.addEventListener(
+    "blur",
+    () => validateName(
+        middleNameInput,
+        "Middle name",
+        false
+    )
+);
+
+lastNameInput.addEventListener(
+    "blur",
+    () => validateName(
+        lastNameInput,
+        "Last name",
+        true
+    )
+);
+
+dateOfBirthInput.addEventListener(
+    "change",
+    validateDateOfBirth
+);
+
+genderInput.addEventListener(
+    "change",
+    validateGender
+);
+
+phoneInput.addEventListener(
+    "blur",
+    () => validatePhone(
+        phoneInput,
+        "Phone number",
+        true
+    )
+);
+
+alternativePhoneInput.addEventListener(
+    "blur",
+    () => validatePhone(
+        alternativePhoneInput,
+        "Alternative phone",
+        false
+    )
+);
+
+emailInput.addEventListener(
+    "blur",
+    validateEmail
+);
+
+nationalIdInput.addEventListener(
+    "blur",
+    validateNationalId
+);
+
+passportInput.addEventListener(
+    "blur",
+    validatePassport
+);
+
+occupationInput.addEventListener(
+    "blur",
+    validateOccupation
+);
+
+addressInput.addEventListener(
+    "blur",
+    validateAddress
+);
+
+emergencyNameInput.addEventListener(
+    "blur",
+    validateEmergencyName
+);
+
+emergencyRelationshipInput.addEventListener(
+    "change",
+    validateEmergencyRelationship
+);
+
+emergencyPhoneInput.addEventListener(
+    "blur",
+    () => validatePhone(
+        emergencyPhoneInput,
+        "Emergency contact phone",
+        true
+    )
+);
+
+bloodGroupInput.addEventListener(
+    "change",
+    validateBloodGroup
+);
+
+allergiesInput.addEventListener(
+    "blur",
+    () => validateMedicalText(
+        allergiesInput,
+        "Known allergies",
+        1000
+    )
+);
+
+conditionsInput.addEventListener(
+    "blur",
+    () => validateMedicalText(
+        conditionsInput,
+        "Medical notes",
+        5000
+    )
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Prevent invalid characters while typing
+|--------------------------------------------------------------------------
+*/
+
+/*
+ * National ID: digits only.
+ */
+nationalIdInput.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value.replace(
+                /[^0-9]/g,
+                ""
+            ).slice(0, 16);
+    }
+);
+
+
+/*
+ * Phone: permit only + and digits.
+ */
+[
+    phoneInput,
+    alternativePhoneInput,
+    emergencyPhoneInput
+].forEach(
+    input => {
+
+        input.addEventListener(
+            "input",
+            function () {
+
+                let value =
+                    this.value;
+
+                value =
+                    value.replace(
+                        /[^0-9+]/g,
+                        ""
+                    );
+
+                /*
+                 * + is allowed only at the beginning.
+                 */
+                if (value.includes("+")) {
+
+                    value =
+                        "+" +
+                        value
+                            .replace(/\+/g, "");
+                }
+
+                this.value =
+                    value.slice(0, 13);
+            }
+        );
+    }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Passport normalization
+|--------------------------------------------------------------------------
+*/
+
+passportInput.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value
+                .replace(
+                    /[^A-Za-z0-9]/g,
+                    ""
+                )
+                .toUpperCase()
+                .slice(0, 30);
+    }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Name input cleanup
+|--------------------------------------------------------------------------
+*/
+
+[
+    firstNameInput,
+    middleNameInput,
+    lastNameInput,
+    emergencyNameInput
+].forEach(
+    input => {
+
+        input.addEventListener(
+            "input",
+            function () {
+
+                /*
+                 * Do not silently alter user text too aggressively.
+                 * Validation remains the authority.
+                 */
+                this.value =
+                    this.value
+                        .replace(
+                            /[0-9]/g,
+                            ""
+                        );
+            }
+        );
+    }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Initialize
+|--------------------------------------------------------------------------
+*/
+
+setDateOfBirthMaximum();
+
+console.log(
+    "MediLink patient registration form initialized."
+);
+</script>
+
+</body>
+</html>

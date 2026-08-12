@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediLink - Reports</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">+</div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">📊 Dashboard</a>
+            <a href="/pages/patients/" class="nav-link">👤 Patients</a>
+            <a href="/pages/pharmacies/" class="nav-link">🏥 Pharmacies</a>
+            <a href="/pages/medicines/" class="nav-link">💊 Medicines</a>
+            <a href="/pages/inventory/" class="nav-link">📦 Inventory</a>
+            <a href="/pages/prescriptions/" class="nav-link">📋 Prescriptions</a>
+            <a href="/pages/appointments/" class="nav-link">📅 Appointments</a>
+            <a href="/pages/hospitals/" class="nav-link">🏥 Hospitals</a>
+            <a href="/pages/laboratory/" class="nav-link">🧪 Laboratory</a>
+            <a href="/pages/deliveries/" class="nav-link">🚚 Deliveries</a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link active">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+            <a href="/">🚪 Logout</a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="search">
+                🔍
+                <input
+                    type="text"
+                    id="globalSearch"
+                    placeholder="Search anything..."
+                >
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">🔔</button>
+                <button type="button">✉️</button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>Dr. Admin</strong>
+                        <small>Super Administrator</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <section class="content">
+
+            <div class="page-header">
+
+                <div>
+                    <h1>📊 Reports</h1>
+
+                    <p>
+                        Generate and view MediLink healthcare reports.
+                    </p>
+                </div>
+
+                <div>
+
+                    <a
+                        href="/pages/reports/create.html"
+                        class="filter active"
+                    >
+                        + Generate Report
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- REPORT FILTER -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Report Generator</h2>
+
+                        <p style="color:#64748b;font-size:13px;">
+                            Select the report type and date range.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form id="reportForm">
+
+                    <div
+                        style="
+                            display:grid;
+                            grid-template-columns:repeat(3,1fr);
+                            gap:18px;
+                        "
+                    >
+
+                        <div>
+
+                            <label
+                                for="reportType"
+                                style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                            >
+                                Report Type
+                            </label>
+
+                            <select
+                                id="reportType"
+                                name="reportType"
+                                required
+                                style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                            >
+
+                                <option value="">
+                                    Select report
+                                </option>
+
+                                <option value="PATIENTS">
+                                    Patient Report
+                                </option>
+
+                                <option value="PHARMACIES">
+                                    Pharmacy Report
+                                </option>
+
+                                <option value="MEDICINES">
+                                    Medicine Report
+                                </option>
+
+                                <option value="INVENTORY">
+                                    Inventory Report
+                                </option>
+
+                                <option value="PRESCRIPTIONS">
+                                    Prescription Report
+                                </option>
+
+                                <option value="APPOINTMENTS">
+                                    Appointment Report
+                                </option>
+
+                                <option value="HOSPITALS">
+                                    Hospital Report
+                                </option>
+
+                                <option value="LABORATORY">
+                                    Laboratory Report
+                                </option>
+
+                                <option value="DELIVERIES">
+                                    Delivery Report
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div>
+
+                            <label
+                                for="startDate"
+                                style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                            >
+                                Start Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="startDate"
+                                name="startDate"
+                                style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label
+                                for="endDate"
+                                style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                            >
+                                End Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="endDate"
+                                name="endDate"
+                                style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:flex-end;
+                            gap:10px;
+                            margin-top:22px;
+                        "
+                    >
+
+                        <button
+                            type="reset"
+                            class="filter"
+                        >
+                            Clear
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="filter active"
+                        >
+                            Generate Report
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- REPORT STATISTICS -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        👤
+                    </div>
+
+                    <div>
+                        <span>Total Patients</span>
+                        <strong id="totalPatients">0</strong>
+                        <small>Registered patients</small>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        💊
+                    </div>
+
+                    <div>
+                        <span>Total Medicines</span>
+                        <strong id="totalMedicines">0</strong>
+                        <small>Medicine records</small>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        📋
+                    </div>
+
+                    <div>
+                        <span>Prescriptions</span>
+                        <strong id="totalPrescriptions">0</strong>
+                        <small>Prescription records</small>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        📅
+                    </div>
+
+                    <div>
+                        <span>Appointments</span>
+                        <strong id="totalAppointments">0</strong>
+                        <small>Appointment records</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- REPORT RESULTS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>Generated Report</h2>
+
+                    <button
+                        type="button"
+                        id="exportButton"
+                        class="filter"
+                        disabled
+                    >
+                        ⬇ Export
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="reportMessage"
+                    style="
+                        padding:25px;
+                        text-align:center;
+                        color:#64748b;
+                    "
+                >
+                    Select a report type and click
+                    <strong>Generate Report</strong>.
+                </div>
+
+
+                <div
+                    id="reportResults"
+                    style="
+                        display:none;
+                        overflow-x:auto;
+                    "
+                >
+
+                    <table
+                        style="
+                            width:100%;
+                            border-collapse:collapse;
+                        "
+                    >
+
+                        <thead id="reportHead"></thead>
+
+                        <tbody id="reportBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+const form = document.getElementById("reportForm");
+
+const reportMessage =
+    document.getElementById("reportMessage");
+
+const reportResults =
+    document.getElementById("reportResults");
+
+const reportHead =
+    document.getElementById("reportHead");
+
+const reportBody =
+    document.getElementById("reportBody");
+
+const exportButton =
+    document.getElementById("exportButton");
+
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const reportType =
+        document.getElementById("reportType").value;
+
+    const startDate =
+        document.getElementById("startDate").value;
+
+    const endDate =
+        document.getElementById("endDate").value;
+
+
+    if (!reportType) {
+
+        alert("Please select a report type.");
+
+        return;
+    }
+
+
+    if (startDate && endDate && startDate > endDate) {
+
+        alert("Start date cannot be after end date.");
+
+        return;
+    }
+
+
+    reportMessage.style.display = "block";
+
+    reportResults.style.display = "none";
+
+    reportMessage.textContent =
+        "Generating report...";
+
+
+    try {
+
+        const params = new URLSearchParams();
+
+        params.set("type", reportType);
+
+        if (startDate) {
+            params.set("startDate", startDate);
+        }
+
+        if (endDate) {
+            params.set("endDate", endDate);
+        }
+
+
+        const response = await fetch(
+            `/api/reports?${params.toString()}`,
+            {
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+
+        /*
+         * IMPORTANT:
+         * Do not blindly call response.json().
+         *
+         * This prevents:
+         *
+         * Unexpected token '<',
+         * "<!DOCTYPE..." is not valid JSON
+         */
+
+        const contentType =
+            response.headers.get("content-type") || "";
+
+
+        if (!contentType.includes("application/json")) {
+
+            const text =
+                await response.text();
+
+            console.error(
+                "Server returned non-JSON:",
+                text
+            );
+
+            throw new Error(
+                "The server did not return JSON. Check the /api/reports route."
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to generate report."
+            );
+
+        }
+
+
+        displayReport(data);
+
+    } catch (error) {
+
+        console.error(error);
+
+        reportMessage.style.display = "block";
+
+        reportResults.style.display = "none";
+
+        reportMessage.innerHTML =
+            `<span style="color:#dc2626;">
+                ${escapeHtml(error.message)}
+            </span>`;
+
+    }
+
+});
+
+
+function displayReport(data) {
+
+    const rows =
+        Array.isArray(data.data)
+            ? data.data
+            : [];
+
+
+    if (!rows.length) {
+
+        reportMessage.style.display = "block";
+
+        reportMessage.textContent =
+            "No records found for this report.";
+
+        reportResults.style.display = "none";
+
+        exportButton.disabled = true;
+
+        return;
+    }
+
+
+    const columns =
+        Object.keys(rows[0]);
+
+
+    reportHead.innerHTML =
+        `<tr>
+            ${columns.map(column =>
+                `<th style="
+                    padding:12px;
+                    text-align:left;
+                    border-bottom:1px solid #e5e7eb;
+                ">
+                    ${escapeHtml(column)}
+                </th>`
+            ).join("")}
+        </tr>`;
+
+
+    reportBody.innerHTML =
+        rows.map(row =>
+            `<tr>
+                ${columns.map(column =>
+                    `<td style="
+                        padding:12px;
+                        border-bottom:1px solid #f1f5f9;
+                    ">
+                        ${escapeHtml(
+                            row[column] ?? ""
+                        )}
+                    </td>`
+                ).join("")}
+            </tr>`
+        ).join("");
+
+
+    reportMessage.style.display = "none";
+
+    reportResults.style.display = "block";
+
+    exportButton.disabled = false;
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replaceAll("&", "&amp;")
+
+        .replaceAll("<", "&lt;")
+
+        .replaceAll(">", "&gt;")
+
+        .replaceAll('"', "&quot;")
+
+        .replaceAll("'", "&#039;");
+
+}
+
+
+exportButton.addEventListener("click", function() {
+
+    const table =
+        document.querySelector("#reportResults table");
+
+    if (!table) return;
+
+
+    const rows =
+        [...table.querySelectorAll("tr")];
+
+    const csv =
+        rows.map(row =>
+
+            [...row.children]
+                .map(cell =>
+                    `"${cell.textContent
+                        .replaceAll('"', '""')}"`
+                )
+                .join(",")
+
+        ).join("\n");
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:"text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "medilink-report.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+});
+
+</script>
+
+
+</body>
+</html>

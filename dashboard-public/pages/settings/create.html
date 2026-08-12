@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - Settings</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/dashboard.css"
+    >
+
+    <style>
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .settings-section {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .settings-section.full {
+            grid-column: 1 / -1;
+        }
+
+        .settings-section h2 {
+            margin: 0 0 6px;
+            font-size: 18px;
+        }
+
+        .settings-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #dbe1e8;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .switch-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid #eef2f7;
+            gap: 20px;
+        }
+
+        .switch-row:last-child {
+            border-bottom: 0;
+        }
+
+        .switch-info strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .switch-info small {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #cbd5e1;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            transition: .2s;
+        }
+
+        .switch input:checked + .slider {
+            background: #2563eb;
+        }
+
+        .switch input:checked + .slider::before {
+            transform: translateX(22px);
+        }
+
+        .danger-zone {
+            border-color: #fecaca;
+        }
+
+        .danger-zone h2 {
+            color: #b91c1c;
+        }
+
+        .danger-button {
+            border: 1px solid #dc2626;
+            color: #dc2626;
+            background: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .danger-button:hover {
+            background: #fef2f2;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            border: 0;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .message {
+            display: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .message.success {
+            display: block;
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        @media (max-width: 900px) {
+            .settings-grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-section.full,
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link active">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+
+            <a href="/">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             CONTENT
+             ===================================================== -->
+
+        <section class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        ⚙️ System Settings
+                    </h1>
+
+                    <p>
+                        Configure MediLink system preferences, security,
+                        notifications and healthcare settings.
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <a
+                        href="/pages/settings/"
+                        class="filter"
+                    >
+                        Back to Settings
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div id="successMessage" class="message">
+                Settings have been updated successfully.
+            </div>
+
+
+            <form id="settingsForm">
+
+
+                <div class="settings-grid">
+
+
+                    <!-- =================================================
+                         GENERAL SETTINGS
+                         ================================================= -->
+
+                    <div class="settings-section">
+
+                        <h2>
+                            General Settings
+                        </h2>
+
+                        <p class="settings-description">
+                            Basic information about the MediLink platform.
+                        </p>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="systemName">
+                                    System Name *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="systemName"
+                                    name="systemName"
+                                    value="MediLink"
+                                    required
+                                    maxlength="100"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="organizationName">
+                                    Organization Name *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="organizationName"
+                                    name="organizationName"
+                                    placeholder="Healthcare organization"
+                                    required
+                                    maxlength="150"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="country">
+                                    Country
+                                </label>
+
+                                <select
+                                    id="country"
+                                    name="country"
+                                >
+
+                                    <option value="RWANDA" selected>
+                                        Rwanda
+                                    </option>
+
+                                    <option value="UGANDA">
+                                        Uganda
+                                    </option>
+
+                                    <option value="KENYA">
+                                        Kenya
+                                    </option>
+
+                                    <option value="TANZANIA">
+                                        Tanzania
+                                    </option>
+
+                                    <option value="OTHER">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="timezone">
+                                    Timezone
+                                </label>
+
+                                <select
+                                    id="timezone"
+                                    name="timezone"
+                                >
+
+                                    <option value="Africa/Kigali" selected>
+                                        Africa/Kigali
+                                    </option>
+
+                                    <option value="UTC">
+                                        UTC
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="systemDescription">
+                                    System Description
+                                </label>
+
+                                <textarea
+                                    id="systemDescription"
+                                    name="systemDescription"
+                                    maxlength="1000"
+                                    placeholder="Describe the MediLink healthcare system..."
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CONTACT SETTINGS
+                         ================================================= -->
+
+                    <div class="settings-section">
+
+                        <h2>
+                            Contact Information
+                        </h2>
+
+                        <p class="settings-description">
+                            Official contact information displayed by the system.
+                        </p>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="supportEmail">
+                                    Support Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="supportEmail"
+                                    name="supportEmail"
+                                    placeholder="support@example.com"
+                                    maxlength="150"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="supportPhone">
+                                    Support Phone
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="supportPhone"
+                                    name="supportPhone"
+                                    placeholder="+250XXXXXXXXX"
+                                    pattern="^\+250[0-9]{9}$"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="officeAddress">
+                                    Office Address
+                                </label>
+
+                                <textarea
+                                    id="officeAddress"
+                                    name="officeAddress"
+                                    maxlength="500"
+                                    placeholder="Enter official address"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         NOTIFICATIONS
+                         ================================================= -->
+
+                    <div class="settings-section">
+
+                        <h2>
+                            Notifications
+                        </h2>
+
+                        <p class="settings-description">
+                            Control how MediLink sends system notifications.
+                        </p>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Email Notifications
+                                </strong>
+
+                                <small>
+                                    Send important system notifications by email.
+                                </small>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    name="emailNotifications"
+                                    checked
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    SMS Notifications
+                                </strong>
+
+                                <small>
+                                    Enable SMS notifications for supported services.
+                                </small>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    name="smsNotifications"
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Appointment Reminders
+                                </strong>
+
+                                <small>
+                                    Notify patients about upcoming appointments.
+                                </small>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    name="appointmentReminders"
+                                    checked
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Prescription Alerts
+                                </strong>
+
+                                <small>
+                                    Notify authorized users about prescription events.
+                                </small>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    name="prescriptionAlerts"
+                                    checked
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SECURITY
+                         ================================================= -->
+
+                    <div class="settings-section">
+
+                        <h2>
+                            Security Settings
+                        </h2>
+
+                        <p class="settings-description">
+                            Configure important account and system security options.
+                        </p>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Two-Factor Authentication
+                                </strong>
+
+                                <small>
+                                    Require an additional verification step for administrators.
+                                </small>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    name="twoFactorAuthentication"
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Login Activity Logging
+                                </strong>
+
+                                <small>
+                                    Record successful and failed login attempts.
+                                </small>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    name="loginLogging"
+                                    checked
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Audit Logging
+                                </strong>
+
+                                <small>
+                                    Record important changes made inside MediLink.
+                                </small>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    name="auditLogging"
+                                    checked
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         HEALTHCARE SETTINGS
+                         ================================================= -->
+
+                    <div class="settings-section full">
+
+                        <h2>
+                            Healthcare Configuration
+                        </h2>
+
+                        <p class="settings-description">
+                            Configure default healthcare-related behaviour.
+                        </p>
+
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="defaultAppointmentDuration">
+                                    Default Appointment Duration
+                                </label>
+
+                                <select
+                                    id="defaultAppointmentDuration"
+                                    name="defaultAppointmentDuration"
+                                >
+
+                                    <option value="15">
+                                        15 minutes
+                                    </option>
+
+                                    <option value="30" selected>
+                                        30 minutes
+                                    </option>
+
+                                    <option value="45">
+                                        45 minutes
+                                    </option>
+
+                                    <option value="60">
+                                        60 minutes
+                                    </option>
+
+                                    <option value="90">
+                                        90 minutes
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="defaultCurrency">
+                                    Currency
+                                </label>
+
+                                <select
+                                    id="defaultCurrency"
+                                    name="defaultCurrency"
+                                >
+
+                                    <option value="RWF" selected>
+                                        RWF - Rwandan Franc
+                                    </option>
+
+                                    <option value="USD">
+                                        USD - US Dollar
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="patientIdPrefix">
+                                    Patient ID Prefix
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="patientIdPrefix"
+                                    name="patientIdPrefix"
+                                    value="PAT"
+                                    pattern="[A-Z0-9_-]{2,10}"
+                                    maxlength="10"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="pharmacyIdPrefix">
+                                    Pharmacy ID Prefix
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="pharmacyIdPrefix"
+                                    name="pharmacyIdPrefix"
+                                    value="PHA"
+                                    pattern="[A-Z0-9_-]{2,10}"
+                                    maxlength="10"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DISPLAY SETTINGS
+                         ================================================= -->
+
+                    <div class="settings-section">
+
+                        <h2>
+                            Display Preferences
+                        </h2>
+
+                        <p class="settings-description">
+                            Customize how information appears in MediLink.
+                        </p>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="language">
+                                    Language
+                                </label>
+
+                                <select
+                                    id="language"
+                                    name="language"
+                                >
+
+                                    <option value="en" selected>
+                                        English
+                                    </option>
+
+                                    <option value="rw">
+                                        Kinyarwanda
+                                    </option>
+
+                                    <option value="fr">
+                                        French
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dateFormat">
+                                    Date Format
+                                </label>
+
+                                <select
+                                    id="dateFormat"
+                                    name="dateFormat"
+                                >
+
+                                    <option value="YYYY-MM-DD" selected>
+                                        YYYY-MM-DD
+                                    </option>
+
+                                    <option value="DD/MM/YYYY">
+                                        DD/MM/YYYY
+                                    </option>
+
+                                    <option value="MM/DD/YYYY">
+                                        MM/DD/YYYY
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SYSTEM STATUS
+                         ================================================= -->
+
+                    <div class="settings-section">
+
+                        <h2>
+                            System Status
+                        </h2>
+
+                        <p class="settings-description">
+                            Current MediLink system information.
+                        </p>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    System Status
+                                </strong>
+
+                                <small>
+                                    MediLink is currently configured for normal operation.
+                                </small>
+
+                            </div>
+
+                            <span
+                                style="
+                                    background:#dcfce7;
+                                    color:#166534;
+                                    padding:6px 12px;
+                                    border-radius:20px;
+                                    font-size:12px;
+                                    font-weight:600;
+                                "
+                            >
+                                ● Operational
+                            </span>
+
+                        </div>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Environment
+                                </strong>
+
+                                <small>
+                                    Current application environment.
+                                </small>
+
+                            </div>
+
+                            <strong>
+                                Development
+                            </strong>
+
+                        </div>
+
+
+                        <div class="switch-row">
+
+                            <div class="switch-info">
+
+                                <strong>
+                                    Version
+                                </strong>
+
+                                <small>
+                                    MediLink application version.
+                                </small>
+
+                            </div>
+
+                            <strong>
+                                1.0.0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DANGER ZONE
+                         ================================================= -->
+
+                    <div class="settings-section danger-zone full">
+
+                        <h2>
+                            Danger Zone
+                        </h2>
+
+                        <p class="settings-description">
+                            These actions can affect system data and should only
+                            be performed by authorized administrators.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="danger-button"
+                            id="clearSettingsButton"
+                        >
+                            Reset Local Settings
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACTIONS
+                     ================================================= -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="reset"
+                        class="btn btn-secondary"
+                    >
+                        Clear Changes
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Settings
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+
+<script>
+
+    const settingsForm =
+        document.getElementById("settingsForm");
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+
+    settingsForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const supportPhone =
+            document.getElementById("supportPhone").value.trim();
+
+
+        const supportPhoneRegex =
+            /^\+250[0-9]{9}$/;
+
+
+        if (
+            supportPhone &&
+            !supportPhoneRegex.test(supportPhone)
+        ) {
+
+            alert(
+                "Support phone must use the format +250XXXXXXXXX."
+            );
+
+            return;
+
+        }
+
+
+        const supportEmail =
+            document.getElementById("supportEmail").value.trim();
+
+
+        if (supportEmail) {
+
+            const emailRegex =
+                /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+
+            if (!emailRegex.test(supportEmail)) {
+
+                alert(
+                    "Please enter a valid support email address."
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        const systemName =
+            document.getElementById("systemName").value.trim();
+
+
+        const organizationName =
+            document
+                .getElementById("organizationName")
+                .value
+                .trim();
+
+
+        if (!systemName) {
+
+            alert("System name is required.");
+
+            return;
+
+        }
+
+
+        if (!organizationName) {
+
+            alert("Organization name is required.");
+
+            return;
+
+        }
+
+
+        successMessage.className =
+            "message success";
+
+        successMessage.textContent =
+            "Settings have been validated successfully. Backend saving can now be connected.";
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+
+    document
+        .getElementById("clearSettingsButton")
+        .addEventListener("click", function() {
+
+            const confirmed =
+                confirm(
+                    "Reset local settings? This will restore this form to its default values."
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            settingsForm.reset();
+
+
+            successMessage.className =
+                "message success";
+
+            successMessage.textContent =
+                "Settings were reset.";
+
+        });
+
+</script>
+
+</body>
+
+</html>s

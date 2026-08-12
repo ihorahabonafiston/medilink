@@ -1,0 +1,2477 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+```
+<title>MediLink - Add Medicine</title>
+
+<link rel="stylesheet" href="/css/dashboard.css">
+
+<style>
+    .form-section {
+        margin-bottom: 30px;
+    }
+
+    .form-section h2 {
+        margin-bottom: 6px;
+    }
+
+    .section-description {
+        color: #64748b;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .form-group {
+        min-width: 0;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+    .form-group.half {
+        grid-column: span 2;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: 600;
+        font-size: 13px;
+        color: #334155;
+    }
+
+    .required {
+        color: #dc2626;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 44px;
+        padding: 0 12px;
+        border: 1px solid #dbe1e8;
+        border-radius: 8px;
+        background: #ffffff;
+        font-size: 14px;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    textarea.form-control {
+        height: auto;
+        min-height: 100px;
+        padding: 12px;
+        resize: vertical;
+    }
+
+    .form-control:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .form-control[readonly] {
+        background: #f8fafc;
+        color: #64748b;
+    }
+
+    .help-text {
+        display: block;
+        margin-top: 5px;
+        font-size: 11px;
+        color: #64748b;
+    }
+
+    .validation-message {
+        display: none;
+        margin-top: 5px;
+        font-size: 12px;
+        color: #dc2626;
+    }
+
+    .form-control.invalid {
+        border-color: #dc2626;
+        background: #fffafa;
+    }
+
+    .form-control.valid {
+        border-color: #16a34a;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 44px;
+    }
+
+    .checkbox-group input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .checkbox-group label {
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 30px;
+        padding-top: 24px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .btn {
+        border: 0;
+        border-radius: 8px;
+        min-height: 44px;
+        padding: 0 20px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-secondary {
+        background: #f1f5f9;
+        color: #334155;
+    }
+
+    .btn-secondary:hover {
+        background: #e2e8f0;
+    }
+
+    .btn-primary {
+        background: #2563eb;
+        color: #ffffff;
+    }
+
+    .btn-primary:hover {
+        background: #1d4ed8;
+    }
+
+    .btn-primary:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    .alert {
+        display: none;
+        padding: 13px 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .alert.error {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+    }
+
+    .alert.success {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+    }
+
+    .medicine-id {
+        font-family: monospace;
+        letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 1000px) {
+        .form-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .form-group.half {
+            grid-column: span 1;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full,
+        .form-group.half {
+            grid-column: 1;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="app">
+
+```
+<!-- =====================================================
+     SIDEBAR
+     ===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            +
+        </div>
+
+        <div>
+            <h2>MediLink</h2>
+            <small>Smart Healthcare System</small>
+        </div>
+
+    </div>
+
+    <nav class="navigation">
+
+        <a href="/" class="nav-link">
+            📊 Dashboard
+        </a>
+
+        <a href="/pages/patients/" class="nav-link">
+            👤 Patients
+        </a>
+
+        <a href="/pages/pharmacies/" class="nav-link">
+            🏥 Pharmacies
+        </a>
+
+        <a href="/pages/medicines/" class="nav-link active">
+            💊 Medicines
+        </a>
+
+        <a href="/pages/inventory/" class="nav-link">
+            📦 Inventory
+        </a>
+
+        <a href="/pages/prescriptions/" class="nav-link">
+            📋 Prescriptions
+        </a>
+
+        <a href="/pages/appointments/" class="nav-link">
+            📅 Appointments
+        </a>
+
+        <a href="/pages/hospitals/" class="nav-link">
+            🏥 Hospitals
+        </a>
+
+        <a href="/pages/laboratory/" class="nav-link">
+            🧪 Laboratory
+        </a>
+
+        <a href="/pages/deliveries/" class="nav-link">
+            🚚 Deliveries
+        </a>
+
+        <div class="nav-divider"></div>
+
+        <a href="/pages/reports/" class="nav-link">
+            📊 Reports
+        </a>
+
+        <a href="/pages/analytics/" class="nav-link">
+            📈 Analytics
+        </a>
+
+        <a href="/pages/settings/" class="nav-link">
+            ⚙️ Settings
+        </a>
+
+    </nav>
+
+    <div class="logout">
+
+        <a href="/pages/medicines/">
+            ← Back to Medicines
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="search">
+
+            🔍
+
+            <input
+                type="text"
+                placeholder="Search anything..."
+            >
+
+        </div>
+
+        <div class="user-area">
+
+            <button type="button">
+                🔔
+            </button>
+
+            <button type="button">
+                ✉️
+            </button>
+
+            <div class="user">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Dr. Admin
+                    </strong>
+
+                    <small>
+                        Super Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
+
+    <section class="content">
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    💊 Add New Medicine
+                </h1>
+
+                <p>
+                    Register a medicine in the MediLink medicine catalogue.
+                </p>
+
+            </div>
+
+            <div>
+
+                <a
+                    href="/pages/medicines/"
+                    class="filter"
+                >
+                    ← Back to Medicines
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ALERTS -->
+
+        <div
+            id="errorAlert"
+            class="alert error"
+        ></div>
+
+        <div
+            id="successAlert"
+            class="alert success"
+        ></div>
+
+
+        <!-- =====================================================
+             FORM
+             ===================================================== -->
+
+        <form
+            id="medicineForm"
+            class="card"
+            novalidate
+        >
+
+            <!-- =================================================
+                 BASIC INFORMATION
+                 ================================================= -->
+
+            <div class="form-section">
+
+                <h2>
+                    Medicine Information
+                </h2>
+
+                <p class="section-description">
+                    Enter the basic identification and classification
+                    information for the medicine.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Medicine ID -->
+
+                    <div class="form-group">
+
+                        <label for="medicineId">
+                            Medicine ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="medicineId"
+                            name="medicineId"
+                            class="form-control medicine-id"
+                            placeholder="Auto-generated"
+                            readonly
+                        >
+
+                        <span class="help-text">
+                            Generated automatically by the system.
+                        </span>
+
+                    </div>
+
+
+                    <!-- Medicine Name -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Medicine Name <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control"
+                            placeholder="e.g. Paracetamol"
+                            maxlength="150"
+                            required
+                        >
+
+                        <span
+                            id="nameError"
+                            class="validation-message"
+                        ></span>
+
+                    </div>
+
+
+                    <!-- Generic Name -->
+
+                    <div class="form-group">
+
+                        <label for="genericName">
+                            Generic Name <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="genericName"
+                            name="genericName"
+                            class="form-control"
+                            placeholder="e.g. Paracetamol"
+                            maxlength="150"
+                            required
+                        >
+
+                        <span
+                            id="genericNameError"
+                            class="validation-message"
+                        ></span>
+
+                    </div>
+
+
+                    <!-- Brand Name -->
+
+                    <div class="form-group">
+
+                        <label for="brandName">
+                            Brand Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="brandName"
+                            name="brandName"
+                            class="form-control"
+                            placeholder="e.g. Panadol"
+                            maxlength="150"
+                        >
+
+                    </div>
+
+
+                    <!-- Medicine Category -->
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="ANALGESIC">
+                                Analgesic / Pain Relief
+                            </option>
+
+                            <option value="ANTIBIOTIC">
+                                Antibiotic
+                            </option>
+
+                            <option value="ANTIMALARIAL">
+                                Antimalarial
+                            </option>
+
+                            <option value="ANTIVIRAL">
+                                Antiviral
+                            </option>
+
+                            <option value="ANTIFUNGAL">
+                                Antifungal
+                            </option>
+
+                            <option value="ANTIHISTAMINE">
+                                Antihistamine
+                            </option>
+
+                            <option value="CARDIOVASCULAR">
+                                Cardiovascular
+                            </option>
+
+                            <option value="DIABETES">
+                                Diabetes
+                            </option>
+
+                            <option value="RESPIRATORY">
+                                Respiratory
+                            </option>
+
+                            <option value="GASTROINTESTINAL">
+                                Gastrointestinal
+                            </option>
+
+                            <option value="VITAMIN">
+                                Vitamins / Supplements
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                        <span
+                            id="categoryError"
+                            class="validation-message"
+                        ></span>
+
+                    </div>
+
+
+                    <!-- Prescription Requirement -->
+
+                    <div class="form-group">
+
+                        <label for="prescriptionRequired">
+                            Prescription Requirement
+                        </label>
+
+                        <select
+                            id="prescriptionRequired"
+                            name="prescriptionRequired"
+                            class="form-control"
+                        >
+
+                            <option value="NO">
+                                No Prescription Required
+                            </option>
+
+                            <option value="YES">
+                                Prescription Required
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <hr
+                style="
+                    border:0;
+                    border-top:1px solid #e5e7eb;
+                    margin:30px 0;
+                "
+            >
+
+
+            <!-- =================================================
+                 FORMULATION
+                 ================================================= -->
+
+            <div class="form-section">
+
+                <h2>
+                    Formulation & Strength
+                </h2>
+
+                <p class="section-description">
+                    Define how the medicine is supplied and its strength.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Dosage Form -->
+
+                    <div class="form-group">
+
+                        <label for="dosageForm">
+                            Dosage Form <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="dosageForm"
+                            name="dosageForm"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select dosage form
+                            </option>
+
+                            <option value="TABLET">
+                                Tablet
+                            </option>
+
+                            <option value="CAPSULE">
+                                Capsule
+                            </option>
+
+                            <option value="SYRUP">
+                                Syrup
+                            </option>
+
+                            <option value="SUSPENSION">
+                                Suspension
+                            </option>
+
+                            <option value="INJECTION">
+                                Injection
+                            </option>
+
+                            <option value="CREAM">
+                                Cream
+                            </option>
+
+                            <option value="OINTMENT">
+                                Ointment
+                            </option>
+
+                            <option value="GEL">
+                                Gel
+                            </option>
+
+                            <option value="DROPS">
+                                Drops
+                            </option>
+
+                            <option value="INHALER">
+                                Inhaler
+                            </option>
+
+                            <option value="POWDER">
+                                Powder
+                            </option>
+
+                            <option value="SOLUTION">
+                                Solution
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Strength -->
+
+                    <div class="form-group">
+
+                        <label for="strength">
+                            Strength <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="strength"
+                            name="strength"
+                            class="form-control"
+                            placeholder="e.g. 500 mg"
+                            maxlength="50"
+                            required
+                        >
+
+                        <span class="help-text">
+                            Example: 500 mg, 250 mg/5 mL, 10 mg/mL.
+                        </span>
+
+                    </div>
+
+
+                    <!-- Unit -->
+
+                    <div class="form-group">
+
+                        <label for="unit">
+                            Strength Unit <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="unit"
+                            name="unit"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select unit
+                            </option>
+
+                            <option value="MG">
+                                mg
+                            </option>
+
+                            <option value="G">
+                                g
+                            </option>
+
+                            <option value="MCG">
+                                mcg
+                            </option>
+
+                            <option value="MG_ML">
+                                mg/mL
+                            </option>
+
+                            <option value="MG_5ML">
+                                mg/5mL
+                            </option>
+
+                            <option value="IU">
+                                IU
+                            </option>
+
+                            <option value="PERCENT">
+                                %
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Pack Size -->
+
+                    <div class="form-group">
+
+                        <label for="packSize">
+                            Pack Size <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="packSize"
+                            name="packSize"
+                            class="form-control"
+                            placeholder="e.g. 20"
+                            min="1"
+                            max="100000"
+                            step="1"
+                            required
+                        >
+
+                        <span
+                            id="packSizeError"
+                            class="validation-message"
+                        ></span>
+
+                    </div>
+
+
+                    <!-- Pack Unit -->
+
+                    <div class="form-group">
+
+                        <label for="packUnit">
+                            Pack Unit <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="packUnit"
+                            name="packUnit"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select pack unit
+                            </option>
+
+                            <option value="TABLETS">
+                                Tablets
+                            </option>
+
+                            <option value="CAPSULES">
+                                Capsules
+                            </option>
+
+                            <option value="BOTTLES">
+                                Bottles
+                            </option>
+
+                            <option value="VIALS">
+                                Vials
+                            </option>
+
+                            <option value="AMPOULES">
+                                Ampoules
+                            </option>
+
+                            <option value="TUBES">
+                                Tubes
+                            </option>
+
+                            <option value="SACHETS">
+                                Sachets
+                            </option>
+
+                            <option value="BOXES">
+                                Boxes
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Route -->
+
+                    <div class="form-group">
+
+                        <label for="route">
+                            Administration Route
+                        </label>
+
+                        <select
+                            id="route"
+                            name="route"
+                            class="form-control"
+                        >
+
+                            <option value="">
+                                Select route
+                            </option>
+
+                            <option value="ORAL">
+                                Oral
+                            </option>
+
+                            <option value="INTRAVENOUS">
+                                Intravenous
+                            </option>
+
+                            <option value="INTRAMUSCULAR">
+                                Intramuscular
+                            </option>
+
+                            <option value="SUBCUTANEOUS">
+                                Subcutaneous
+                            </option>
+
+                            <option value="TOPICAL">
+                                Topical
+                            </option>
+
+                            <option value="INHALATION">
+                                Inhalation
+                            </option>
+
+                            <option value="RECTAL">
+                                Rectal
+                            </option>
+
+                            <option value="OPHTHALMIC">
+                                Ophthalmic
+                            </option>
+
+                            <option value="OTIC">
+                                Otic
+                            </option>
+
+                            <option value="NASAL">
+                                Nasal
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <hr
+                style="
+                    border:0;
+                    border-top:1px solid #e5e7eb;
+                    margin:30px 0;
+                "
+            >
+
+
+            <!-- =================================================
+                 MANUFACTURER
+                 ================================================= -->
+
+            <div class="form-section">
+
+                <h2>
+                    Manufacturer & Registration
+                </h2>
+
+                <p class="section-description">
+                    Store manufacturer and regulatory information.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Manufacturer -->
+
+                    <div class="form-group">
+
+                        <label for="manufacturer">
+                            Manufacturer <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="manufacturer"
+                            name="manufacturer"
+                            class="form-control"
+                            placeholder="Manufacturer name"
+                            maxlength="150"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Manufacturer Country -->
+
+                    <div class="form-group">
+
+                        <label for="manufacturerCountry">
+                            Manufacturer Country
+                        </label>
+
+                        <input
+                            type="text"
+                            id="manufacturerCountry"
+                            name="manufacturerCountry"
+                            class="form-control"
+                            placeholder="Country"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+
+                    <!-- Registration Number -->
+
+                    <div class="form-group">
+
+                        <label for="registrationNumber">
+                            Registration Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="registrationNumber"
+                            name="registrationNumber"
+                            class="form-control"
+                            placeholder="Medicine registration number"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+
+                    <!-- Barcode -->
+
+                    <div class="form-group">
+
+                        <label for="barcode">
+                            Barcode
+                        </label>
+
+                        <input
+                            type="text"
+                            id="barcode"
+                            name="barcode"
+                            class="form-control"
+                            placeholder="Barcode / GTIN"
+                            maxlength="50"
+                            inputmode="numeric"
+                        >
+
+                    </div>
+
+
+                    <!-- ATC Code -->
+
+                    <div class="form-group">
+
+                        <label for="atcCode">
+                            ATC Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="atcCode"
+                            name="atcCode"
+                            class="form-control"
+                            placeholder="e.g. N02BE01"
+                            maxlength="20"
+                        >
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Medicine Status <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="ACTIVE">
+                                Active
+                            </option>
+
+                            <option value="INACTIVE">
+                                Inactive
+                            </option>
+
+                            <option value="DISCONTINUED">
+                                Discontinued
+                            </option>
+
+                            <option value="RECALLED">
+                                Recalled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <hr
+                style="
+                    border:0;
+                    border-top:1px solid #e5e7eb;
+                    margin:30px 0;
+                "
+            >
+
+
+            <!-- =================================================
+                 STORAGE
+                 ================================================= -->
+
+            <div class="form-section">
+
+                <h2>
+                    Storage & Safety
+                </h2>
+
+                <p class="section-description">
+                    Define storage requirements and safety information.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Storage Condition -->
+
+                    <div class="form-group">
+
+                        <label for="storageCondition">
+                            Storage Condition
+                        </label>
+
+                        <select
+                            id="storageCondition"
+                            name="storageCondition"
+                            class="form-control"
+                        >
+
+                            <option value="">
+                                Select condition
+                            </option>
+
+                            <option value="ROOM_TEMPERATURE">
+                                Room Temperature
+                            </option>
+
+                            <option value="REFRIGERATED">
+                                Refrigerated
+                            </option>
+
+                            <option value="FROZEN">
+                                Frozen
+                            </option>
+
+                            <option value="PROTECT_FROM_LIGHT">
+                                Protect from Light
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Minimum Temperature -->
+
+                    <div class="form-group">
+
+                        <label for="minTemperature">
+                            Minimum Temperature °C
+                        </label>
+
+                        <input
+                            type="number"
+                            id="minTemperature"
+                            name="minTemperature"
+                            class="form-control"
+                            placeholder="e.g. 2"
+                            min="-100"
+                            max="100"
+                            step="0.1"
+                        >
+
+                    </div>
+
+
+                    <!-- Maximum Temperature -->
+
+                    <div class="form-group">
+
+                        <label for="maxTemperature">
+                            Maximum Temperature °C
+                        </label>
+
+                        <input
+                            type="number"
+                            id="maxTemperature"
+                            name="maxTemperature"
+                            class="form-control"
+                            placeholder="e.g. 8"
+                            min="-100"
+                            max="100"
+                            step="0.1"
+                        >
+
+                    </div>
+
+
+                    <!-- Controlled Medicine -->
+
+                    <div class="form-group">
+
+                        <label for="controlled">
+                            Controlled Medicine
+                        </label>
+
+                        <select
+                            id="controlled"
+                            name="controlled"
+                            class="form-control"
+                        >
+
+                            <option value="NO">
+                                No
+                            </option>
+
+                            <option value="YES">
+                                Yes
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Hazardous -->
+
+                    <div class="form-group">
+
+                        <label for="hazardous">
+                            Special Handling
+                        </label>
+
+                        <select
+                            id="hazardous"
+                            name="hazardous"
+                            class="form-control"
+                        >
+
+                            <option value="NO">
+                                Normal Handling
+                            </option>
+
+                            <option value="YES">
+                                Special Handling Required
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Storage Notes -->
+
+                    <div class="form-group full">
+
+                        <label for="storageNotes">
+                            Storage Notes
+                        </label>
+
+                        <textarea
+                            id="storageNotes"
+                            name="storageNotes"
+                            class="form-control"
+                            maxlength="2000"
+                            placeholder="Enter special storage or handling instructions..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <hr
+                style="
+                    border:0;
+                    border-top:1px solid #e5e7eb;
+                    margin:30px 0;
+                "
+            >
+
+
+            <!-- =================================================
+                 DESCRIPTION
+                 ================================================= -->
+
+            <div class="form-section">
+
+                <h2>
+                    Medicine Description
+                </h2>
+
+                <p class="section-description">
+                    Add clinical and general information about the medicine.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Indications -->
+
+                    <div class="form-group full">
+
+                        <label for="indications">
+                            Indications / Uses
+                        </label>
+
+                        <textarea
+                            id="indications"
+                            name="indications"
+                            class="form-control"
+                            maxlength="3000"
+                            placeholder="Describe the main approved uses of this medicine..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Contraindications -->
+
+                    <div class="form-group full">
+
+                        <label for="contraindications">
+                            Contraindications
+                        </label>
+
+                        <textarea
+                            id="contraindications"
+                            name="contraindications"
+                            class="form-control"
+                            maxlength="3000"
+                            placeholder="Enter important contraindications..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Side Effects -->
+
+                    <div class="form-group full">
+
+                        <label for="sideEffects">
+                            Common Side Effects
+                        </label>
+
+                        <textarea
+                            id="sideEffects"
+                            name="sideEffects"
+                            class="form-control"
+                            maxlength="3000"
+                            placeholder="List known common side effects..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Description -->
+
+                    <div class="form-group full">
+
+                        <label for="description">
+                            General Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            class="form-control"
+                            maxlength="5000"
+                            placeholder="Enter additional medicine information..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <hr
+                style="
+                    border:0;
+                    border-top:1px solid #e5e7eb;
+                    margin:30px 0;
+                "
+            >
+
+
+            <!-- =================================================
+                 SYSTEM OPTIONS
+                 ================================================= -->
+
+            <div class="form-section">
+
+                <h2>
+                    System Options
+                </h2>
+
+                <p class="section-description">
+                    Configure how this medicine will be used throughout MediLink.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Searchable -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Medicine Catalogue
+                        </label>
+
+                        <div class="checkbox-group">
+
+                            <input
+                                type="checkbox"
+                                id="searchable"
+                                name="searchable"
+                                checked
+                            >
+
+                            <label for="searchable">
+                                Available for medicine search
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Inventory -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Inventory
+                        </label>
+
+                        <div class="checkbox-group">
+
+                            <input
+                                type="checkbox"
+                                id="inventoryEnabled"
+                                name="inventoryEnabled"
+                                checked
+                            >
+
+                            <label for="inventoryEnabled">
+                                Allow pharmacy inventory tracking
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Availability -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Public Availability
+                        </label>
+
+                        <div class="checkbox-group">
+
+                            <input
+                                type="checkbox"
+                                id="publicAvailability"
+                                name="publicAvailability"
+                                checked
+                            >
+
+                            <label for="publicAvailability">
+                                Show availability to authorized users
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+                 ================================================= -->
+
+            <div class="form-actions">
+
+                <a
+                    href="/pages/medicines/"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="reset"
+                    class="btn btn-secondary"
+                    id="clearButton"
+                >
+                    Clear Form
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="submitButton"
+                >
+                    💊 Register Medicine
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+```
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+<script>
+/*
+ * ============================================================
+ * MEDILINK MEDICINE REGISTRATION
+ * Frontend validation
+ * ============================================================
+ */
+
+const medicineForm = document.getElementById("medicineForm");
+
+const submitButton = document.getElementById("submitButton");
+
+const errorAlert = document.getElementById("errorAlert");
+
+const successAlert = document.getElementById("successAlert");
+
+
+/*
+ * Generate a temporary display ID.
+ *
+ * The real permanent Medicine ID must be generated
+ * by the server. This value is only for the UI.
+ */
+
+function generateDisplayId() {
+
+    const year = new Date().getFullYear();
+
+    const random = Math.floor(
+        100000 + Math.random() * 900000
+    );
+
+    return `MED-${year}-${random}`;
+}
+
+
+document.getElementById("medicineId").value =
+    generateDisplayId();
+
+
+/*
+ * Display error
+ */
+
+function showError(message) {
+
+    errorAlert.textContent = message;
+
+    errorAlert.style.display = "block";
+
+    successAlert.style.display = "none";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/*
+ * Display success
+ */
+
+function showSuccess(message) {
+
+    successAlert.textContent = message;
+
+    successAlert.style.display = "block";
+
+    errorAlert.style.display = "none";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/*
+ * Clear alerts
+ */
+
+function clearAlerts() {
+
+    errorAlert.style.display = "none";
+
+    successAlert.style.display = "none";
+
+}
+
+
+/*
+ * Clean text
+ */
+
+function cleanText(value) {
+
+    return value
+        .trim()
+        .replace(/\s+/g, " ");
+
+}
+
+
+/*
+ * Medicine name validation
+ *
+ * Allows:
+ * - letters
+ * - numbers where medically appropriate
+ * - spaces
+ * - hyphens
+ * - apostrophes
+ * - parentheses
+ * - slash
+ */
+
+function validateMedicineName(value) {
+
+    if (!value) {
+        return false;
+    }
+
+    if (value.length < 2 || value.length > 150) {
+        return false;
+    }
+
+    return /^[A-Za-zÀ-ÖØ-öø-ÿ0-9][A-Za-zÀ-ÖØ-öø-ÿ0-9\s'().\/-]*$/.test(value);
+
+}
+
+
+/*
+ * Generic name
+ */
+
+function validateGenericName(value) {
+
+    if (!value) {
+        return false;
+    }
+
+    if (value.length < 2 || value.length > 150) {
+        return false;
+    }
+
+    return /^[A-Za-zÀ-ÖØ-öø-ÿ0-9][A-Za-zÀ-ÖØ-öø-ÿ0-9\s'().\/-]*$/.test(value);
+
+}
+
+
+/*
+ * Strength
+ */
+
+function validateStrength(value) {
+
+    if (!value) {
+        return false;
+    }
+
+    if (value.length > 50) {
+        return false;
+    }
+
+    return /^[A-Za-z0-9\s./%()-]+$/.test(value);
+
+}
+
+
+/*
+ * Pack size
+ */
+
+function validatePackSize(value) {
+
+    const number = Number(value);
+
+    return Number.isInteger(number) &&
+           number >= 1 &&
+           number <= 100000;
+
+}
+
+
+/*
+ * Barcode
+ *
+ * Supports common numeric barcode values.
+ */
+
+function validateBarcode(value) {
+
+    if (!value) {
+        return true;
+    }
+
+    return /^[0-9]{8,20}$/.test(value);
+
+}
+
+
+/*
+ * Temperature validation
+ */
+
+function validateTemperatureRange() {
+
+    const min =
+        document.getElementById("minTemperature").value;
+
+    const max =
+        document.getElementById("maxTemperature").value;
+
+    if (min === "" || max === "") {
+        return true;
+    }
+
+    return Number(min) <= Number(max);
+
+}
+
+
+/*
+ * ATC Code
+ */
+
+function validateAtcCode(value) {
+
+    if (!value) {
+        return true;
+    }
+
+    return /^[A-Za-z0-9]{2,20}$/.test(value);
+
+}
+
+
+/*
+ * Mark invalid field
+ */
+
+function markInvalid(element, message) {
+
+    element.classList.add("invalid");
+
+    element.classList.remove("valid");
+
+    let errorElement =
+        document.getElementById(
+            `${element.id}Error`
+        );
+
+    if (errorElement) {
+
+        errorElement.textContent = message;
+
+        errorElement.style.display = "block";
+
+    }
+
+}
+
+
+/*
+ * Mark valid field
+ */
+
+function markValid(element) {
+
+    element.classList.remove("invalid");
+
+    element.classList.add("valid");
+
+    let errorElement =
+        document.getElementById(
+            `${element.id}Error`
+        );
+
+    if (errorElement) {
+
+        errorElement.textContent = "";
+
+        errorElement.style.display = "none";
+
+    }
+
+}
+
+
+/*
+ * Submit
+ */
+
+medicineForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        clearAlerts();
+
+
+        /*
+         * Get values
+         */
+
+        const name =
+            cleanText(
+                document.getElementById("name").value
+            );
+
+        const genericName =
+            cleanText(
+                document.getElementById("genericName").value
+            );
+
+        const brandName =
+            cleanText(
+                document.getElementById("brandName").value
+            );
+
+        const category =
+            document.getElementById("category").value;
+
+        const dosageForm =
+            document.getElementById("dosageForm").value;
+
+        const strength =
+            cleanText(
+                document.getElementById("strength").value
+            );
+
+        const unit =
+            document.getElementById("unit").value;
+
+        const packSize =
+            document.getElementById("packSize").value;
+
+        const packUnit =
+            document.getElementById("packUnit").value;
+
+        const manufacturer =
+            cleanText(
+                document.getElementById("manufacturer").value
+            );
+
+        const barcode =
+            cleanText(
+                document.getElementById("barcode").value
+            );
+
+        const atcCode =
+            cleanText(
+                document.getElementById("atcCode").value
+            );
+
+        const minTemperature =
+            document.getElementById("minTemperature").value;
+
+        const maxTemperature =
+            document.getElementById("maxTemperature").value;
+
+
+        /*
+         * Required validation
+         */
+
+        if (!validateMedicineName(name)) {
+
+            markInvalid(
+                document.getElementById("name"),
+                "Enter a valid medicine name."
+            );
+
+            showError(
+                "Medicine name is invalid."
+            );
+
+            return;
+        }
+
+        markValid(
+            document.getElementById("name")
+        );
+
+
+        if (!validateGenericName(genericName)) {
+
+            markInvalid(
+                document.getElementById("genericName"),
+                "Enter a valid generic name."
+            );
+
+            showError(
+                "Generic name is invalid."
+            );
+
+            return;
+        }
+
+        markValid(
+            document.getElementById("genericName")
+        );
+
+
+        if (!category) {
+
+            showError(
+                "Please select a medicine category."
+            );
+
+            document.getElementById("category").focus();
+
+            return;
+        }
+
+
+        if (!dosageForm) {
+
+            showError(
+                "Please select the dosage form."
+            );
+
+            document.getElementById("dosageForm").focus();
+
+            return;
+        }
+
+
+        if (!validateStrength(strength)) {
+
+            showError(
+                "Enter a valid medicine strength."
+            );
+
+            document.getElementById("strength").focus();
+
+            return;
+        }
+
+
+        if (!unit) {
+
+            showError(
+                "Please select the strength unit."
+            );
+
+            document.getElementById("unit").focus();
+
+            return;
+        }
+
+
+        if (!validatePackSize(packSize)) {
+
+            markInvalid(
+                document.getElementById("packSize"),
+                "Pack size must be a positive whole number."
+            );
+
+            showError(
+                "Invalid pack size."
+            );
+
+            return;
+        }
+
+
+        if (!packUnit) {
+
+            showError(
+                "Please select the pack unit."
+            );
+
+            document.getElementById("packUnit").focus();
+
+            return;
+        }
+
+
+        if (!manufacturer) {
+
+            showError(
+                "Manufacturer is required."
+            );
+
+            document.getElementById("manufacturer").focus();
+
+            return;
+        }
+
+
+        /*
+         * Optional barcode
+         */
+
+        if (!validateBarcode(barcode)) {
+
+            showError(
+                "Barcode must contain 8 to 20 digits."
+            );
+
+            document.getElementById("barcode").focus();
+
+            return;
+        }
+
+
+        /*
+         * ATC code
+         */
+
+        if (!validateAtcCode(atcCode)) {
+
+            showError(
+                "ATC code contains invalid characters."
+            );
+
+            document.getElementById("atcCode").focus();
+
+            return;
+        }
+
+
+        /*
+         * Temperature
+         */
+
+        if (!validateTemperatureRange()) {
+
+            showError(
+                "Minimum temperature cannot be greater than maximum temperature."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Create FormData
+         */
+
+        const formData =
+            new FormData(medicineForm);
+
+
+        /*
+         * Convert checkbox values
+         */
+
+        formData.set(
+            "searchable",
+            document.getElementById("searchable").checked
+                ? "true"
+                : "false"
+        );
+
+        formData.set(
+            "inventoryEnabled",
+            document.getElementById("inventoryEnabled").checked
+                ? "true"
+                : "false"
+        );
+
+        formData.set(
+            "publicAvailability",
+            document.getElementById("publicAvailability").checked
+                ? "true"
+                : "false"
+        );
+
+
+        /*
+         * Do not trust Medicine ID from browser.
+         *
+         * Delete it before sending.
+         */
+
+        formData.delete("medicineId");
+
+
+        /*
+         * Convert to object
+         */
+
+        const medicine =
+            Object.fromEntries(
+                formData.entries()
+            );
+
+
+        /*
+         * Disable button
+         */
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "Registering Medicine...";
+
+
+        try {
+
+            /*
+             * API endpoint
+             *
+             * This will connect to the Node.js
+             * backend when /api/medicines is implemented.
+             */
+
+            const response =
+                await fetch(
+                    "/api/medicines",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                medicine
+                            )
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "Failed to register medicine."
+                );
+
+            }
+
+
+            /*
+             * Successful registration
+             */
+
+            showSuccess(
+                result.message ||
+                "Medicine registered successfully."
+            );
+
+
+            medicineForm.reset();
+
+
+            /*
+             * Generate another display ID
+             */
+
+            document.getElementById(
+                "medicineId"
+            ).value =
+                generateDisplayId();
+
+
+            /*
+             * Restore defaults
+             */
+
+            document.getElementById(
+                "status"
+            ).value = "ACTIVE";
+
+
+            document.getElementById(
+                "prescriptionRequired"
+            ).value = "NO";
+
+
+            document.getElementById(
+                "controlled"
+            ).value = "NO";
+
+
+            document.getElementById(
+                "hazardous"
+            ).value = "NO";
+
+
+            document.getElementById(
+                "searchable"
+            ).checked = true;
+
+
+            document.getElementById(
+                "inventoryEnabled"
+            ).checked = true;
+
+
+            document.getElementById(
+                "publicAvailability"
+            ).checked = true;
+
+
+        } catch (error) {
+
+            console.error(
+                "Medicine registration error:",
+                error
+            );
+
+            showError(
+                error.message ||
+                "Unable to register medicine."
+            );
+
+        } finally {
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "💊 Register Medicine";
+
+        }
+
+    }
+);
+
+
+/*
+ * Clear validation state
+ */
+
+document
+    .getElementById("clearButton")
+    .addEventListener(
+        "click",
+        function() {
+
+            clearAlerts();
+
+            document
+                .querySelectorAll(".invalid, .valid")
+                .forEach(
+                    element => {
+                        element.classList.remove(
+                            "invalid",
+                            "valid"
+                        );
+                    }
+                );
+
+            setTimeout(
+                () => {
+
+                    document.getElementById(
+                        "medicineId"
+                    ).value =
+                        generateDisplayId();
+
+                },
+                0
+            );
+
+        }
+    );
+
+
+/*
+ * Prevent negative pack size.
+ */
+
+document
+    .getElementById("packSize")
+    .addEventListener(
+        "input",
+        function() {
+
+            if (this.value < 1) {
+                this.value = "";
+            }
+
+        }
+    );
+
+
+/*
+ * Barcode: digits only.
+ */
+
+document
+    .getElementById("barcode")
+    .addEventListener(
+        "input",
+        function() {
+
+            this.value =
+                this.value.replace(
+                    /[^0-9]/g,
+                    ""
+                );
+
+        }
+    );
+
+
+/*
+ * ATC code normalization.
+ */
+
+document
+    .getElementById("atcCode")
+    .addEventListener(
+        "input",
+        function() {
+
+            this.value =
+                this.value
+                    .replace(
+                        /[^A-Za-z0-9]/g,
+                        ""
+                    )
+                    .toUpperCase();
+
+        }
+    );
+
+
+/*
+ * Trim accidental leading spaces
+ * from text fields.
+ */
+
+document
+    .querySelectorAll(
+        'input[type="text"], textarea'
+    )
+    .forEach(
+        element => {
+
+            element.addEventListener(
+                "blur",
+                function() {
+
+                    this.value =
+                        cleanText(
+                            this.value
+                        );
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

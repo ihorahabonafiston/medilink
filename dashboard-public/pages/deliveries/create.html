@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - Create Delivery</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link active">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+
+            <a href="/">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             CONTENT
+             ===================================================== -->
+
+        <section class="content">
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        🚚 Create Delivery
+                    </h1>
+
+                    <p>
+                        Create and schedule a medicine or healthcare delivery.
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <a
+                        href="/pages/deliveries/"
+                        class="filter"
+                    >
+                        ← Back to Deliveries
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DELIVERY FORM
+                 ================================================= -->
+
+            <form
+                id="deliveryForm"
+                class="card"
+                novalidate
+            >
+
+                <!-- =================================================
+                     DELIVERY INFORMATION
+                     ================================================= -->
+
+                <h2>
+                    Delivery Information
+                </h2>
+
+                <p
+                    style="
+                        color:#64748b;
+                        font-size:13px;
+                        margin-bottom:20px;
+                    "
+                >
+                    Enter the basic information for this delivery.
+                </p>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3, 1fr);
+                        gap:18px;
+                    "
+                >
+
+                    <!-- Delivery ID -->
+
+                    <div>
+
+                        <label
+                            for="deliveryId"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Delivery ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="deliveryId"
+                            name="deliveryId"
+                            placeholder="Auto-generated"
+                            readonly
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#f8fafc;"
+                        >
+
+                    </div>
+
+
+                    <!-- Delivery Type -->
+
+                    <div>
+
+                        <label
+                            for="deliveryType"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Delivery Type *
+                        </label>
+
+                        <select
+                            id="deliveryType"
+                            name="deliveryType"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="">
+                                Select delivery type
+                            </option>
+
+                            <option value="MEDICINE">
+                                Medicine Delivery
+                            </option>
+
+                            <option value="PRESCRIPTION">
+                                Prescription Delivery
+                            </option>
+
+                            <option value="MEDICAL_SUPPLY">
+                                Medical Supply
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Priority -->
+
+                    <div>
+
+                        <label
+                            for="priority"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Priority *
+                        </label>
+
+                        <select
+                            id="priority"
+                            name="priority"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="">
+                                Select priority
+                            </option>
+
+                            <option value="LOW">
+                                Low
+                            </option>
+
+                            <option value="NORMAL">
+                                Normal
+                            </option>
+
+                            <option value="HIGH">
+                                High
+                            </option>
+
+                            <option value="URGENT">
+                                Urgent
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PATIENT INFORMATION
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Patient Information
+                </h2>
+
+                <p
+                    style="
+                        color:#64748b;
+                        font-size:13px;
+                        margin-bottom:20px;
+                    "
+                >
+                    Select the patient who will receive the delivery.
+                </p>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3, 1fr);
+                        gap:18px;
+                    "
+                >
+
+                    <!-- Patient ID -->
+
+                    <div>
+
+                        <label
+                            for="patientId"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Patient ID *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="patientId"
+                            name="patientId"
+                            placeholder="Enter patient ID"
+                            required
+                            maxlength="50"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Patient Name -->
+
+                    <div>
+
+                        <label
+                            for="patientName"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Patient Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="patientName"
+                            name="patientName"
+                            placeholder="Patient full name"
+                            required
+                            maxlength="100"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Patient Phone -->
+
+                    <div>
+
+                        <label
+                            for="patientPhone"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Patient Phone *
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="patientPhone"
+                            name="patientPhone"
+                            placeholder="+250XXXXXXXXX"
+                            required
+                            maxlength="13"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PICKUP INFORMATION
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Pickup Information
+                </h2>
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3, 1fr);
+                        gap:18px;
+                    "
+                >
+
+                    <!-- Pickup Pharmacy -->
+
+                    <div>
+
+                        <label
+                            for="pickupLocation"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Pickup Location *
+                        </label>
+
+                        <select
+                            id="pickupLocation"
+                            name="pickupLocation"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="">
+                                Select pharmacy
+                            </option>
+
+                            <option value="PHARMACY">
+                                Pharmacy
+                            </option>
+
+                            <option value="HOSPITAL">
+                                Hospital
+                            </option>
+
+                            <option value="CLINIC">
+                                Clinic
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Pickup Address -->
+
+                    <div style="grid-column:2 / -1;">
+
+                        <label
+                            for="pickupAddress"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Pickup Address *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="pickupAddress"
+                            name="pickupAddress"
+                            placeholder="Enter pickup address"
+                            required
+                            maxlength="250"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     DELIVERY ADDRESS
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Delivery Destination
+                </h2>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3, 1fr);
+                        gap:18px;
+                    "
+                >
+
+                    <!-- Province -->
+
+                    <div>
+
+                        <label
+                            for="province"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Province *
+                        </label>
+
+                        <select
+                            id="province"
+                            name="province"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="">
+                                Select province
+                            </option>
+
+                            <option value="KIGALI_CITY">
+                                Kigali City
+                            </option>
+
+                            <option value="EASTERN">
+                                Eastern Province
+                            </option>
+
+                            <option value="NORTHERN">
+                                Northern Province
+                            </option>
+
+                            <option value="SOUTHERN">
+                                Southern Province
+                            </option>
+
+                            <option value="WESTERN">
+                                Western Province
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- District -->
+
+                    <div>
+
+                        <label
+                            for="district"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            District *
+                        </label>
+
+                        <select
+                            id="district"
+                            name="district"
+                            required
+                            disabled
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#f8fafc;"
+                        >
+
+                            <option value="">
+                                Select district
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Sector -->
+
+                    <div>
+
+                        <label
+                            for="sector"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Sector
+                        </label>
+
+                        <input
+                            type="text"
+                            id="sector"
+                            name="sector"
+                            placeholder="Sector"
+                            maxlength="100"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Full Address -->
+
+                    <div style="grid-column:1 / -1;">
+
+                        <label
+                            for="deliveryAddress"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Full Delivery Address *
+                        </label>
+
+                        <textarea
+                            id="deliveryAddress"
+                            name="deliveryAddress"
+                            rows="3"
+                            required
+                            maxlength="500"
+                            placeholder="Enter complete delivery address"
+                            style="width:100%;padding:12px;border:1px solid #dbe1e8;border-radius:8px;resize:vertical;"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     DELIVERY SCHEDULE
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Delivery Schedule
+                </h2>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3, 1fr);
+                        gap:18px;
+                    "
+                >
+
+                    <!-- Delivery Date -->
+
+                    <div>
+
+                        <label
+                            for="deliveryDate"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Delivery Date *
+                        </label>
+
+                        <input
+                            type="date"
+                            id="deliveryDate"
+                            name="deliveryDate"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Delivery Time -->
+
+                    <div>
+
+                        <label
+                            for="deliveryTime"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Delivery Time *
+                        </label>
+
+                        <input
+                            type="time"
+                            id="deliveryTime"
+                            name="deliveryTime"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Delivery Status -->
+
+                    <div>
+
+                        <label
+                            for="status"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Status *
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="PENDING">
+                                Pending
+                            </option>
+
+                            <option value="ASSIGNED">
+                                Assigned
+                            </option>
+
+                            <option value="IN_TRANSIT">
+                                In Transit
+                            </option>
+
+                            <option value="DELIVERED">
+                                Delivered
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     DELIVERY PERSON
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Delivery Personnel
+                </h2>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3, 1fr);
+                        gap:18px;
+                    "
+                >
+
+                    <!-- Driver -->
+
+                    <div>
+
+                        <label
+                            for="driverName"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Driver / Courier Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="driverName"
+                            name="driverName"
+                            placeholder="Driver name"
+                            maxlength="100"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Driver Phone -->
+
+                    <div>
+
+                        <label
+                            for="driverPhone"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Driver Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="driverPhone"
+                            name="driverPhone"
+                            placeholder="+250XXXXXXXXX"
+                            maxlength="13"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Vehicle -->
+
+                    <div>
+
+                        <label
+                            for="vehicleNumber"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Vehicle / Motorcycle Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="vehicleNumber"
+                            name="vehicleNumber"
+                            placeholder="Vehicle registration"
+                            maxlength="30"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;text-transform:uppercase;"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PACKAGE INFORMATION
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Package Information
+                </h2>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3, 1fr);
+                        gap:18px;
+                    "
+                >
+
+                    <!-- Package -->
+
+                    <div>
+
+                        <label
+                            for="packageDescription"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Package Description *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="packageDescription"
+                            name="packageDescription"
+                            placeholder="Medicine / medical supply"
+                            required
+                            maxlength="200"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Quantity -->
+
+                    <div>
+
+                        <label
+                            for="quantity"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Quantity *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            min="1"
+                            max="100000"
+                            step="1"
+                            required
+                            placeholder="1"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Weight -->
+
+                    <div>
+
+                        <label
+                            for="weight"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Weight (kg)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            min="0"
+                            max="1000"
+                            step="0.01"
+                            placeholder="0.00"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     NOTES
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Additional Information
+                </h2>
+
+                <div>
+
+                    <label
+                        for="notes"
+                        style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                    >
+                        Delivery Notes
+                    </label>
+
+                    <textarea
+                        id="notes"
+                        name="notes"
+                        rows="4"
+                        maxlength="1000"
+                        placeholder="Special delivery instructions..."
+                        style="width:100%;padding:12px;border:1px solid #dbe1e8;border-radius:8px;resize:vertical;"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- =================================================
+                     FORM ACTIONS
+                     ================================================= -->
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:flex-end;
+                        gap:12px;
+                        margin-top:30px;
+                        padding-top:20px;
+                        border-top:1px solid #e5e7eb;
+                    "
+                >
+
+                    <button
+                        type="reset"
+                        class="filter"
+                    >
+                        Clear
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="filter active"
+                    >
+                        🚚 Create Delivery
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.getElementById("deliveryForm");
+
+    const province = document.getElementById("province");
+    const district = document.getElementById("district");
+
+    const deliveryDate =
+        document.getElementById("deliveryDate");
+
+    const patientPhone =
+        document.getElementById("patientPhone");
+
+    const driverPhone =
+        document.getElementById("driverPhone");
+
+
+    /*
+    ============================================================
+    RWANDA DISTRICTS
+    ============================================================
+    */
+
+    const districts = {
+
+        KIGALI_CITY: [
+            "Gasabo",
+            "Kicukiro",
+            "Nyarugenge"
+        ],
+
+        EASTERN: [
+            "Bugesera",
+            "Gatsibo",
+            "Kayonza",
+            "Kirehe",
+            "Ngoma",
+            "Nyagatare",
+            "Rwamagana"
+        ],
+
+        NORTHERN: [
+            "Burera",
+            "Gakenke",
+            "Gicumbi",
+            "Musanze",
+            "Rulindo"
+        ],
+
+        SOUTHERN: [
+            "Gisagara",
+            "Huye",
+            "Kamonyi",
+            "Muhanga",
+            "Nyamagabe",
+            "Nyanza",
+            "Nyaruguru",
+            "Ruhango"
+        ],
+
+        WESTERN: [
+            "Karongi",
+            "Ngororero",
+            "Nyabihu",
+            "Nyamasheke",
+            "Rubavu",
+            "Rusizi",
+            "Rutsiro"
+        ]
+
+    };
+
+
+    /*
+    ============================================================
+    PROVINCE → DISTRICT
+    ============================================================
+    */
+
+    province.addEventListener("change", () => {
+
+        district.innerHTML =
+            '<option value="">Select district</option>';
+
+        district.disabled = true;
+
+        if (!province.value) {
+            return;
+        }
+
+        const provinceDistricts =
+            districts[province.value] || [];
+
+        provinceDistricts.forEach((name) => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = name.toUpperCase();
+
+            option.textContent = name;
+
+            district.appendChild(option);
+
+        });
+
+        district.disabled = false;
+
+    });
+
+
+    /*
+    ============================================================
+    PHONE VALIDATION
+    ============================================================
+    */
+
+    const phoneRegex =
+        /^\+250[0-9]{9}$/;
+
+
+    function validatePhone(input) {
+
+        const value =
+            input.value.trim();
+
+        if (!value) {
+            return false;
+        }
+
+        return phoneRegex.test(value);
+
+    }
+
+
+    patientPhone.addEventListener("input", () => {
+
+        patientPhone.value =
+            patientPhone.value.replace(/\s/g, "");
+
+    });
+
+
+    driverPhone.addEventListener("input", () => {
+
+        driverPhone.value =
+            driverPhone.value.replace(/\s/g, "");
+
+    });
+
+
+    /*
+    ============================================================
+    DELIVERY DATE
+    ============================================================
+    */
+
+    const today = new Date();
+
+    const yyyy =
+        today.getFullYear();
+
+    const mm =
+        String(today.getMonth() + 1)
+            .padStart(2, "0");
+
+    const dd =
+        String(today.getDate())
+            .padStart(2, "0");
+
+    const todayString =
+        `${yyyy}-${mm}-${dd}`;
+
+    deliveryDate.min = todayString;
+
+
+    /*
+    ============================================================
+    FORM SUBMISSION
+    ============================================================
+    */
+
+    form.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+
+        /*
+        ----------------------------
+        BASIC HTML VALIDATION
+        ----------------------------
+        */
+
+        if (!form.checkValidity()) {
+
+            form.reportValidity();
+
+            return;
+
+        }
+
+
+        /*
+        ----------------------------
+        PHONE
+        ----------------------------
+        */
+
+        if (!validatePhone(patientPhone)) {
+
+            alert(
+                "Patient phone must use the format +250XXXXXXXXX."
+            );
+
+            patientPhone.focus();
+
+            return;
+
+        }
+
+
+        if (
+            driverPhone.value.trim() &&
+            !validatePhone(driverPhone)
+        ) {
+
+            alert(
+                "Driver phone must use the format +250XXXXXXXXX."
+            );
+
+            driverPhone.focus();
+
+            return;
+
+        }
+
+
+        /*
+        ----------------------------
+        QUANTITY
+        ----------------------------
+        */
+
+        const quantity =
+            Number(
+                document.getElementById("quantity").value
+            );
+
+        if (
+            !Number.isInteger(quantity) ||
+            quantity < 1
+        ) {
+
+            alert(
+                "Quantity must be a whole number greater than zero."
+            );
+
+            return;
+
+        }
+
+
+        /*
+        ----------------------------
+        WEIGHT
+        ----------------------------
+        */
+
+        const weightValue =
+            document.getElementById("weight").value;
+
+        if (weightValue) {
+
+            const weight =
+                Number(weightValue);
+
+            if (
+                !Number.isFinite(weight) ||
+                weight < 0
+            ) {
+
+                alert(
+                    "Weight must be a valid positive number."
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+        ----------------------------
+        ADDRESS
+        ----------------------------
+        */
+
+        const deliveryAddress =
+            document
+                .getElementById("deliveryAddress")
+                .value
+                .trim();
+
+        if (deliveryAddress.length < 5) {
+
+            alert(
+                "Please enter a complete delivery address."
+            );
+
+            return;
+
+        }
+
+
+        /*
+        ----------------------------
+        PREPARE DATA
+        ----------------------------
+        */
+
+        const formData =
+            new FormData(form);
+
+        const data =
+            Object.fromEntries(
+                formData.entries()
+            );
+
+
+        /*
+        ----------------------------
+        REMOVE AUTO ID
+        ----------------------------
+        */
+
+        delete data.deliveryId;
+
+
+        /*
+        ----------------------------
+        SUBMIT TO SERVER
+        ----------------------------
+        */
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/deliveries",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(data)
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "Unable to create delivery."
+                );
+
+            }
+
+
+            alert(
+                "Delivery created successfully."
+            );
+
+
+            form.reset();
+
+            district.innerHTML =
+                '<option value="">Select district</option>';
+
+            district.disabled = true;
+
+
+            /*
+            Return to delivery list
+            */
+
+            window.location.href =
+                "/pages/deliveries/";
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Delivery creation error:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "An error occurred while creating the delivery."
+            );
+
+        }
+
+    });
+
+});
+
+</script>
+
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - Create Prescription</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <style>
+        .required {
+            color: #dc2626;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            min-width: 0;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .form-control {
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #dbe1e8;
+            border-radius: 8px;
+            background: #ffffff;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .form-control.invalid {
+            border-color: #dc2626;
+            background: #fff7f7;
+        }
+
+        .field-error {
+            display: none;
+            margin-top: 5px;
+            color: #dc2626;
+            font-size: 12px;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        .section-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .prescription-section {
+            margin-bottom: 5px;
+        }
+
+        .medication-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .medication-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .medication-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+        }
+
+        .medication-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .medication-number {
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .remove-medication {
+            border: 0;
+            background: #fee2e2;
+            color: #b91c1c;
+            border-radius: 7px;
+            padding: 7px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .remove-medication:hover {
+            background: #fecaca;
+        }
+
+        .add-medication {
+            border: 1px solid #2563eb;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .add-medication:hover {
+            background: #dbeafe;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            min-height: 44px;
+            padding: 0 20px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #475569;
+            border-color: #cbd5e1;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-info {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1000px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .medication-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link active">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+
+            <a href="/pages/prescriptions/">
+                ← Back to Prescriptions
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+             ================================================= -->
+
+        <section class="content">
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        📋 Create Prescription
+                    </h1>
+
+                    <p>
+                        Create a new patient prescription in MediLink.
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <a
+                        href="/pages/prescriptions/"
+                        class="filter"
+                    >
+                        ← Back to Prescriptions
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM
+                 ================================================= -->
+
+            <form
+                id="prescriptionForm"
+                class="card"
+                novalidate
+            >
+
+                <!-- SERVER RESPONSE -->
+
+                <div
+                    id="formAlert"
+                    class="alert"
+                    role="alert"
+                ></div>
+
+
+                <!-- =================================================
+                     PRESCRIPTION INFORMATION
+                     ================================================= -->
+
+                <div class="prescription-section">
+
+                    <h2>
+                        Prescription Information
+                    </h2>
+
+                    <p class="section-description">
+                        Enter the patient, prescriber and prescription details.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Prescription Number -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="prescriptionNumber"
+                            >
+                                Prescription Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="prescriptionNumber"
+                                name="prescriptionNumber"
+                                class="form-control"
+                                placeholder="Auto-generated"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <!-- Patient -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="patientId"
+                            >
+                                Patient <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="patientId"
+                                name="patientId"
+                                class="form-control"
+                                placeholder="Enter patient ID"
+                                required
+                                maxlength="100"
+                            >
+
+                            <div
+                                id="patientIdError"
+                                class="field-error"
+                            >
+                                Patient ID is required.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Prescriber -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="prescriber"
+                            >
+                                Prescriber <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="prescriber"
+                                name="prescriber"
+                                class="form-control"
+                                placeholder="Doctor / healthcare professional"
+                                required
+                                maxlength="100"
+                            >
+
+                            <div
+                                id="prescriberError"
+                                class="field-error"
+                            >
+                                Prescriber name is required.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Prescription Date -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="prescriptionDate"
+                            >
+                                Prescription Date <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="prescriptionDate"
+                                name="prescriptionDate"
+                                class="form-control"
+                                required
+                            >
+
+                            <div
+                                id="prescriptionDateError"
+                                class="field-error"
+                            >
+                                Prescription date cannot be in the future.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Priority -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="priority"
+                            >
+                                Priority <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="priority"
+                                name="priority"
+                                class="form-control"
+                                required
+                            >
+
+                                <option value="">
+                                    Select priority
+                                </option>
+
+                                <option value="NORMAL">
+                                    Normal
+                                </option>
+
+                                <option value="URGENT">
+                                    Urgent
+                                </option>
+
+                                <option value="EMERGENCY">
+                                    Emergency
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Status -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="status"
+                            >
+                                Status
+                            </label>
+
+                            <select
+                                id="status"
+                                name="status"
+                                class="form-control"
+                            >
+
+                                <option value="ACTIVE">
+                                    Active
+                                </option>
+
+                                <option value="PENDING">
+                                    Pending
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Diagnosis -->
+
+                        <div class="form-group full">
+
+                            <label
+                                class="form-label"
+                                for="diagnosis"
+                            >
+                                Diagnosis / Clinical Reason
+                            </label>
+
+                            <textarea
+                                id="diagnosis"
+                                name="diagnosis"
+                                class="form-control"
+                                rows="3"
+                                maxlength="1000"
+                                placeholder="Enter diagnosis or reason for prescription"
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+
+                <!-- =================================================
+                     MEDICATIONS
+                     ================================================= -->
+
+                <div class="prescription-section">
+
+                    <div class="medication-header">
+
+                        <div>
+
+                            <h2>
+                                Prescribed Medicines
+                            </h2>
+
+                            <p class="section-description">
+                                Add every medicine included in this prescription.
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="addMedication"
+                            class="add-medication"
+                        >
+                            + Add Medicine
+                        </button>
+
+                    </div>
+
+
+                    <div id="medicationContainer">
+
+                        <!-- MEDICATION 1 -->
+
+                        <div
+                            class="medication-card"
+                            data-medication="1"
+                        >
+
+                            <div class="medication-card-header">
+
+                                <span class="medication-number">
+                                    Medicine 1
+                                </span>
+
+                                <button
+                                    type="button"
+                                    class="remove-medication"
+                                    style="display:none;"
+                                >
+                                    Remove
+                                </button>
+
+                            </div>
+
+
+                            <div class="form-grid">
+
+                                <!-- Medicine -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Medicine <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="medicineName[]"
+                                        class="form-control medicine-name"
+                                        placeholder="Medicine name"
+                                        required
+                                        maxlength="150"
+                                    >
+
+                                </div>
+
+
+                                <!-- Strength -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Strength
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="strength[]"
+                                        class="form-control"
+                                        placeholder="e.g. 500 mg"
+                                        maxlength="50"
+                                    >
+
+                                </div>
+
+
+                                <!-- Form -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Medicine Form
+                                    </label>
+
+                                    <select
+                                        name="medicineForm[]"
+                                        class="form-control"
+                                    >
+
+                                        <option value="">
+                                            Select form
+                                        </option>
+
+                                        <option value="TABLET">
+                                            Tablet
+                                        </option>
+
+                                        <option value="CAPSULE">
+                                            Capsule
+                                        </option>
+
+                                        <option value="SYRUP">
+                                            Syrup
+                                        </option>
+
+                                        <option value="INJECTION">
+                                            Injection
+                                        </option>
+
+                                        <option value="CREAM">
+                                            Cream
+                                        </option>
+
+                                        <option value="OINTMENT">
+                                            Ointment
+                                        </option>
+
+                                        <option value="DROPS">
+                                            Drops
+                                        </option>
+
+                                        <option value="INHALER">
+                                            Inhaler
+                                        </option>
+
+                                        <option value="OTHER">
+                                            Other
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- Dosage -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Dose <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="dose[]"
+                                        class="form-control"
+                                        placeholder="e.g. 1 tablet"
+                                        required
+                                        maxlength="100"
+                                    >
+
+                                </div>
+
+
+                                <!-- Frequency -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Frequency <span class="required">*</span>
+                                    </label>
+
+                                    <select
+                                        name="frequency[]"
+                                        class="form-control"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Select frequency
+                                        </option>
+
+                                        <option value="ONCE_DAILY">
+                                            Once daily
+                                        </option>
+
+                                        <option value="TWICE_DAILY">
+                                            Twice daily
+                                        </option>
+
+                                        <option value="THREE_TIMES_DAILY">
+                                            Three times daily
+                                        </option>
+
+                                        <option value="FOUR_TIMES_DAILY">
+                                            Four times daily
+                                        </option>
+
+                                        <option value="EVERY_4_HOURS">
+                                            Every 4 hours
+                                        </option>
+
+                                        <option value="EVERY_6_HOURS">
+                                            Every 6 hours
+                                        </option>
+
+                                        <option value="EVERY_8_HOURS">
+                                            Every 8 hours
+                                        </option>
+
+                                        <option value="EVERY_12_HOURS">
+                                            Every 12 hours
+                                        </option>
+
+                                        <option value="AS_NEEDED">
+                                            As needed
+                                        </option>
+
+                                        <option value="OTHER">
+                                            Other
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- Duration -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Duration <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        name="duration[]"
+                                        class="form-control duration"
+                                        placeholder="Number"
+                                        min="1"
+                                        max="3650"
+                                        step="1"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- Duration Unit -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Duration Unit
+                                    </label>
+
+                                    <select
+                                        name="durationUnit[]"
+                                        class="form-control"
+                                    >
+
+                                        <option value="DAYS">
+                                            Days
+                                        </option>
+
+                                        <option value="WEEKS">
+                                            Weeks
+                                        </option>
+
+                                        <option value="MONTHS">
+                                            Months
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- Quantity -->
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Quantity
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        name="quantity[]"
+                                        class="form-control quantity"
+                                        placeholder="Quantity"
+                                        min="1"
+                                        max="100000"
+                                        step="1"
+                                    >
+
+                                </div>
+
+
+                                <!-- Instructions -->
+
+                                <div class="form-group full">
+
+                                    <label class="form-label">
+                                        Instructions
+                                    </label>
+
+                                    <textarea
+                                        name="instructions[]"
+                                        class="form-control"
+                                        rows="2"
+                                        maxlength="500"
+                                        placeholder="e.g. Take after meals with water"
+                                    ></textarea>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+
+                <!-- =================================================
+                     ADDITIONAL INSTRUCTIONS
+                     ================================================= -->
+
+                <div class="prescription-section">
+
+                    <h2>
+                        Additional Instructions
+                    </h2>
+
+                    <p class="section-description">
+                        Add any additional instructions relevant to the prescription.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <div class="form-group full">
+
+                            <label
+                                class="form-label"
+                                for="additionalInstructions"
+                            >
+                                Instructions
+                            </label>
+
+                            <textarea
+                                id="additionalInstructions"
+                                name="additionalInstructions"
+                                class="form-control"
+                                rows="4"
+                                maxlength="2000"
+                                placeholder="Additional prescription instructions..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="refills"
+                            >
+                                Refills
+                            </label>
+
+                            <input
+                                type="number"
+                                id="refills"
+                                name="refills"
+                                class="form-control"
+                                min="0"
+                                max="12"
+                                step="1"
+                                value="0"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="validUntil"
+                            >
+                                Valid Until
+                            </label>
+
+                            <input
+                                type="date"
+                                id="validUntil"
+                                name="validUntil"
+                                class="form-control"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="pharmacy"
+                            >
+                                Preferred Pharmacy
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pharmacy"
+                                name="pharmacy"
+                                class="form-control"
+                                placeholder="Pharmacy name"
+                                maxlength="150"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACTIONS
+                     ================================================= -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="/pages/prescriptions/"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="reset"
+                        id="clearButton"
+                        class="btn btn-secondary"
+                    >
+                        Clear
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="submitButton"
+                        class="btn btn-primary"
+                    >
+                        Create Prescription
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+
+<script>
+/* ============================================================
+   PRESCRIPTION FORM
+   ============================================================ */
+
+(function () {
+
+    "use strict";
+
+    const form = document.getElementById("prescriptionForm");
+    const container = document.getElementById("medicationContainer");
+    const addButton = document.getElementById("addMedication");
+    const submitButton = document.getElementById("submitButton");
+    const alertBox = document.getElementById("formAlert");
+
+    const prescriptionDate =
+        document.getElementById("prescriptionDate");
+
+    const validUntil =
+        document.getElementById("validUntil");
+
+
+    /* ========================================================
+       TODAY
+       ======================================================== */
+
+    function getToday() {
+
+        const today = new Date();
+
+        const year = today.getFullYear();
+
+        const month = String(
+            today.getMonth() + 1
+        ).padStart(2, "0");
+
+        const day = String(
+            today.getDate()
+        ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+
+    const today = getToday();
+
+    prescriptionDate.max = today;
+
+    prescriptionDate.value = today;
+
+
+    /* ========================================================
+       VALID UNTIL
+       ======================================================== */
+
+    validUntil.min = today;
+
+
+    validUntil.addEventListener(
+        "change",
+        function () {
+
+            if (
+                this.value &&
+                this.value < prescriptionDate.value
+            ) {
+
+                this.setCustomValidity(
+                    "Valid until date cannot be before prescription date."
+                );
+
+            } else {
+
+                this.setCustomValidity("");
+
+            }
+
+        }
+    );
+
+
+    prescriptionDate.addEventListener(
+        "change",
+        function () {
+
+            validUntil.min = this.value || today;
+
+            if (
+                validUntil.value &&
+                validUntil.value < this.value
+            ) {
+
+                validUntil.value = "";
+
+            }
+
+        }
+    );
+
+
+    /* ========================================================
+       ALERT
+       ======================================================== */
+
+    function showAlert(message, type) {
+
+        alertBox.textContent = message;
+
+        alertBox.className =
+            "alert show " +
+            (type === "success"
+                ? "alert-success"
+                : "alert-error");
+
+        alertBox.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+
+    function clearAlert() {
+
+        alertBox.textContent = "";
+
+        alertBox.className = "alert";
+
+    }
+
+
+    /* ========================================================
+       MEDICATION NUMBERING
+       ======================================================== */
+
+    function updateMedicationNumbers() {
+
+        const cards =
+            container.querySelectorAll(".medication-card");
+
+        cards.forEach(function (card, index) {
+
+            const number =
+                card.querySelector(".medication-number");
+
+            if (number) {
+
+                number.textContent =
+                    `Medicine ${index + 1}`;
+
+            }
+
+            const removeButton =
+                card.querySelector(".remove-medication");
+
+            if (removeButton) {
+
+                removeButton.style.display =
+                    cards.length > 1
+                        ? "inline-block"
+                        : "none";
+
+            }
+
+        });
+
+    }
+
+
+    /* ========================================================
+       ADD MEDICATION
+       ======================================================== */
+
+    addButton.addEventListener(
+        "click",
+        function () {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "medication-card";
+
+            card.dataset.medication = "new";
+
+            card.innerHTML = `
+
+                <div class="medication-card-header">
+
+                    <span class="medication-number">
+                        Medicine
+                    </span>
+
+                    <button
+                        type="button"
+                        class="remove-medication"
+                    >
+                        Remove
+                    </button>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Medicine <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="medicineName[]"
+                            class="form-control medicine-name"
+                            placeholder="Medicine name"
+                            maxlength="150"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Strength
+                        </label>
+
+                        <input
+                            type="text"
+                            name="strength[]"
+                            class="form-control"
+                            placeholder="e.g. 500 mg"
+                            maxlength="50"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Medicine Form
+                        </label>
+
+                        <select
+                            name="medicineForm[]"
+                            class="form-control"
+                        >
+
+                            <option value="">
+                                Select form
+                            </option>
+
+                            <option value="TABLET">
+                                Tablet
+                            </option>
+
+                            <option value="CAPSULE">
+                                Capsule
+                            </option>
+
+                            <option value="SYRUP">
+                                Syrup
+                            </option>
+
+                            <option value="INJECTION">
+                                Injection
+                            </option>
+
+                            <option value="CREAM">
+                                Cream
+                            </option>
+
+                            <option value="OINTMENT">
+                                Ointment
+                            </option>
+
+                            <option value="DROPS">
+                                Drops
+                            </option>
+
+                            <option value="INHALER">
+                                Inhaler
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Dose <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="dose[]"
+                            class="form-control"
+                            placeholder="e.g. 1 tablet"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Frequency <span class="required">*</span>
+                        </label>
+
+                        <select
+                            name="frequency[]"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select frequency
+                            </option>
+
+                            <option value="ONCE_DAILY">
+                                Once daily
+                            </option>
+
+                            <option value="TWICE_DAILY">
+                                Twice daily
+                            </option>
+
+                            <option value="THREE_TIMES_DAILY">
+                                Three times daily
+                            </option>
+
+                            <option value="FOUR_TIMES_DAILY">
+                                Four times daily
+                            </option>
+
+                            <option value="EVERY_4_HOURS">
+                                Every 4 hours
+                            </option>
+
+                            <option value="EVERY_6_HOURS">
+                                Every 6 hours
+                            </option>
+
+                            <option value="EVERY_8_HOURS">
+                                Every 8 hours
+                            </option>
+
+                            <option value="EVERY_12_HOURS">
+                                Every 12 hours
+                            </option>
+
+                            <option value="AS_NEEDED">
+                                As needed
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Duration <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            name="duration[]"
+                            class="form-control duration"
+                            placeholder="Number"
+                            min="1"
+                            max="3650"
+                            step="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Duration Unit
+                        </label>
+
+                        <select
+                            name="durationUnit[]"
+                            class="form-control"
+                        >
+
+                            <option value="DAYS">
+                                Days
+                            </option>
+
+                            <option value="WEEKS">
+                                Weeks
+                            </option>
+
+                            <option value="MONTHS">
+                                Months
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            name="quantity[]"
+                            class="form-control quantity"
+                            placeholder="Quantity"
+                            min="1"
+                            max="100000"
+                            step="1"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Instructions
+                        </label>
+
+                        <textarea
+                            name="instructions[]"
+                            class="form-control"
+                            rows="2"
+                            maxlength="500"
+                            placeholder="e.g. Take after meals with water"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+            `;
+
+
+            container.appendChild(card);
+
+            updateMedicationNumbers();
+
+            const medicineInput =
+                card.querySelector(".medicine-name");
+
+            if (medicineInput) {
+                medicineInput.focus();
+            }
+
+        }
+    );
+
+
+    /* ========================================================
+       REMOVE MEDICATION
+       ======================================================== */
+
+    container.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                !event.target.classList.contains(
+                    "remove-medication"
+                )
+            ) {
+                return;
+            }
+
+            const cards =
+                container.querySelectorAll(
+                    ".medication-card"
+                );
+
+            if (cards.length <= 1) {
+
+                showAlert(
+                    "At least one medicine is required.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            const card =
+                event.target.closest(
+                    ".medication-card"
+                );
+
+            if (card) {
+
+                card.remove();
+
+                updateMedicationNumbers();
+
+            }
+
+        }
+    );
+
+
+    /* ========================================================
+       BASIC TEXT CLEANING
+       ======================================================== */
+
+    function cleanText(value) {
+
+        return String(value || "")
+            .trim()
+            .replace(/\s+/g, " ");
+
+    }
+
+
+    /* ========================================================
+       VALIDATE DATE
+       ======================================================== */
+
+    function validateDates() {
+
+        const prescription =
+            prescriptionDate.value;
+
+        const valid =
+            validUntil.value;
+
+
+        if (!prescription) {
+
+            return "Prescription date is required.";
+
+        }
+
+
+        if (prescription > today) {
+
+            return "Prescription date cannot be in the future.";
+
+        }
+
+
+        if (
+            valid &&
+            valid < prescription
+        ) {
+
+            return "Valid until date cannot be before prescription date.";
+
+        }
+
+
+        return null;
+
+    }
+
+
+    /* ========================================================
+       VALIDATE MEDICATIONS
+       ======================================================== */
+
+    function validateMedications() {
+
+        const cards =
+            container.querySelectorAll(
+                ".medication-card"
+            );
+
+
+        if (cards.length === 0) {
+
+            return "At least one medicine is required.";
+
+        }
+
+
+        for (
+            let i = 0;
+            i < cards.length;
+            i++
+        ) {
+
+            const card = cards[i];
+
+            const medicine =
+                card.querySelector(
+                    '[name="medicineName[]"]'
+                );
+
+            const dose =
+                card.querySelector(
+                    '[name="dose[]"]'
+                );
+
+            const frequency =
+                card.querySelector(
+                    '[name="frequency[]"]'
+                );
+
+            const duration =
+                card.querySelector(
+                    '[name="duration[]"]'
+                );
+
+
+            if (
+                !medicine ||
+                !cleanText(medicine.value)
+            ) {
+
+                return `Medicine ${i + 1} name is required.`;
+
+            }
+
+
+            if (
+                !dose ||
+                !cleanText(dose.value)
+            ) {
+
+                return `Dose is required for Medicine ${i + 1}.`;
+
+            }
+
+
+            if (
+                !frequency ||
+                !frequency.value
+            ) {
+
+                return `Frequency is required for Medicine ${i + 1}.`;
+
+            }
+
+
+            if (
+                !duration ||
+                !duration.value ||
+                Number(duration.value) < 1
+            ) {
+
+                return `A valid duration is required for Medicine ${i + 1}.`;
+
+            }
+
+
+            const quantity =
+                card.querySelector(
+                    '[name="quantity[]"]'
+                );
+
+
+            if (
+                quantity &&
+                quantity.value &&
+                Number(quantity.value) < 1
+            ) {
+
+                return `Quantity must be greater than zero for Medicine ${i + 1}.`;
+
+            }
+
+        }
+
+
+        return null;
+
+    }
+
+
+    /* ========================================================
+       COLLECT MEDICATIONS
+       ======================================================== */
+
+    function collectMedications() {
+
+        const cards =
+            container.querySelectorAll(
+                ".medication-card"
+            );
+
+        const medications = [];
+
+
+        cards.forEach(function (card) {
+
+            const getValue =
+                function (selector) {
+
+                    const element =
+                        card.querySelector(selector);
+
+                    return element
+                        ? cleanText(element.value)
+                        : "";
+
+                };
+
+
+            const getRawValue =
+                function (selector) {
+
+                    const element =
+                        card.querySelector(selector);
+
+                    return element
+                        ? element.value
+                        : "";
+
+                };
+
+
+            medications.push({
+
+                medicineName:
+                    getValue('[name="medicineName[]"]'),
+
+                strength:
+                    getValue('[name="strength[]"]'),
+
+                medicineForm:
+                    getRawValue('[name="medicineForm[]"]'),
+
+                dose:
+                    getValue('[name="dose[]"]'),
+
+                frequency:
+                    getRawValue('[name="frequency[]"]'),
+
+                duration:
+                    Number(
+                        getRawValue(
+                            '[name="duration[]"]'
+                        )
+                    ),
+
+                durationUnit:
+                    getRawValue(
+                        '[name="durationUnit[]"]'
+                    ),
+
+                quantity:
+                    getRawValue(
+                        '[name="quantity[]"]'
+                    )
+                    ? Number(
+                        getRawValue(
+                            '[name="quantity[]"]'
+                        )
+                    )
+                    : null,
+
+                instructions:
+                    getValue(
+                        '[name="instructions[]"]'
+                    )
+
+            });
+
+        });
+
+
+        return medications;
+
+    }
+
+
+    /* ========================================================
+       SUBMIT
+       ======================================================== */
+
+    form.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearAlert();
+
+
+            /* Browser validation */
+
+            if (!form.checkValidity()) {
+
+                form.reportValidity();
+
+                return;
+
+            }
+
+
+            /* Dates */
+
+            const dateError =
+                validateDates();
+
+            if (dateError) {
+
+                showAlert(
+                    dateError,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* Required main fields */
+
+            const patientId =
+                cleanText(
+                    document.getElementById(
+                        "patientId"
+                    ).value
+                );
+
+            const prescriber =
+                cleanText(
+                    document.getElementById(
+                        "prescriber"
+                    ).value
+                );
+
+            const priority =
+                document.getElementById(
+                    "priority"
+                ).value;
+
+
+            if (!patientId) {
+
+                showAlert(
+                    "Patient is required.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (!prescriber) {
+
+                showAlert(
+                    "Prescriber is required.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (!priority) {
+
+                showAlert(
+                    "Please select prescription priority.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* Medications */
+
+            const medicationError =
+                validateMedications();
+
+            if (medicationError) {
+
+                showAlert(
+                    medicationError,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* =================================================
+               BUILD REQUEST
+               ================================================= */
+
+            const payload = {
+
+                patientId:
+
+                    patientId,
+
+                prescriber:
+
+                    prescriber,
+
+                prescriptionDate:
+
+                    prescriptionDate.value,
+
+                priority:
+
+                    priority,
+
+                status:
+
+                    document.getElementById(
+                        "status"
+                    ).value,
+
+                diagnosis:
+
+                    cleanText(
+                        document.getElementById(
+                            "diagnosis"
+                        ).value
+                    ),
+
+                medications:
+
+                    collectMedications(),
+
+                additionalInstructions:
+
+                    cleanText(
+                        document.getElementById(
+                            "additionalInstructions"
+                        ).value
+                    ),
+
+                refills:
+
+                    Number(
+                        document.getElementById(
+                            "refills"
+                        ).value || 0
+                    ),
+
+                validUntil:
+
+                    validUntil.value || null,
+
+                pharmacy:
+
+                    cleanText(
+                        document.getElementById(
+                            "pharmacy"
+                        ).value
+                    )
+
+            };
+
+
+            /* =================================================
+               SUBMIT TO SERVER
+               ================================================= */
+
+            submitButton.disabled = true;
+
+            submitButton.textContent =
+                "Creating...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/prescriptions",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    payload
+                                )
+                        }
+                    );
+
+
+                let result = {};
+
+                try {
+
+                    result =
+                        await response.json();
+
+                } catch (jsonError) {
+
+                    result = {};
+
+                }
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to create prescription."
+                    );
+
+                }
+
+
+                showAlert(
+                    result.message ||
+                    "Prescription created successfully.",
+                    "success"
+                );
+
+
+                /*
+                 * If the backend returns a prescription
+                 * number, display it.
+                 */
+
+                if (
+                    result.prescription &&
+                    result.prescription.prescriptionNumber
+                ) {
+
+                    document.getElementById(
+                        "prescriptionNumber"
+                    ).value =
+                        result.prescription.prescriptionNumber;
+
+                }
+
+
+                /*
+                 * Redirect after successful creation.
+                 */
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "/pages/prescriptions/";
+
+                    },
+                    1200
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Prescription error:",
+                    error
+                );
+
+
+                showAlert(
+                    error.message ||
+                    "Failed to create prescription.",
+                    "error"
+                );
+
+
+                submitButton.disabled = false;
+
+                submitButton.textContent =
+                    "Create Prescription";
+
+            }
+
+        }
+    );
+
+
+    /* ========================================================
+       CLEAR FORM
+       ======================================================== */
+
+    form.addEventListener(
+        "reset",
+        function () {
+
+            setTimeout(
+                function () {
+
+                    prescriptionDate.value =
+                        today;
+
+                    validUntil.value = "";
+
+                    /*
+                     * Keep only first medicine.
+                     */
+
+                    const cards =
+                        container.querySelectorAll(
+                            ".medication-card"
+                        );
+
+                    cards.forEach(
+                        function (card, index) {
+
+                            if (index > 0) {
+                                card.remove();
+                            }
+
+                        }
+                    );
+
+
+                    updateMedicationNumbers();
+
+                    clearAlert();
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Create Prescription";
+
+                },
+                0
+            );
+
+        }
+    );
+
+
+    /* ========================================================
+       INITIALIZE
+       ======================================================== */
+
+    updateMedicationNumbers();
+
+})();
+</script>
+
+</body>
+</html>

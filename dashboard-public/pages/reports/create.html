@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - Create Report</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/dashboard.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+
+                <h2>MediLink</h2>
+
+                <small>
+                    Smart Healthcare System
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a
+                href="/pages/reports/"
+                class="nav-link active"
+            >
+                📊 Reports
+            </a>
+
+            <a
+                href="/pages/analytics/"
+                class="nav-link"
+            >
+                📈 Analytics
+            </a>
+
+            <a
+                href="/pages/settings/"
+                class="nav-link"
+            >
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+
+        <div class="logout">
+
+            <a href="/pages/reports/">
+                ← Back to Reports
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        📊 Generate Report
+                    </h1>
+
+                    <p>
+                        Create a healthcare report from MediLink records.
+                    </p>
+
+                </div>
+
+                <a
+                    href="/pages/reports/"
+                    class="filter"
+                >
+                    ← Back
+                </a>
+
+            </div>
+
+
+            <form
+                id="createReportForm"
+                class="card"
+            >
+
+                <h2>
+                    Report Information
+                </h2>
+
+                <p
+                    style="
+                        color:#64748b;
+                        font-size:13px;
+                        margin-bottom:25px;
+                    "
+                >
+                    Choose the information you want to analyze.
+                </p>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(2,1fr);
+                        gap:20px;
+                    "
+                >
+
+                    <div>
+
+                        <label
+                            for="type"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Report Type *
+                        </label>
+
+                        <select
+                            id="type"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                            <option value="">
+                                Select report type
+                            </option>
+
+                            <option value="PATIENTS">
+                                Patients
+                            </option>
+
+                            <option value="PHARMACIES">
+                                Pharmacies
+                            </option>
+
+                            <option value="MEDICINES">
+                                Medicines
+                            </option>
+
+                            <option value="INVENTORY">
+                                Inventory
+                            </option>
+
+                            <option value="PRESCRIPTIONS">
+                                Prescriptions
+                            </option>
+
+                            <option value="APPOINTMENTS">
+                                Appointments
+                            </option>
+
+                            <option value="HOSPITALS">
+                                Hospitals
+                            </option>
+
+                            <option value="LABORATORY">
+                                Laboratory
+                            </option>
+
+                            <option value="DELIVERIES">
+                                Deliveries
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label
+                            for="format"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Output Format
+                        </label>
+
+                        <select
+                            id="format"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                            <option value="VIEW">
+                                View Online
+                            </option>
+
+                            <option value="CSV">
+                                CSV
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label
+                            for="startDate"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Start Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="startDate"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label
+                            for="endDate"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            End Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="endDate"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:flex-end;
+                        gap:12px;
+                        margin-top:30px;
+                    "
+                >
+
+                    <a
+                        href="/pages/reports/"
+                        class="filter"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="filter active"
+                    >
+                        Generate Report
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+document
+    .getElementById("createReportForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const type =
+            document.getElementById("type").value;
+
+        const startDate =
+            document.getElementById("startDate").value;
+
+        const endDate =
+            document.getElementById("endDate").value;
+
+
+        if (!type) {
+
+            alert("Please select a report type.");
+
+            return;
+
+        }
+
+
+        if (
+            startDate &&
+            endDate &&
+            startDate > endDate
+        ) {
+
+            alert(
+                "Start date cannot be after end date."
+            );
+
+            return;
+
+        }
+
+
+        const params =
+            new URLSearchParams();
+
+        params.set("type", type);
+
+        if (startDate) {
+            params.set("startDate", startDate);
+        }
+
+        if (endDate) {
+            params.set("endDate", endDate);
+        }
+
+
+        window.location.href =
+            `/pages/reports/?${params.toString()}`;
+
+    });
+
+</script>
+
+</body>
+</html>

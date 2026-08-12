@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - Create Analytics</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/dashboard.css"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+
+                <small>
+                    Smart Healthcare System
+                </small>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a
+                href="/pages/reports/"
+                class="nav-link"
+            >
+                📊 Reports
+            </a>
+
+            <a
+                href="/pages/analytics/"
+                class="nav-link active"
+            >
+                📈 Analytics
+            </a>
+
+            <a
+                href="/pages/settings/"
+                class="nav-link"
+            >
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+
+        <div class="logout">
+
+            <a href="/pages/analytics/">
+                ← Back to Analytics
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             CONTENT
+             ===================================================== -->
+
+        <section class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        📈 Create Analytics
+                    </h1>
+
+                    <p>
+                        Configure a new MediLink analytics view.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <a
+                        href="/pages/analytics/"
+                        class="filter"
+                    >
+                        ← Back to Analytics
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ANALYTICS CONFIGURATION
+                 ================================================= -->
+
+            <form
+                id="analyticsForm"
+                class="card"
+            >
+
+                <h2>
+                    Analytics Configuration
+                </h2>
+
+                <p
+                    style="
+                        color:#64748b;
+                        font-size:13px;
+                        margin-bottom:25px;
+                    "
+                >
+                    Select the healthcare information you want
+                    to analyze.
+                </p>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3,1fr);
+                        gap:18px;
+                    "
+                >
+
+
+                    <!-- Analytics Type -->
+
+                    <div>
+
+                        <label
+                            for="analyticsType"
+                            style="
+                                display:block;
+                                margin-bottom:7px;
+                                font-weight:600;
+                                font-size:13px;
+                            "
+                        >
+                            Analytics Type *
+                        </label>
+
+
+                        <select
+                            id="analyticsType"
+                            name="analyticsType"
+                            required
+                            style="
+                                width:100%;
+                                height:44px;
+                                padding:0 12px;
+                                border:1px solid #dbe1e8;
+                                border-radius:8px;
+                                background:#fff;
+                            "
+                        >
+
+                            <option value="">
+                                Select analytics
+                            </option>
+
+                            <option value="PATIENTS">
+                                Patient Analytics
+                            </option>
+
+                            <option value="PHARMACIES">
+                                Pharmacy Analytics
+                            </option>
+
+                            <option value="MEDICINES">
+                                Medicine Analytics
+                            </option>
+
+                            <option value="INVENTORY">
+                                Inventory Analytics
+                            </option>
+
+                            <option value="PRESCRIPTIONS">
+                                Prescription Analytics
+                            </option>
+
+                            <option value="APPOINTMENTS">
+                                Appointment Analytics
+                            </option>
+
+                            <option value="HOSPITALS">
+                                Hospital Analytics
+                            </option>
+
+                            <option value="LABORATORY">
+                                Laboratory Analytics
+                            </option>
+
+                            <option value="DELIVERIES">
+                                Delivery Analytics
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Period -->
+
+                    <div>
+
+                        <label
+                            for="period"
+                            style="
+                                display:block;
+                                margin-bottom:7px;
+                                font-weight:600;
+                                font-size:13px;
+                            "
+                        >
+                            Analysis Period *
+                        </label>
+
+
+                        <select
+                            id="period"
+                            name="period"
+                            required
+                            style="
+                                width:100%;
+                                height:44px;
+                                padding:0 12px;
+                                border:1px solid #dbe1e8;
+                                border-radius:8px;
+                                background:#fff;
+                            "
+                        >
+
+                            <option value="">
+                                Select period
+                            </option>
+
+                            <option value="TODAY">
+                                Today
+                            </option>
+
+                            <option value="WEEK">
+                                This Week
+                            </option>
+
+                            <option value="MONTH">
+                                This Month
+                            </option>
+
+                            <option value="QUARTER">
+                                This Quarter
+                            </option>
+
+                            <option value="YEAR">
+                                This Year
+                            </option>
+
+                            <option value="CUSTOM">
+                                Custom Range
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Group By -->
+
+                    <div>
+
+                        <label
+                            for="groupBy"
+                            style="
+                                display:block;
+                                margin-bottom:7px;
+                                font-weight:600;
+                                font-size:13px;
+                            "
+                        >
+                            Group By
+                        </label>
+
+
+                        <select
+                            id="groupBy"
+                            name="groupBy"
+                            style="
+                                width:100%;
+                                height:44px;
+                                padding:0 12px;
+                                border:1px solid #dbe1e8;
+                                border-radius:8px;
+                                background:#fff;
+                            "
+                        >
+
+                            <option value="DAY">
+                                Day
+                            </option>
+
+                            <option value="WEEK">
+                                Week
+                            </option>
+
+                            <option value="MONTH">
+                                Month
+                            </option>
+
+                            <option value="YEAR">
+                                Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CUSTOM DATE RANGE -->
+
+                <div
+                    id="customDates"
+                    style="
+                        display:none;
+                        margin-top:20px;
+                        padding:20px;
+                        border:1px solid #e5e7eb;
+                        border-radius:10px;
+                        background:#f8fafc;
+                    "
+                >
+
+                    <h3
+                        style="
+                            margin-top:0;
+                            margin-bottom:15px;
+                        "
+                    >
+                        Custom Date Range
+                    </h3>
+
+
+                    <div
+                        style="
+                            display:grid;
+                            grid-template-columns:repeat(2,1fr);
+                            gap:18px;
+                        "
+                    >
+
+                        <div>
+
+                            <label
+                                for="startDate"
+                                style="
+                                    display:block;
+                                    margin-bottom:7px;
+                                    font-weight:600;
+                                    font-size:13px;
+                                "
+                            >
+                                Start Date
+                            </label>
+
+
+                            <input
+                                type="date"
+                                id="startDate"
+                                name="startDate"
+                                style="
+                                    width:100%;
+                                    height:44px;
+                                    padding:0 12px;
+                                    border:1px solid #dbe1e8;
+                                    border-radius:8px;
+                                "
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label
+                                for="endDate"
+                                style="
+                                    display:block;
+                                    margin-bottom:7px;
+                                    font-weight:600;
+                                    font-size:13px;
+                                "
+                            >
+                                End Date
+                            </label>
+
+
+                            <input
+                                type="date"
+                                id="endDate"
+                                name="endDate"
+                                style="
+                                    width:100%;
+                                    height:44px;
+                                    padding:0 12px;
+                                    border:1px solid #dbe1e8;
+                                    border-radius:8px;
+                                "
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     METRICS
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+
+                <h2>
+                    Metrics
+                </h2>
+
+
+                <p
+                    style="
+                        color:#64748b;
+                        font-size:13px;
+                        margin-bottom:20px;
+                    "
+                >
+                    Select the measurements that should appear
+                    in the analytics.
+                </p>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(3,1fr);
+                        gap:15px;
+                    "
+                >
+
+                    <label
+                        style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            padding:15px;
+                            border:1px solid #e5e7eb;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+
+                        <input
+                            type="checkbox"
+                            name="metrics"
+                            value="TOTAL"
+                            checked
+                        >
+
+                        <span>
+                            Total Records
+                        </span>
+
+                    </label>
+
+
+                    <label
+                        style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            padding:15px;
+                            border:1px solid #e5e7eb;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+
+                        <input
+                            type="checkbox"
+                            name="metrics"
+                            value="ACTIVE"
+                        >
+
+                        <span>
+                            Active Records
+                        </span>
+
+                    </label>
+
+
+                    <label
+                        style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            padding:15px;
+                            border:1px solid #e5e7eb;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+
+                        <input
+                            type="checkbox"
+                            name="metrics"
+                            value="NEW"
+                        >
+
+                        <span>
+                            New Records
+                        </span>
+
+                    </label>
+
+
+                    <label
+                        style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            padding:15px;
+                            border:1px solid #e5e7eb;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+
+                        <input
+                            type="checkbox"
+                            name="metrics"
+                            value="COMPLETED"
+                        >
+
+                        <span>
+                            Completed
+                        </span>
+
+                    </label>
+
+
+                    <label
+                        style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            padding:15px;
+                            border:1px solid #e5e7eb;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+
+                        <input
+                            type="checkbox"
+                            name="metrics"
+                            value="PENDING"
+                        >
+
+                        <span>
+                            Pending
+                        </span>
+
+                    </label>
+
+
+                    <label
+                        style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            padding:15px;
+                            border:1px solid #e5e7eb;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+
+                        <input
+                            type="checkbox"
+                            name="metrics"
+                            value="ALERTS"
+                        >
+
+                        <span>
+                            Alerts
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- =================================================
+                     DISPLAY
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+
+                <h2>
+                    Display Options
+                </h2>
+
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:repeat(2,1fr);
+                        gap:18px;
+                        margin-top:20px;
+                    "
+                >
+
+                    <div>
+
+                        <label
+                            for="chartType"
+                            style="
+                                display:block;
+                                margin-bottom:7px;
+                                font-weight:600;
+                                font-size:13px;
+                            "
+                        >
+                            Chart Type
+                        </label>
+
+
+                        <select
+                            id="chartType"
+                            name="chartType"
+                            style="
+                                width:100%;
+                                height:44px;
+                                padding:0 12px;
+                                border:1px solid #dbe1e8;
+                                border-radius:8px;
+                                background:#fff;
+                            "
+                        >
+
+                            <option value="BAR">
+                                Bar Chart
+                            </option>
+
+                            <option value="LINE">
+                                Line Chart
+                            </option>
+
+                            <option value="PIE">
+                                Pie Chart
+                            </option>
+
+                            <option value="TABLE">
+                                Table
+                            </option>
+
+                            <option value="SUMMARY">
+                                Summary Cards
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label
+                            for="title"
+                            style="
+                                display:block;
+                                margin-bottom:7px;
+                                font-weight:600;
+                                font-size:13px;
+                            "
+                        >
+                            Analytics Title
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            maxlength="100"
+                            placeholder="e.g. Monthly Patient Analysis"
+                            style="
+                                width:100%;
+                                height:44px;
+                                padding:0 12px;
+                                border:1px solid #dbe1e8;
+                                border-radius:8px;
+                            "
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:flex-end;
+                        gap:12px;
+                        margin-top:30px;
+                    "
+                >
+
+                    <button
+                        type="reset"
+                        class="filter"
+                    >
+                        Clear
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="filter active"
+                    >
+                        Create Analytics
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- =================================================
+                 PREVIEW
+                 ================================================= -->
+
+            <div
+                id="previewCard"
+                class="card"
+                style="display:none;"
+            >
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2 id="previewTitle">
+                            Analytics Preview
+                        </h2>
+
+                        <p
+                            id="previewDescription"
+                            style="
+                                color:#64748b;
+                                font-size:13px;
+                            "
+                        ></p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stats">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue">
+                            📊
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Total Records
+                            </span>
+
+                            <strong id="previewTotal">
+                                0
+                            </strong>
+
+                            <small>
+                                Selected dataset
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Active
+                            </span>
+
+                            <strong>
+                                —
+                            </strong>
+
+                            <small>
+                                Live data
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon purple">
+                            📈
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Trend
+                            </span>
+
+                            <strong>
+                                —
+                            </strong>
+
+                            <small>
+                                Selected period
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        padding:30px;
+                        text-align:center;
+                        border:1px dashed #cbd5e1;
+                        border-radius:10px;
+                        color:#64748b;
+                    "
+                >
+
+                    📈
+
+                    <h3>
+                        Analytics Configuration Saved
+                    </h3>
+
+                    <p>
+                        The selected analytics configuration
+                        is ready to be connected to live MediLink
+                        data.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+const analyticsForm =
+    document.getElementById("analyticsForm");
+
+const period =
+    document.getElementById("period");
+
+const customDates =
+    document.getElementById("customDates");
+
+const startDate =
+    document.getElementById("startDate");
+
+const endDate =
+    document.getElementById("endDate");
+
+const previewCard =
+    document.getElementById("previewCard");
+
+const previewTitle =
+    document.getElementById("previewTitle");
+
+const previewDescription =
+    document.getElementById("previewDescription");
+
+
+/*
+ * Show custom date fields.
+ */
+
+period.addEventListener("change", function () {
+
+    if (period.value === "CUSTOM") {
+
+        customDates.style.display = "block";
+
+        startDate.required = true;
+        endDate.required = true;
+
+    } else {
+
+        customDates.style.display = "none";
+
+        startDate.required = false;
+        endDate.required = false;
+
+    }
+
+});
+
+
+/*
+ * Prevent an invalid date range.
+ */
+
+endDate.addEventListener("change", function () {
+
+    if (
+        startDate.value &&
+        endDate.value &&
+        endDate.value < startDate.value
+    ) {
+
+        alert(
+            "End date cannot be before the start date."
+        );
+
+        endDate.value = "";
+
+    }
+
+});
+
+
+/*
+ * Create analytics configuration.
+ *
+ * This version intentionally does NOT call
+ * /api/analytics.
+ *
+ * Therefore it will not produce:
+ *
+ * Unexpected token '<'
+ *
+ * when the API route does not yet exist.
+ */
+
+analyticsForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+
+        const analyticsType =
+            document.getElementById(
+                "analyticsType"
+            ).value;
+
+
+        const selectedPeriod =
+            period.value;
+
+
+        const chartType =
+            document.getElementById(
+                "chartType"
+            ).value;
+
+
+        const title =
+            document.getElementById(
+                "title"
+            ).value.trim();
+
+
+        if (!analyticsType) {
+
+            alert(
+                "Please select an analytics type."
+            );
+
+            return;
+
+        }
+
+
+        if (!selectedPeriod) {
+
+            alert(
+                "Please select an analysis period."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            selectedPeriod === "CUSTOM" &&
+            (
+                !startDate.value ||
+                !endDate.value
+            )
+        ) {
+
+            alert(
+                "Please select both start and end dates."
+            );
+
+            return;
+
+        }
+
+
+        const metrics =
+            [
+                ...document.querySelectorAll(
+                    'input[name="metrics"]:checked'
+                )
+            ].map(
+                checkbox => checkbox.value
+            );
+
+
+        if (!metrics.length) {
+
+            alert(
+                "Select at least one metric."
+            );
+
+            return;
+
+        }
+
+
+        const names = {
+
+            PATIENTS:
+                "Patient Analytics",
+
+            PHARMACIES:
+                "Pharmacy Analytics",
+
+            MEDICINES:
+                "Medicine Analytics",
+
+            INVENTORY:
+                "Inventory Analytics",
+
+            PRESCRIPTIONS:
+                "Prescription Analytics",
+
+            APPOINTMENTS:
+                "Appointment Analytics",
+
+            HOSPITALS:
+                "Hospital Analytics",
+
+            LABORATORY:
+                "Laboratory Analytics",
+
+            DELIVERIES:
+                "Delivery Analytics"
+
+        };
+
+
+        const analyticsName =
+            title ||
+            names[analyticsType];
+
+
+        previewTitle.textContent =
+            analyticsName;
+
+
+        previewDescription.textContent =
+            `${names[analyticsType]} • ${selectedPeriod} • ${chartType}`;
+
+
+        previewCard.style.display =
+            "block";
+
+
+        window.scrollTo({
+
+            top:
+                previewCard.offsetTop - 30,
+
+            behavior:
+                "smooth"
+
+        });
+
+    }
+);
+
+
+/*
+ * Reset preview.
+ */
+
+analyticsForm.addEventListener(
+    "reset",
+    function () {
+
+        setTimeout(function () {
+
+            customDates.style.display =
+                "none";
+
+            startDate.required =
+                false;
+
+            endDate.required =
+                false;
+
+            previewCard.style.display =
+                "none";
+
+        }, 0);
+
+    }
+);
+
+</script>
+
+</body>
+</html>

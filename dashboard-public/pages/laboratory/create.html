@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - New Laboratory Test</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">+</div>
+
+            <div>
+
+                <h2>MediLink</h2>
+
+                <small>
+                    Smart Healthcare System
+                </small>
+
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/"
+               class="nav-link active">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+
+            <a href="/pages/laboratory/">
+                ← Back to Laboratory
+            </a>
+
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">🔔</button>
+
+                <div class="user">
+
+                    <div class="avatar">A</div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        🧪 New Laboratory Test
+                    </h1>
+
+                    <p>
+                        Register a laboratory investigation for a patient.
+                    </p>
+
+                </div>
+
+                <a
+                    href="/pages/laboratory/"
+                    class="filter"
+                >
+                    ← Back
+                </a>
+
+            </div>
+
+            <form
+                id="laboratoryForm"
+                class="card"
+                novalidate
+            >
+
+                <h2>Test Information</h2>
+
+                <p style="color:#64748b;font-size:13px;">
+                    Enter the patient's laboratory investigation details.
+                </p>
+
+                <div style="
+                    display:grid;
+                    grid-template-columns:repeat(3,1fr);
+                    gap:18px;
+                    margin-top:20px;
+                ">
+
+                    <div>
+
+                        <label
+                            for="patientId"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Patient ID *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="patientId"
+                            name="patientId"
+                            required
+                            maxlength="100"
+                            placeholder="Enter patient ID"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="testName"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Laboratory Test *
+                        </label>
+
+                        <select
+                            id="testName"
+                            name="testName"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="">
+                                Select test
+                            </option>
+
+                            <option value="CBC">
+                                Complete Blood Count (CBC)
+                            </option>
+
+                            <option value="BLOOD_GLUCOSE">
+                                Blood Glucose
+                            </option>
+
+                            <option value="MALARIA">
+                                Malaria Test
+                            </option>
+
+                            <option value="HIV">
+                                HIV Test
+                            </option>
+
+                            <option value="URINALYSIS">
+                                Urinalysis
+                            </option>
+
+                            <option value="LIVER_FUNCTION">
+                                Liver Function Test
+                            </option>
+
+                            <option value="KIDNEY_FUNCTION">
+                                Kidney Function Test
+                            </option>
+
+                            <option value="LIPID_PROFILE">
+                                Lipid Profile
+                            </option>
+
+                            <option value="PREGNANCY">
+                                Pregnancy Test
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="sampleType"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Sample Type *
+                        </label>
+
+                        <select
+                            id="sampleType"
+                            name="sampleType"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="">
+                                Select sample
+                            </option>
+
+                            <option value="BLOOD">
+                                Blood
+                            </option>
+
+                            <option value="URINE">
+                                Urine
+                            </option>
+
+                            <option value="STOOL">
+                                Stool
+                            </option>
+
+                            <option value="SALIVA">
+                                Saliva
+                            </option>
+
+                            <option value="SWAB">
+                                Swab
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="collectionDate"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Collection Date *
+                        </label>
+
+                        <input
+                            type="date"
+                            id="collectionDate"
+                            name="collectionDate"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="collectionTime"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Collection Time *
+                        </label>
+
+                        <input
+                            type="time"
+                            id="collectionTime"
+                            name="collectionTime"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="priority"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Priority *
+                        </label>
+
+                        <select
+                            id="priority"
+                            name="priority"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="NORMAL">
+                                Normal
+                            </option>
+
+                            <option value="URGENT">
+                                Urgent
+                            </option>
+
+                            <option value="STAT">
+                                STAT / Emergency
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="doctor"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Requesting Clinician
+                        </label>
+
+                        <input
+                            type="text"
+                            id="doctor"
+                            name="doctor"
+                            maxlength="100"
+                            placeholder="Doctor / clinician"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="laboratory"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Laboratory
+                        </label>
+
+                        <input
+                            type="text"
+                            id="laboratory"
+                            name="laboratory"
+                            maxlength="150"
+                            placeholder="Laboratory name"
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label
+                            for="status"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Status *
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            required
+                            style="width:100%;height:44px;padding:0 12px;border:1px solid #dbe1e8;border-radius:8px;background:#fff;"
+                        >
+
+                            <option value="PENDING">
+                                Pending
+                            </option>
+
+                            <option value="IN_PROGRESS">
+                                In Progress
+                            </option>
+
+                            <option value="COMPLETED">
+                                Completed
+                            </option>
+
+                            <option value="CANCELLED">
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div style="grid-column:1 / -1;">
+
+                        <label
+                            for="clinicalNotes"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Clinical Notes
+                        </label>
+
+                        <textarea
+                            id="clinicalNotes"
+                            name="clinicalNotes"
+                            rows="4"
+                            maxlength="2000"
+                            placeholder="Clinical information relevant to this investigation..."
+                            style="width:100%;padding:12px;border:1px solid #dbe1e8;border-radius:8px;resize:vertical;"
+                        ></textarea>
+
+                    </div>
+
+                    <div style="grid-column:1 / -1;">
+
+                        <label
+                            for="result"
+                            style="display:block;margin-bottom:7px;font-weight:600;font-size:13px;"
+                        >
+                            Laboratory Result
+                        </label>
+
+                        <textarea
+                            id="result"
+                            name="result"
+                            rows="5"
+                            maxlength="5000"
+                            placeholder="Enter result when available..."
+                            style="width:100%;padding:12px;border:1px solid #dbe1e8;border-radius:8px;resize:vertical;"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <div style="
+                    display:flex;
+                    justify-content:flex-end;
+                    gap:12px;
+                    margin-top:30px;
+                ">
+
+                    <button
+                        type="reset"
+                        class="filter"
+                    >
+                        Clear
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="filter active"
+                    >
+                        Register Laboratory Test
+                    </button>
+
+                </div>
+
+                <div
+                    id="message"
+                    style="margin-top:15px;font-size:14px;"
+                ></div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+<script>
+
+const form =
+    document.getElementById(
+        "laboratoryForm"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+const collectionDate =
+    document.getElementById(
+        "collectionDate"
+    );
+
+const today =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+collectionDate.max = today;
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        message.textContent = "";
+
+        const patientId =
+            document
+                .getElementById("patientId")
+                .value
+                .trim();
+
+        const testName =
+            document
+                .getElementById("testName")
+                .value;
+
+        const sampleType =
+            document
+                .getElementById("sampleType")
+                .value;
+
+        const date =
+            collectionDate.value;
+
+        const time =
+            document
+                .getElementById("collectionTime")
+                .value;
+
+        const priority =
+            document
+                .getElementById("priority")
+                .value;
+
+        const status =
+            document
+                .getElementById("status")
+                .value;
+
+        if (
+            !patientId ||
+            !testName ||
+            !sampleType ||
+            !date ||
+            !time ||
+            !priority ||
+            !status
+        ) {
+
+            message.textContent =
+                "Please complete all required fields.";
+
+            message.style.color =
+                "#dc2626";
+
+            return;
+        }
+
+        if (date > today) {
+
+            message.textContent =
+                "Collection date cannot be in the future.";
+
+            message.style.color =
+                "#dc2626";
+
+            return;
+        }
+
+        const data = {
+
+            patientId,
+
+            testName,
+
+            sampleType,
+
+            collectionDate: date,
+
+            collectionTime: time,
+
+            priority,
+
+            doctor:
+                document
+                    .getElementById("doctor")
+                    .value
+                    .trim(),
+
+            laboratory:
+                document
+                    .getElementById("laboratory")
+                    .value
+                    .trim(),
+
+            status,
+
+            clinicalNotes:
+                document
+                    .getElementById("clinicalNotes")
+                    .value
+                    .trim(),
+
+            result:
+                document
+                    .getElementById("result")
+                    .value
+                    .trim()
+
+        };
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/laboratory",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(data)
+                    }
+                );
+
+            const result =
+                await response.json();
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "Unable to register laboratory test."
+                );
+
+            }
+
+            message.textContent =
+                "Laboratory test registered successfully.";
+
+            message.style.color =
+                "#16a34a";
+
+            form.reset();
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                error.message ||
+                "Unable to register laboratory test.";
+
+            message.style.color =
+                "#dc2626";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

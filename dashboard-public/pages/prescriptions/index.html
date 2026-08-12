@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - Prescriptions</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+
+        <div class="logout">
+
+            <a href="/">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        📋 Prescriptions
+                    </h1>
+
+                    <p>
+                        Manage digital prescriptions and prescription requests.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAGE CARD -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Prescriptions Management
+                    </h2>
+
+                    <a href="/pages/prescriptions/create.html" class="filter active">
+    + Add New
+</a>
+
+                </div>
+
+
+                <div class="page-empty">
+
+                    <div class="stat-icon blue">
+                        📋
+                    </div>
+
+                    <h2>
+                        Prescriptions
+                    </h2>
+
+                    <p>
+                        The prescriptions
+                        module is ready for development.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- INFORMATION CARDS -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📋
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Records
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            System records
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Active
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            Active records
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        📈
+                    </div>
+
+                    <div>
+
+                        <span>
+                            This Month
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            New records
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Alerts
+                        </span>
+
+                        <strong>
+                            0
+                        </strong>
+
+                        <small>
+                            Requires attention
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+
+</html>

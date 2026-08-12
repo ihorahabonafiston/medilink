@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediLink - Create Appointment</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <style>
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #dbe1e8;
+            border-radius: 8px;
+            background: #fff;
+            font: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #334155;
+        }
+
+        .help-text {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message,
+        .error-message {
+            display: none;
+            padding: 13px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 900px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">+</div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">📊 Dashboard</a>
+            <a href="/pages/patients/" class="nav-link">👤 Patients</a>
+            <a href="/pages/pharmacies/" class="nav-link">🏥 Pharmacies</a>
+            <a href="/pages/medicines/" class="nav-link">💊 Medicines</a>
+            <a href="/pages/inventory/" class="nav-link">📦 Inventory</a>
+            <a href="/pages/prescriptions/" class="nav-link">📋 Prescriptions</a>
+            <a href="/pages/appointments/" class="nav-link active">📅 Appointments</a>
+            <a href="/pages/hospitals/" class="nav-link">🏥 Hospitals</a>
+            <a href="/pages/laboratory/" class="nav-link">🧪 Laboratory</a>
+            <a href="/pages/deliveries/" class="nav-link">🚚 Deliveries</a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">📊 Reports</a>
+            <a href="/pages/analytics/" class="nav-link">📈 Analytics</a>
+            <a href="/pages/settings/" class="nav-link">⚙️ Settings</a>
+
+        </nav>
+
+        <div class="logout">
+            <a href="/pages/appointments/">← Back to Appointments</a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="search">
+                🔍
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">🔔</button>
+                <button type="button">✉️</button>
+
+                <div class="user">
+
+                    <div class="avatar">A</div>
+
+                    <div>
+                        <strong>Dr. Admin</strong>
+                        <small>Super Administrator</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            <!-- HEADER -->
+
+            <div class="page-header">
+
+                <div>
+                    <h1>📅 Create Appointment</h1>
+
+                    <p>
+                        Schedule a patient appointment with a healthcare provider.
+                    </p>
+                </div>
+
+                <div>
+                    <a
+                        href="/pages/appointments/"
+                        class="filter"
+                    >
+                        ← Back
+                    </a>
+                </div>
+
+            </div>
+
+
+            <form
+                id="appointmentForm"
+                class="card"
+                novalidate
+            >
+
+                <div
+                    id="successMessage"
+                    class="success-message"
+                ></div>
+
+                <div
+                    id="errorMessage"
+                    class="error-message"
+                ></div>
+
+
+                <!-- APPOINTMENT INFORMATION -->
+
+                <h2>Appointment Information</h2>
+
+                <p class="help-text">
+                    Enter the basic information for the appointment.
+                </p>
+
+                <br>
+
+                <div class="form-grid">
+
+                    <!-- Patient -->
+
+                    <div class="form-group">
+
+                        <label for="patientId">
+                            Patient <span class="required">*</span>
+                        </label>
+
+                        <select id="patientId" name="patientId" required>
+
+                            <option value="">
+                                Select patient
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Provider -->
+
+                    <div class="form-group">
+
+                        <label for="providerId">
+                            Healthcare Provider <span class="required">*</span>
+                        </label>
+
+                        <select id="providerId" name="providerId" required>
+
+                            <option value="">
+                                Select provider
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Facility -->
+
+                    <div class="form-group">
+
+                        <label for="facilityId">
+                            Facility <span class="required">*</span>
+                        </label>
+
+                        <select id="facilityId" name="facilityId" required>
+
+                            <option value="">
+                                Select facility
+                            </option>
+
+                            <option value="hospital">
+                                Hospital
+                            </option>
+
+                            <option value="clinic">
+                                Clinic
+                            </option>
+
+                            <option value="pharmacy">
+                                Pharmacy
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Appointment Type -->
+
+                    <div class="form-group">
+
+                        <label for="appointmentType">
+                            Appointment Type <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="appointmentType"
+                            name="appointmentType"
+                            required
+                        >
+
+                            <option value="">
+                                Select type
+                            </option>
+
+                            <option value="CONSULTATION">
+                                Consultation
+                            </option>
+
+                            <option value="FOLLOW_UP">
+                                Follow-up
+                            </option>
+
+                            <option value="CHECKUP">
+                                General Checkup
+                            </option>
+
+                            <option value="SPECIALIST">
+                                Specialist
+                            </option>
+
+                            <option value="LABORATORY">
+                                Laboratory
+                            </option>
+
+                            <option value="VACCINATION">
+                                Vaccination
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Date -->
+
+                    <div class="form-group">
+
+                        <label for="appointmentDate">
+                            Appointment Date <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="appointmentDate"
+                            name="appointmentDate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Time -->
+
+                    <div class="form-group">
+
+                        <label for="appointmentTime">
+                            Appointment Time <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="time"
+                            id="appointmentTime"
+                            name="appointmentTime"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Duration -->
+
+                    <div class="form-group">
+
+                        <label for="duration">
+                            Duration
+                        </label>
+
+                        <select id="duration" name="duration">
+
+                            <option value="15">15 minutes</option>
+                            <option value="30" selected>30 minutes</option>
+                            <option value="45">45 minutes</option>
+                            <option value="60">1 hour</option>
+                            <option value="90">1.5 hours</option>
+                            <option value="120">2 hours</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Priority -->
+
+                    <div class="form-group">
+
+                        <label for="priority">
+                            Priority <span class="required">*</span>
+                        </label>
+
+                        <select id="priority" name="priority" required>
+
+                            <option value="NORMAL" selected>
+                                Normal
+                            </option>
+
+                            <option value="LOW">
+                                Low
+                            </option>
+
+                            <option value="HIGH">
+                                High
+                            </option>
+
+                            <option value="URGENT">
+                                Urgent
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Status
+                        </label>
+
+                        <select id="status" name="status">
+
+                            <option value="SCHEDULED" selected>
+                                Scheduled
+                            </option>
+
+                            <option value="PENDING">
+                                Pending
+                            </option>
+
+                            <option value="CONFIRMED">
+                                Confirmed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Reason -->
+
+                    <div class="form-group full">
+
+                        <label for="reason">
+                            Reason / Chief Complaint
+                        </label>
+
+                        <textarea
+                            id="reason"
+                            name="reason"
+                            maxlength="1000"
+                            placeholder="Describe the reason for the appointment..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Notes -->
+
+                    <div class="form-group full">
+
+                        <label for="notes">
+                            Additional Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            maxlength="2000"
+                            placeholder="Additional appointment information..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="reset"
+                        class="btn btn-secondary"
+                    >
+                        Clear
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        📅 Schedule Appointment
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+const form = document.getElementById("appointmentForm");
+
+const dateInput =
+    document.getElementById("appointmentDate");
+
+const successMessage =
+    document.getElementById("successMessage");
+
+const errorMessage =
+    document.getElementById("errorMessage");
+
+
+// Do not allow appointments in the past.
+
+const today = new Date();
+
+const year = today.getFullYear();
+
+const month =
+    String(today.getMonth() + 1).padStart(2, "0");
+
+const day =
+    String(today.getDate()).padStart(2, "0");
+
+const todayString =
+    `${year}-${month}-${day}`;
+
+dateInput.min = todayString;
+
+
+// Submit
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    successMessage.style.display = "none";
+    errorMessage.style.display = "none";
+
+    const patientId =
+        document.getElementById("patientId").value;
+
+    const providerId =
+        document.getElementById("providerId").value;
+
+    const facilityId =
+        document.getElementById("facilityId").value;
+
+    const appointmentType =
+        document.getElementById("appointmentType").value;
+
+    const appointmentDate =
+        document.getElementById("appointmentDate").value;
+
+    const appointmentTime =
+        document.getElementById("appointmentTime").value;
+
+
+    if (
+        !patientId ||
+        !providerId ||
+        !facilityId ||
+        !appointmentType ||
+        !appointmentDate ||
+        !appointmentTime
+    ) {
+
+        errorMessage.textContent =
+            "Please complete all required fields.";
+
+        errorMessage.style.display = "block";
+
+        return;
+    }
+
+
+    if (appointmentDate < todayString) {
+
+        errorMessage.textContent =
+            "Appointment date cannot be in the past.";
+
+        errorMessage.style.display = "block";
+
+        return;
+    }
+
+
+    const data =
+        Object.fromEntries(
+            new FormData(form).entries()
+        );
+
+
+    try {
+
+        const response =
+            await fetch("/api/appointments", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(data)
+
+            });
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "Unable to create appointment."
+            );
+
+        }
+
+
+        successMessage.textContent =
+            result.message ||
+            "Appointment scheduled successfully.";
+
+        successMessage.style.display = "block";
+
+        form.reset();
+
+        dateInput.min = todayString;
+
+
+    } catch (error) {
+
+        errorMessage.textContent =
+            error.message ||
+            "Unable to create appointment.";
+
+        errorMessage.style.display = "block";
+
+    }
+
+});
+
+
+// Load patients
+
+async function loadPatients() {
+
+    try {
+
+        const response =
+            await fetch("/api/patients");
+
+        if (!response.ok) return;
+
+        const result =
+            await response.json();
+
+        const patients =
+            result.patients || result.data || result;
+
+
+        const select =
+            document.getElementById("patientId");
+
+
+        if (!Array.isArray(patients)) return;
+
+
+        patients.forEach(patient => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                patient.id;
+
+            option.textContent =
+                `${patient.patientNumber || patient.id} - ${patient.firstName || ""} ${patient.lastName || ""}`;
+
+            select.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Could not load patients:",
+            error
+        );
+
+    }
+
+}
+
+
+// Load providers
+
+async function loadProviders() {
+
+    try {
+
+        const response =
+            await fetch("/api/providers");
+
+        if (!response.ok) return;
+
+        const result =
+            await response.json();
+
+        const providers =
+            result.providers ||
+            result.data ||
+            result;
+
+
+        const select =
+            document.getElementById("providerId");
+
+
+        if (!Array.isArray(providers)) return;
+
+
+        providers.forEach(provider => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                provider.id;
+
+            option.textContent =
+                provider.name ||
+                `${provider.firstName || ""} ${provider.lastName || ""}`;
+
+            select.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Could not load providers:",
+            error
+        );
+
+    }
+
+}
+
+
+loadPatients();
+loadProviders();
+
+</script>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

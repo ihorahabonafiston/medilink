@@ -1,0 +1,2249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediLink - Add Inventory</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <style>
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .form-group {
+            min-width: 0;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 44px;
+            padding: 0 12px;
+            border: 1px solid #dbe1e8;
+            border-radius: 8px;
+            background: #fff;
+            color: #0f172a;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        textarea.form-control {
+            height: auto;
+            min-height: 100px;
+            padding: 12px;
+            resize: vertical;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .form-control[readonly] {
+            background: #f8fafc;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .error-message {
+            display: none;
+            margin-top: 5px;
+            color: #dc2626;
+            font-size: 12px;
+        }
+
+        .form-group.has-error .form-control {
+            border-color: #dc2626;
+            background: #fffafa;
+        }
+
+        .form-group.has-error .error-message {
+            display: block;
+        }
+
+        .section-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .status-box {
+            display: none;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .status-box.success {
+            display: block;
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-box.error {
+            display: block;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        .stock-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #f8fafc;
+        }
+
+        .summary-item span {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .summary-item strong {
+            font-size: 18px;
+            color: #0f172a;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            height: 44px;
+            padding: 0 20px;
+            border-radius: 8px;
+            border: 0;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        @media (max-width: 1000px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stock-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .stock-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                +
+            </div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link active">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+
+            <a href="/pages/inventory/">
+                ← Back to Inventory
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             CONTENT
+             ===================================================== -->
+
+        <section class="content">
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        📦 Add Inventory Stock
+                    </h1>
+
+                    <p>
+                        Register medicine stock for a pharmacy.
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <a
+                        href="/pages/inventory/"
+                        class="filter"
+                    >
+                        ← Back to Inventory
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM
+                 ================================================= -->
+
+            <form
+                id="inventoryForm"
+                class="card"
+                novalidate
+            >
+
+                <div
+                    id="statusBox"
+                    class="status-box"
+                ></div>
+
+
+                <!-- =================================================
+                     INVENTORY IDENTIFICATION
+                     ================================================= -->
+
+                <h2>
+                    Inventory Information
+                </h2>
+
+                <p class="section-description">
+                    Basic information used to identify this inventory record.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Inventory ID -->
+
+                    <div class="form-group">
+
+                        <label for="inventoryId">
+                            Inventory ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="inventoryId"
+                            name="inventoryId"
+                            class="form-control"
+                            placeholder="Auto-generated"
+                            readonly
+                        >
+
+                        <small class="help-text">
+                            Generated by the server.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Pharmacy -->
+
+                    <div class="form-group">
+
+                        <label for="pharmacyId">
+                            Pharmacy <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="pharmacyId"
+                            name="pharmacyId"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select pharmacy
+                            </option>
+
+                        </select>
+
+                        <div class="error-message">
+                            Please select a pharmacy.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Medicine -->
+
+                    <div class="form-group">
+
+                        <label for="medicineId">
+                            Medicine <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="medicineId"
+                            name="medicineId"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select medicine
+                            </option>
+
+                        </select>
+
+                        <div class="error-message">
+                            Please select a medicine.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Batch Number -->
+
+                    <div class="form-group">
+
+                        <label for="batchNumber">
+                            Batch Number <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="batchNumber"
+                            name="batchNumber"
+                            class="form-control"
+                            placeholder="e.g. BATCH-2026-001"
+                            maxlength="50"
+                            required
+                        >
+
+                        <div class="error-message">
+                            Enter a valid batch number.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Unit -->
+
+                    <div class="form-group">
+
+                        <label for="unit">
+                            Unit <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="unit"
+                            name="unit"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select unit
+                            </option>
+
+                            <option value="TABLET">
+                                Tablet
+                            </option>
+
+                            <option value="CAPSULE">
+                                Capsule
+                            </option>
+
+                            <option value="BOTTLE">
+                                Bottle
+                            </option>
+
+                            <option value="BOX">
+                                Box
+                            </option>
+
+                            <option value="VIAL">
+                                Vial
+                            </option>
+
+                            <option value="AMPOULE">
+                                Ampoule
+                            </option>
+
+                            <option value="TUBE">
+                                Tube
+                            </option>
+
+                            <option value="SACHET">
+                                Sachet
+                            </option>
+
+                            <option value="PACK">
+                                Pack
+                            </option>
+
+                            <option value="PIECE">
+                                Piece
+                            </option>
+
+                        </select>
+
+                        <div class="error-message">
+                            Please select a unit.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Storage Location -->
+
+                    <div class="form-group">
+
+                        <label for="storageLocation">
+                            Storage Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="storageLocation"
+                            name="storageLocation"
+                            class="form-control"
+                            placeholder="e.g. Shelf A-12"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUANTITY AND PRICING
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Stock & Pricing
+                </h2>
+
+                <p class="section-description">
+                    Enter the quantity and financial information for this stock.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Quantity Received -->
+
+                    <div class="form-group">
+
+                        <label for="quantityReceived">
+                            Quantity Received <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantityReceived"
+                            name="quantityReceived"
+                            class="form-control"
+                            min="1"
+                            max="100000000"
+                            step="1"
+                            placeholder="0"
+                            required
+                        >
+
+                        <div class="error-message">
+                            Quantity received must be at least 1.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Current Quantity -->
+
+                    <div class="form-group">
+
+                        <label for="currentQuantity">
+                            Current Quantity <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="currentQuantity"
+                            name="currentQuantity"
+                            class="form-control"
+                            min="0"
+                            max="100000000"
+                            step="1"
+                            placeholder="0"
+                            required
+                        >
+
+                        <div class="error-message">
+                            Current quantity cannot exceed quantity received.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Minimum Stock -->
+
+                    <div class="form-group">
+
+                        <label for="minimumStock">
+                            Minimum Stock Level <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="minimumStock"
+                            name="minimumStock"
+                            class="form-control"
+                            min="0"
+                            max="100000000"
+                            step="1"
+                            placeholder="10"
+                            required
+                        >
+
+                        <div class="error-message">
+                            Minimum stock cannot be negative.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Reorder Level -->
+
+                    <div class="form-group">
+
+                        <label for="reorderLevel">
+                            Reorder Level <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="reorderLevel"
+                            name="reorderLevel"
+                            class="form-control"
+                            min="0"
+                            max="100000000"
+                            step="1"
+                            placeholder="20"
+                            required
+                        >
+
+                        <div class="error-message">
+                            Reorder level cannot be negative.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Buying Price -->
+
+                    <div class="form-group">
+
+                        <label for="buyingPrice">
+                            Buying Price (RWF)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="buyingPrice"
+                            name="buyingPrice"
+                            class="form-control"
+                            min="0"
+                            max="1000000000"
+                            step="0.01"
+                            placeholder="0"
+                        >
+
+                        <div class="error-message">
+                            Buying price cannot be negative.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Selling Price -->
+
+                    <div class="form-group">
+
+                        <label for="sellingPrice">
+                            Selling Price (RWF) <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="sellingPrice"
+                            name="sellingPrice"
+                            class="form-control"
+                            min="0"
+                            max="1000000000"
+                            step="0.01"
+                            placeholder="0"
+                            required
+                        >
+
+                        <div class="error-message">
+                            Selling price cannot be negative.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STOCK SUMMARY -->
+
+                <div class="stock-summary">
+
+                    <div class="summary-item">
+
+                        <span>
+                            Current Stock
+                        </span>
+
+                        <strong id="summaryCurrent">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-item">
+
+                        <span>
+                            Minimum Level
+                        </span>
+
+                        <strong id="summaryMinimum">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-item">
+
+                        <span>
+                            Reorder Level
+                        </span>
+
+                        <strong id="summaryReorder">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-item">
+
+                        <span>
+                            Stock Status
+                        </span>
+
+                        <strong id="summaryStatus">
+                            Not Set
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     DATES
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Batch & Expiry Information
+                </h2>
+
+                <p class="section-description">
+                    Expiry information is important for medicine safety and stock management.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Manufacturing Date -->
+
+                    <div class="form-group">
+
+                        <label for="manufacturingDate">
+                            Manufacturing Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="manufacturingDate"
+                            name="manufacturingDate"
+                            class="form-control"
+                        >
+
+                        <div class="error-message">
+                            Manufacturing date cannot be in the future.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Expiry Date -->
+
+                    <div class="form-group">
+
+                        <label for="expiryDate">
+                            Expiry Date <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="expiryDate"
+                            name="expiryDate"
+                            class="form-control"
+                            required
+                        >
+
+                        <div class="error-message">
+                            Expiry date must be after today and after the manufacturing date.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Inventory Status <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select status
+                            </option>
+
+                            <option value="ACTIVE">
+                                Active
+                            </option>
+
+                            <option value="QUARANTINED">
+                                Quarantined
+                            </option>
+
+                            <option value="RECALLED">
+                                Recalled
+                            </option>
+
+                            <option value="DAMAGED">
+                                Damaged
+                            </option>
+
+                            <option value="EXPIRED">
+                                Expired
+                            </option>
+
+                        </select>
+
+                        <div class="error-message">
+                            Please select an inventory status.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SUPPLIER
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Supplier Information
+                </h2>
+
+                <p class="section-description">
+                    Record the supplier associated with this medicine batch.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- Supplier -->
+
+                    <div class="form-group">
+
+                        <label for="supplier">
+                            Supplier
+                        </label>
+
+                        <input
+                            type="text"
+                            id="supplier"
+                            name="supplier"
+                            class="form-control"
+                            placeholder="Supplier name"
+                            maxlength="150"
+                        >
+
+                        <div class="error-message">
+                            Supplier name is invalid.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Supplier Reference -->
+
+                    <div class="form-group">
+
+                        <label for="supplierReference">
+                            Supplier Reference
+                        </label>
+
+                        <input
+                            type="text"
+                            id="supplierReference"
+                            name="supplierReference"
+                            class="form-control"
+                            placeholder="Invoice / reference number"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+
+                    <!-- Purchase Date -->
+
+                    <div class="form-group">
+
+                        <label for="purchaseDate">
+                            Purchase Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="purchaseDate"
+                            name="purchaseDate"
+                            class="form-control"
+                        >
+
+                        <div class="error-message">
+                            Purchase date cannot be in the future.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     NOTES
+                     ================================================= -->
+
+                <hr
+                    style="
+                        border:0;
+                        border-top:1px solid #e5e7eb;
+                        margin:30px 0;
+                    "
+                >
+
+                <h2>
+                    Additional Information
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            class="form-control"
+                            maxlength="2000"
+                            placeholder="Enter additional inventory information..."
+                        ></textarea>
+
+                        <small class="help-text">
+                            Maximum 2,000 characters.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACTIONS
+                     ================================================= -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="reset"
+                        class="btn btn-secondary"
+                        id="clearButton"
+                    >
+                        Clear Form
+                    </button>
+
+                    <a
+                        href="/pages/inventory/"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="submitButton"
+                    >
+                        Register Stock
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+
+<script>
+/* ==========================================================
+   MEDILINK INVENTORY FORM
+   Frontend validation
+   ========================================================== */
+
+(function () {
+
+    "use strict";
+
+    const form = document.getElementById("inventoryForm");
+
+    const statusBox = document.getElementById("statusBox");
+
+    const submitButton = document.getElementById("submitButton");
+
+    const pharmacySelect =
+        document.getElementById("pharmacyId");
+
+    const medicineSelect =
+        document.getElementById("medicineId");
+
+    const quantityReceived =
+        document.getElementById("quantityReceived");
+
+    const currentQuantity =
+        document.getElementById("currentQuantity");
+
+    const minimumStock =
+        document.getElementById("minimumStock");
+
+    const reorderLevel =
+        document.getElementById("reorderLevel");
+
+    const manufacturingDate =
+        document.getElementById("manufacturingDate");
+
+    const expiryDate =
+        document.getElementById("expiryDate");
+
+    const purchaseDate =
+        document.getElementById("purchaseDate");
+
+    const summaryCurrent =
+        document.getElementById("summaryCurrent");
+
+    const summaryMinimum =
+        document.getElementById("summaryMinimum");
+
+    const summaryReorder =
+        document.getElementById("summaryReorder");
+
+    const summaryStatus =
+        document.getElementById("summaryStatus");
+
+
+    /* ==========================================================
+       DATE HELPERS
+       ========================================================== */
+
+    function getToday() {
+
+        const today = new Date();
+
+        const year =
+            today.getFullYear();
+
+        const month =
+            String(today.getMonth() + 1)
+                .padStart(2, "0");
+
+        const day =
+            String(today.getDate())
+                .padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+
+    const today = getToday();
+
+
+    manufacturingDate.max = today;
+
+    purchaseDate.max = today;
+
+
+    /*
+       Expiry must be a future date.
+    */
+
+    expiryDate.min = today;
+
+
+    /* ==========================================================
+       STATUS MESSAGE
+       ========================================================== */
+
+    function showStatus(message, type) {
+
+        statusBox.textContent = message;
+
+        statusBox.className =
+            "status-box " + type;
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    function clearStatus() {
+
+        statusBox.textContent = "";
+
+        statusBox.className =
+            "status-box";
+
+    }
+
+
+    /* ==========================================================
+       FIELD ERROR HELPERS
+       ========================================================== */
+
+    function setError(input, message) {
+
+        const group =
+            input.closest(".form-group");
+
+        if (!group) return;
+
+        group.classList.add("has-error");
+
+        const error =
+            group.querySelector(".error-message");
+
+        if (error) {
+            error.textContent = message;
+        }
+    }
+
+
+    function clearError(input) {
+
+        const group =
+            input.closest(".form-group");
+
+        if (!group) return;
+
+        group.classList.remove("has-error");
+    }
+
+
+    /* ==========================================================
+       NUMBER VALIDATION
+       ========================================================== */
+
+    function isValidNonNegativeInteger(value) {
+
+        return (
+            value !== "" &&
+            Number.isInteger(Number(value)) &&
+            Number(value) >= 0
+        );
+
+    }
+
+
+    /* ==========================================================
+       BATCH NUMBER
+       ========================================================== */
+
+    function validateBatchNumber() {
+
+        const value =
+            document
+                .getElementById("batchNumber")
+                .value
+                .trim();
+
+        const regex =
+            /^[A-Za-z0-9][A-Za-z0-9._/-]{1,49}$/;
+
+        if (!regex.test(value)) {
+
+            setError(
+                document.getElementById("batchNumber"),
+                "Batch number must contain 2-50 letters, numbers, hyphens, slashes or dots."
+            );
+
+            return false;
+        }
+
+        clearError(
+            document.getElementById("batchNumber")
+        );
+
+        return true;
+    }
+
+
+    /* ==========================================================
+       QUANTITY VALIDATION
+       ========================================================== */
+
+    function validateQuantities() {
+
+        let valid = true;
+
+        const received =
+            Number(quantityReceived.value);
+
+        const current =
+            Number(currentQuantity.value);
+
+        const minimum =
+            Number(minimumStock.value);
+
+        const reorder =
+            Number(reorderLevel.value);
+
+
+        if (
+            !isValidNonNegativeInteger(
+                quantityReceived.value
+            ) ||
+            received < 1
+        ) {
+
+            setError(
+                quantityReceived,
+                "Quantity received must be at least 1."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(quantityReceived);
+
+        }
+
+
+        if (
+            !isValidNonNegativeInteger(
+                currentQuantity.value
+            )
+        ) {
+
+            setError(
+                currentQuantity,
+                "Current quantity must be 0 or greater."
+            );
+
+            valid = false;
+
+        } else if (current > received) {
+
+            setError(
+                currentQuantity,
+                "Current quantity cannot exceed quantity received."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(currentQuantity);
+
+        }
+
+
+        if (
+            !isValidNonNegativeInteger(
+                minimumStock.value
+            )
+        ) {
+
+            setError(
+                minimumStock,
+                "Minimum stock must be 0 or greater."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(minimumStock);
+
+        }
+
+
+        if (
+            !isValidNonNegativeInteger(
+                reorderLevel.value
+            )
+        ) {
+
+            setError(
+                reorderLevel,
+                "Reorder level must be 0 or greater."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(reorderLevel);
+
+        }
+
+
+        if (
+            isValidNonNegativeInteger(
+                minimumStock.value
+            ) &&
+            isValidNonNegativeInteger(
+                reorderLevel.value
+            ) &&
+            reorder < minimum
+        ) {
+
+            setError(
+                reorderLevel,
+                "Reorder level should normally be equal to or greater than minimum stock."
+            );
+
+            valid = false;
+
+        }
+
+
+        updateStockSummary();
+
+        return valid;
+    }
+
+
+    /* ==========================================================
+       DATE VALIDATION
+       ========================================================== */
+
+    function validateDates() {
+
+        let valid = true;
+
+        const manufacturing =
+            manufacturingDate.value;
+
+        const expiry =
+            expiryDate.value;
+
+        const purchase =
+            purchaseDate.value;
+
+
+        /*
+           Manufacturing date cannot be future.
+        */
+
+        if (
+            manufacturing &&
+            manufacturing > today
+        ) {
+
+            setError(
+                manufacturingDate,
+                "Manufacturing date cannot be in the future."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(manufacturingDate);
+
+        }
+
+
+        /*
+           Purchase date cannot be future.
+        */
+
+        if (
+            purchase &&
+            purchase > today
+        ) {
+
+            setError(
+                purchaseDate,
+                "Purchase date cannot be in the future."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(purchaseDate);
+
+        }
+
+
+        /*
+           Expiry must be future.
+        */
+
+        if (!expiry) {
+
+            setError(
+                expiryDate,
+                "Expiry date is required."
+            );
+
+            valid = false;
+
+        } else if (expiry <= today) {
+
+            setError(
+                expiryDate,
+                "Expiry date must be in the future."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(expiryDate);
+
+        }
+
+
+        /*
+           Expiry must be after manufacturing.
+        */
+
+        if (
+            manufacturing &&
+            expiry &&
+            expiry <= manufacturing
+        ) {
+
+            setError(
+                expiryDate,
+                "Expiry date must be after the manufacturing date."
+            );
+
+            valid = false;
+
+        }
+
+
+        /*
+           Purchase should not be before manufacturing.
+        */
+
+        if (
+            manufacturing &&
+            purchase &&
+            purchase < manufacturing
+        ) {
+
+            setError(
+                purchaseDate,
+                "Purchase date cannot be before manufacturing date."
+            );
+
+            valid = false;
+
+        }
+
+
+        return valid;
+    }
+
+
+    /* ==========================================================
+       PRICE VALIDATION
+       ========================================================== */
+
+    function validatePrices() {
+
+        let valid = true;
+
+        const buying =
+            document.getElementById("buyingPrice");
+
+        const selling =
+            document.getElementById("sellingPrice");
+
+
+        if (
+            buying.value !== "" &&
+            Number(buying.value) < 0
+        ) {
+
+            setError(
+                buying,
+                "Buying price cannot be negative."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(buying);
+
+        }
+
+
+        if (
+            selling.value === "" ||
+            Number(selling.value) < 0
+        ) {
+
+            setError(
+                selling,
+                "Selling price must be 0 or greater."
+            );
+
+            valid = false;
+
+        } else {
+
+            clearError(selling);
+
+        }
+
+
+        /*
+           If buying price exists, selling price should
+           not be less than buying price.
+        */
+
+        if (
+            buying.value !== "" &&
+            selling.value !== "" &&
+            Number(selling.value) < Number(buying.value)
+        ) {
+
+            setError(
+                selling,
+                "Selling price should not be lower than buying price."
+            );
+
+            valid = false;
+
+        }
+
+
+        return valid;
+    }
+
+
+    /* ==========================================================
+       STOCK SUMMARY
+       ========================================================== */
+
+    function updateStockSummary() {
+
+        const current =
+            Number(currentQuantity.value) || 0;
+
+        const minimum =
+            Number(minimumStock.value) || 0;
+
+        const reorder =
+            Number(reorderLevel.value) || 0;
+
+
+        summaryCurrent.textContent =
+            current.toLocaleString();
+
+        summaryMinimum.textContent =
+            minimum.toLocaleString();
+
+        summaryReorder.textContent =
+            reorder.toLocaleString();
+
+
+        let status = "Normal";
+
+
+        if (current === 0) {
+
+            status = "Out of Stock";
+
+        } else if (current <= minimum) {
+
+            status = "Low Stock";
+
+        } else if (current <= reorder) {
+
+            status = "Reorder Soon";
+
+        }
+
+
+        summaryStatus.textContent = status;
+
+    }
+
+
+    /* ==========================================================
+       GENERIC REQUIRED VALIDATION
+       ========================================================== */
+
+    function validateRequiredFields() {
+
+        let valid = true;
+
+        const requiredFields =
+            form.querySelectorAll(
+                "[required]"
+            );
+
+
+        requiredFields.forEach(function (field) {
+
+            if (!field.value.trim()) {
+
+                setError(
+                    field,
+                    "This field is required."
+                );
+
+                valid = false;
+
+            } else {
+
+                clearError(field);
+
+            }
+
+        });
+
+
+        return valid;
+    }
+
+
+    /* ==========================================================
+       LOAD PHARMACIES
+       ========================================================== */
+
+    async function loadPharmacies() {
+
+        /*
+           This expects your backend to eventually provide:
+
+           GET /api/pharmacies
+
+           returning:
+
+           {
+               "success": true,
+               "pharmacies": [
+                   {
+                       "id": "...",
+                       "name": "..."
+                   }
+               ]
+           }
+        */
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/pharmacies"
+                );
+
+            if (!response.ok) {
+                return;
+            }
+
+            const data =
+                await response.json();
+
+            const pharmacies =
+                data.pharmacies ||
+                data.data ||
+                [];
+
+
+            pharmacies.forEach(function (pharmacy) {
+
+                const option =
+                    document.createElement("option");
+
+                option.value =
+                    pharmacy.id;
+
+                option.textContent =
+                    pharmacy.name ||
+                    pharmacy.pharmacyName ||
+                    "Unnamed Pharmacy";
+
+                pharmacySelect.appendChild(option);
+
+            });
+
+        } catch (error) {
+
+            console.warn(
+                "Pharmacy loading failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* ==========================================================
+       LOAD MEDICINES
+       ========================================================== */
+
+    async function loadMedicines() {
+
+        /*
+           This expects:
+
+           GET /api/medicines
+
+           returning:
+
+           {
+               "success": true,
+               "medicines": [
+                   {
+                       "id": "...",
+                       "name": "..."
+                   }
+               ]
+           }
+        */
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/medicines"
+                );
+
+            if (!response.ok) {
+                return;
+            }
+
+            const data =
+                await response.json();
+
+            const medicines =
+                data.medicines ||
+                data.data ||
+                [];
+
+
+            medicines.forEach(function (medicine) {
+
+                const option =
+                    document.createElement("option");
+
+                option.value =
+                    medicine.id;
+
+                option.textContent =
+                    medicine.name ||
+                    medicine.medicineName ||
+                    "Unnamed Medicine";
+
+                medicineSelect.appendChild(option);
+
+            });
+
+        } catch (error) {
+
+            console.warn(
+                "Medicine loading failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* ==========================================================
+       LIVE VALIDATION
+       ========================================================== */
+
+    [
+        quantityReceived,
+        currentQuantity,
+        minimumStock,
+        reorderLevel
+    ].forEach(function (field) {
+
+        field.addEventListener(
+            "input",
+            validateQuantities
+        );
+
+    });
+
+
+    [
+        manufacturingDate,
+        expiryDate,
+        purchaseDate
+    ].forEach(function (field) {
+
+        field.addEventListener(
+            "change",
+            validateDates
+        );
+
+    });
+
+
+    document
+        .getElementById("buyingPrice")
+        .addEventListener(
+            "input",
+            validatePrices
+        );
+
+
+    document
+        .getElementById("sellingPrice")
+        .addEventListener(
+            "input",
+            validatePrices
+        );
+
+
+    document
+        .getElementById("batchNumber")
+        .addEventListener(
+            "input",
+            validateBatchNumber
+        );
+
+
+    /* ==========================================================
+       FORM SUBMISSION
+       ========================================================== */
+
+    form.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearStatus();
+
+
+            const requiredValid =
+                validateRequiredFields();
+
+            const batchValid =
+                validateBatchNumber();
+
+            const quantityValid =
+                validateQuantities();
+
+            const datesValid =
+                validateDates();
+
+            const pricesValid =
+                validatePrices();
+
+
+            if (
+                !requiredValid ||
+                !batchValid ||
+                !quantityValid ||
+                !datesValid ||
+                !pricesValid
+            ) {
+
+                showStatus(
+                    "Please correct the highlighted fields before registering stock.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            /*
+               Prevent double submission.
+            */
+
+            submitButton.disabled = true;
+
+            submitButton.textContent =
+                "Registering...";
+
+
+            /*
+               Build request.
+            */
+
+            const formData =
+                new FormData(form);
+
+            const data =
+                Object.fromEntries(
+                    formData.entries()
+                );
+
+
+            /*
+               Convert numerical values.
+            */
+
+            data.quantityReceived =
+                Number(data.quantityReceived);
+
+            data.currentQuantity =
+                Number(data.currentQuantity);
+
+            data.minimumStock =
+                Number(data.minimumStock);
+
+            data.reorderLevel =
+                Number(data.reorderLevel);
+
+            data.buyingPrice =
+                data.buyingPrice === ""
+                    ? null
+                    : Number(data.buyingPrice);
+
+            data.sellingPrice =
+                Number(data.sellingPrice);
+
+
+            /*
+               Send to MediLink backend.
+            */
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/inventory",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(data)
+                        }
+                    );
+
+
+                let result = {};
+
+                try {
+
+                    result =
+                        await response.json();
+
+                } catch (jsonError) {
+
+                    result = {};
+
+                }
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to register inventory."
+                    );
+
+                }
+
+
+                showStatus(
+                    result.message ||
+                    "Inventory registered successfully.",
+                    "success"
+                );
+
+
+                /*
+                   Reset after successful insertion.
+                */
+
+                form.reset();
+
+                updateStockSummary();
+
+
+                /*
+                   If server returns inventory ID,
+                   display it.
+                */
+
+                if (
+                    result.inventory &&
+                    result.inventory.inventoryId
+                ) {
+
+                    document
+                        .getElementById("inventoryId")
+                        .value =
+                        result.inventory.inventoryId;
+
+                }
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showStatus(
+                    error.message ||
+                    "An error occurred while registering inventory.",
+                    "error"
+                );
+
+            } finally {
+
+                submitButton.disabled = false;
+
+                submitButton.textContent =
+                    "Register Stock";
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================================
+       RESET
+       ========================================================== */
+
+    form.addEventListener(
+        "reset",
+        function () {
+
+            setTimeout(function () {
+
+                document
+                    .querySelectorAll(".form-group")
+                    .forEach(function (group) {
+
+                        group.classList.remove(
+                            "has-error"
+                        );
+
+                    });
+
+                clearStatus();
+
+                updateStockSummary();
+
+            }, 0);
+
+        }
+    );
+
+
+    /* ==========================================================
+       INITIALIZATION
+       ========================================================== */
+
+    updateStockSummary();
+
+    loadPharmacies();
+
+    loadMedicines();
+
+})();
+</script>
+
+</body>
+</html>

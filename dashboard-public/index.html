@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediLink - Dashboard</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">+</div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link active">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+
+            <a href="/login.html">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- ================= TOP BAR ================= -->
+
+        <header class="topbar">
+
+            <div class="search">
+
+                🔍
+
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dr. Admin
+                        </strong>
+
+                        <small>
+                            Super Administrator
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                    <p>
+                        Welcome back! Here's what's happening today.
+                    </p>
+
+                </div>
+
+
+                <div class="date">
+                    📅 August 11, 2026
+                </div>
+
+            </div>
+
+
+            <!-- ================= STATISTICS ================= -->
+
+            <div class="stats">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Patients
+                        </span>
+
+                        <strong>
+                            12,450
+                        </strong>
+
+                        <small>
+                            ↑ 12.5% from last month
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        💊
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Medicines
+                        </span>
+
+                        <strong>
+                            8,230
+                        </strong>
+
+                        <small>
+                            ↑ 8.6% from last month
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        🛒
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Orders
+                        </span>
+
+                        <strong>
+                            1,284
+                        </strong>
+
+                        <small>
+                            ↑ 15.3% from last month
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        🏥
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Pharmacies
+                        </span>
+
+                        <strong>
+                            245
+                        </strong>
+
+                        <small>
+                            ↑ 7.2% from last month
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= MEDICINE SEARCH ================= -->
+
+            <div class="card medicine-search">
+
+                <h2>
+                    Medicine Availability
+                </h2>
+
+                <div class="medicine-input">
+
+                    <input
+                        type="text"
+                        id="medicineSearch"
+                        placeholder="Search medicine..."
+                    >
+
+                    <button
+                        type="button"
+                        onclick="searchMedicine()"
+                    >
+                        🔍
+                    </button>
+
+                </div>
+
+
+                <div class="filters">
+
+                    <button
+                        type="button"
+                        class="filter active"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter"
+                    >
+                        Available
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter"
+                    >
+                        Low Stock
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter"
+                    >
+                        Out of Stock
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= TWO COLUMNS ================= -->
+
+            <div class="two-columns">
+
+
+                <!-- RECENT REQUESTS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Recent Requests
+                        </h2>
+
+                        <a href="/pages/prescriptions/">
+                            View all
+                        </a>
+
+                    </div>
+
+
+                    <div class="request">
+
+                        <div class="medicine-icon">
+                            💊
+                        </div>
+
+                        <div class="request-info">
+
+                            <strong>
+                                Paracetamol 500mg
+                            </strong>
+
+                            <small>
+                                Pain Reliever
+                            </small>
+
+                        </div>
+
+                        <span class="status available">
+                            Available
+                        </span>
+
+                        <small>
+                            12 min ago
+                        </small>
+
+                    </div>
+
+
+                    <div class="request">
+
+                        <div class="medicine-icon">
+                            💊
+                        </div>
+
+                        <div class="request-info">
+
+                            <strong>
+                                Amoxicillin 250mg
+                            </strong>
+
+                            <small>
+                                Antibiotic
+                            </small>
+
+                        </div>
+
+                        <span class="status low">
+                            Low Stock
+                        </span>
+
+                        <small>
+                            25 min ago
+                        </small>
+
+                    </div>
+
+
+                    <div class="request">
+
+                        <div class="medicine-icon">
+                            💉
+                        </div>
+
+                        <div class="request-info">
+
+                            <strong>
+                                Insulin Injection
+                            </strong>
+
+                            <small>
+                                Diabetes Care
+                            </small>
+
+                        </div>
+
+                        <span class="status available">
+                            Available
+                        </span>
+
+                        <small>
+                            40 min ago
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHARMACY AVAILABILITY -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Pharmacy Availability
+                        </h2>
+
+                        <a href="/pages/pharmacies/">
+                            View all
+                        </a>
+
+                    </div>
+
+
+                    <div class="pharmacy">
+
+                        <div class="pharmacy-icon">
+                            +
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Pharmacy A
+                            </strong>
+
+                            <small>
+                                Downtown, Main Street
+                            </small>
+
+                        </div>
+
+                        <span class="status available">
+                            ✓ Available
+                        </span>
+
+                        <small>
+                            2.4 km
+                        </small>
+
+                    </div>
+
+
+                    <div class="pharmacy">
+
+                        <div class="pharmacy-icon">
+                            +
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                HealthPlus Pharmacy
+                            </strong>
+
+                            <small>
+                                City Center
+                            </small>
+
+                        </div>
+
+                        <span class="status low">
+                            Low Stock
+                        </span>
+
+                        <small>
+                            3.1 km
+                        </small>
+
+                    </div>
+
+
+                    <div class="pharmacy">
+
+                        <div class="pharmacy-icon">
+                            +
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                MediCare Pharmacy
+                            </strong>
+
+                            <small>
+                                West Avenue
+                            </small>
+
+                        </div>
+
+                        <span class="status available">
+                            ✓ Available
+                        </span>
+
+                        <small>
+                            4.7 km
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ACTIVITY ================= -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Activity / Alerts / Notifications
+                    </h2>
+
+                    <a href="/pages/reports/">
+                        View all
+                    </a>
+
+                </div>
+
+
+                <div class="activities">
+
+
+                    <div class="activity warning">
+
+                        🔔
+
+                        <strong>
+                            Low stock alert
+                        </strong>
+
+                        <p>
+                            Amoxicillin 250mg is running low in Pharmacy B.
+                        </p>
+
+                        <small>
+                            10 min ago
+                        </small>
+
+                    </div>
+
+
+                    <div class="activity orange">
+
+                        📋
+
+                        <strong>
+                            New prescription
+                        </strong>
+
+                        <p>
+                            A doctor created a new prescription.
+                        </p>
+
+                        <small>
+                            25 min ago
+                        </small>
+
+                    </div>
+
+
+                    <div class="activity blue">
+
+                        🛒
+
+                        <strong>
+                            New order placed
+                        </strong>
+
+                        <p>
+                            Order #ORD-1258 has been placed.
+                        </p>
+
+                        <small>
+                            35 min ago
+                        </small>
+
+                    </div>
+
+
+                    <div class="activity success">
+
+                        ✓
+
+                        <strong>
+                            Delivery completed
+                        </strong>
+
+                        <p>
+                            Order #ORD-1248 delivered successfully.
+                        </p>
+
+                        <small>
+                            1 hour ago
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

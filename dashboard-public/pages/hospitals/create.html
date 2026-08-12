@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediLink - Register Hospital</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <style>
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #dbe1e8;
+            border-radius: 8px;
+            padding: 0 12px;
+            height: 44px;
+            background: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group textarea {
+            height: auto;
+            padding: 12px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .08);
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .section-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: -8px;
+            margin-bottom: 20px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section hr {
+            border: 0;
+            border-top: 1px solid #e5e7eb;
+            margin: 30px 0;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .message {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .message.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .help-text {
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 1000px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">+</div>
+
+            <div>
+                <h2>MediLink</h2>
+                <small>Smart Healthcare System</small>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-link">
+                📊 Dashboard
+            </a>
+
+            <a href="/pages/patients/" class="nav-link">
+                👤 Patients
+            </a>
+
+            <a href="/pages/pharmacies/" class="nav-link">
+                🏥 Pharmacies
+            </a>
+
+            <a href="/pages/medicines/" class="nav-link">
+                💊 Medicines
+            </a>
+
+            <a href="/pages/inventory/" class="nav-link">
+                📦 Inventory
+            </a>
+
+            <a href="/pages/prescriptions/" class="nav-link">
+                📋 Prescriptions
+            </a>
+
+            <a href="/pages/appointments/" class="nav-link">
+                📅 Appointments
+            </a>
+
+            <a href="/pages/hospitals/" class="nav-link active">
+                🏥 Hospitals
+            </a>
+
+            <a href="/pages/laboratory/" class="nav-link">
+                🧪 Laboratory
+            </a>
+
+            <a href="/pages/deliveries/" class="nav-link">
+                🚚 Deliveries
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/pages/reports/" class="nav-link">
+                📊 Reports
+            </a>
+
+            <a href="/pages/analytics/" class="nav-link">
+                📈 Analytics
+            </a>
+
+            <a href="/pages/settings/" class="nav-link">
+                ⚙️ Settings
+            </a>
+
+        </nav>
+
+        <div class="logout">
+            <a href="/pages/hospitals/">
+                ← Back to Hospitals
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="search">
+                🔍
+                <input
+                    type="text"
+                    placeholder="Search anything..."
+                >
+            </div>
+
+            <div class="user-area">
+
+                <button type="button">
+                    🔔
+                </button>
+
+                <button type="button">
+                    ✉️
+                </button>
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>Dr. Admin</strong>
+                        <small>Super Administrator</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <section class="content">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+                    <h1>
+                        🏥 Register New Hospital
+                    </h1>
+
+                    <p>
+                        Create a hospital record and connect it to the MediLink healthcare network.
+                    </p>
+                </div>
+
+                <div>
+                    <a
+                        href="/pages/hospitals/"
+                        class="filter"
+                    >
+                        ← Back to Hospitals
+                    </a>
+                </div>
+
+            </div>
+
+
+            <!-- FORM -->
+            <form
+                id="hospitalForm"
+                class="card"
+                novalidate
+            >
+
+                <div id="formMessage" class="message"></div>
+
+
+                <!-- =================================================
+                     HOSPITAL INFORMATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <h2>Hospital Information</h2>
+
+                    <p class="section-description">
+                        Enter the official identification information of the hospital.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Hospital ID -->
+
+                        <div class="form-group">
+
+                            <label for="hospitalId">
+                                Hospital ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="hospitalId"
+                                name="hospitalId"
+                                placeholder="Auto-generated"
+                                readonly
+                            >
+
+                            <span class="help-text">
+                                Generated automatically by the system.
+                            </span>
+
+                        </div>
+
+
+                        <!-- Hospital Name -->
+
+                        <div class="form-group">
+
+                            <label for="hospitalName">
+                                Hospital Name <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="hospitalName"
+                                name="hospitalName"
+                                placeholder="e.g. Kigali Central Hospital"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Hospital Type -->
+
+                        <div class="form-group">
+
+                            <label for="hospitalType">
+                                Hospital Type <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="hospitalType"
+                                name="hospitalType"
+                                required
+                            >
+
+                                <option value="">
+                                    Select hospital type
+                                </option>
+
+                                <option value="PUBLIC">
+                                    Public Hospital
+                                </option>
+
+                                <option value="PRIVATE">
+                                    Private Hospital
+                                </option>
+
+                                <option value="TEACHING">
+                                    Teaching Hospital
+                                </option>
+
+                                <option value="REFERRAL">
+                                    Referral Hospital
+                                </option>
+
+                                <option value="DISTRICT">
+                                    District Hospital
+                                </option>
+
+                                <option value="SPECIALIZED">
+                                    Specialized Hospital
+                                </option>
+
+                                <option value="COMMUNITY">
+                                    Community Hospital
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Registration Number -->
+
+                        <div class="form-group">
+
+                            <label for="registrationNumber">
+                                Registration Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="registrationNumber"
+                                name="registrationNumber"
+                                placeholder="Hospital registration number"
+                                maxlength="50"
+                            >
+
+                        </div>
+
+
+                        <!-- License Number -->
+
+                        <div class="form-group">
+
+                            <label for="licenseNumber">
+                                License Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="licenseNumber"
+                                name="licenseNumber"
+                                placeholder="Healthcare license number"
+                                maxlength="50"
+                            >
+
+                        </div>
+
+
+                        <!-- Status -->
+
+                        <div class="form-group">
+
+                            <label for="status">
+                                Status <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="status"
+                                name="status"
+                                required
+                            >
+
+                                <option value="ACTIVE">
+                                    Active
+                                </option>
+
+                                <option value="INACTIVE">
+                                    Inactive
+                                </option>
+
+                                <option value="SUSPENDED">
+                                    Suspended
+                                </option>
+
+                                <option value="UNDER_REVIEW">
+                                    Under Review
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     CONTACT INFORMATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <hr>
+
+                    <h2>Contact Information</h2>
+
+                    <p class="section-description">
+                        Add the hospital's official communication details.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Phone -->
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Main Phone <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="+250788123456"
+                                maxlength="13"
+                                required
+                            >
+
+                            <span class="help-text">
+                                Format: +250XXXXXXXXX
+                            </span>
+
+                        </div>
+
+
+                        <!-- Alternative Phone -->
+
+                        <div class="form-group">
+
+                            <label for="alternativePhone">
+                                Alternative Phone
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="alternativePhone"
+                                name="alternativePhone"
+                                placeholder="+250788123456"
+                                maxlength="13"
+                            >
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Official Email <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="hospital@example.rw"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Website -->
+
+                        <div class="form-group">
+
+                            <label for="website">
+                                Website
+                            </label>
+
+                            <input
+                                type="url"
+                                id="website"
+                                name="website"
+                                placeholder="https://example.rw"
+                                maxlength="200"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     LOCATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <hr>
+
+                    <h2>Location</h2>
+
+                    <p class="section-description">
+                        Select the hospital's location using the Rwanda administrative structure.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Province -->
+
+                        <div class="form-group">
+
+                            <label for="province">
+                                Province <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="province"
+                                name="province"
+                                required
+                            >
+
+                                <option value="">
+                                    Select province
+                                </option>
+
+                                <option value="KIGALI_CITY">
+                                    Kigali City
+                                </option>
+
+                                <option value="EASTERN">
+                                    Eastern Province
+                                </option>
+
+                                <option value="NORTHERN">
+                                    Northern Province
+                                </option>
+
+                                <option value="SOUTHERN">
+                                    Southern Province
+                                </option>
+
+                                <option value="WESTERN">
+                                    Western Province
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- District -->
+
+                        <div class="form-group">
+
+                            <label for="district">
+                                District <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="district"
+                                name="district"
+                                required
+                                disabled
+                            >
+
+                                <option value="">
+                                    Select province first
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Sector -->
+
+                        <div class="form-group">
+
+                            <label for="sector">
+                                Sector
+                            </label>
+
+                            <select
+                                id="sector"
+                                name="sector"
+                                disabled
+                            >
+
+                                <option value="">
+                                    Select district first
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Address -->
+
+                        <div class="form-group full">
+
+                            <label for="address">
+                                Full Address <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="address"
+                                name="address"
+                                placeholder="Enter the complete hospital address"
+                                maxlength="500"
+                                required
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ADMINISTRATION
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <hr>
+
+                    <h2>Hospital Administration</h2>
+
+                    <p class="section-description">
+                        Information about the hospital's administration and management.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <!-- Director -->
+
+                        <div class="form-group">
+
+                            <label for="directorName">
+                                Hospital Director
+                            </label>
+
+                            <input
+                                type="text"
+                                id="directorName"
+                                name="directorName"
+                                placeholder="Director's full name"
+                                maxlength="120"
+                            >
+
+                        </div>
+
+
+                        <!-- Director Phone -->
+
+                        <div class="form-group">
+
+                            <label for="directorPhone">
+                                Director Phone
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="directorPhone"
+                                name="directorPhone"
+                                placeholder="+250788123456"
+                                maxlength="13"
+                            >
+
+                        </div>
+
+
+                        <!-- Number of Beds -->
+
+                        <div class="form-group">
+
+                            <label for="bedCapacity">
+                                Bed Capacity <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="bedCapacity"
+                                name="bedCapacity"
+                                min="1"
+                                max="10000"
+                                step="1"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Emergency -->
+
+                        <div class="form-group">
+
+                            <label for="emergencyService">
+                                Emergency Service <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="emergencyService"
+                                name="emergencyService"
+                                required
+                            >
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option value="YES">
+                                    Available
+                                </option>
+
+                                <option value="NO">
+                                    Not Available
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- 24 Hours -->
+
+                        <div class="form-group">
+
+                            <label for="open24Hours">
+                                24-Hour Service <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="open24Hours"
+                                name="open24Hours"
+                                required
+                            >
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option value="YES">
+                                    Yes
+                                </option>
+
+                                <option value="NO">
+                                    No
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Ownership -->
+
+                        <div class="form-group">
+
+                            <label for="ownership">
+                                Ownership <span class="required">*</span>
+                            </label>
+
+                            <select
+                                id="ownership"
+                                name="ownership"
+                                required
+                            >
+
+                                <option value="">
+                                    Select ownership
+                                </option>
+
+                                <option value="GOVERNMENT">
+                                    Government
+                                </option>
+
+                                <option value="PRIVATE">
+                                    Private
+                                </option>
+
+                                <option value="FAITH_BASED">
+                                    Faith Based
+                                </option>
+
+                                <option value="NGO">
+                                    NGO
+                                </option>
+
+                                <option value="OTHER">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SERVICES
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <hr>
+
+                    <h2>Hospital Services</h2>
+
+                    <p class="section-description">
+                        Select the major services provided by this hospital.
+                    </p>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="outpatient">
+                                Outpatient Services
+                            </label>
+
+                            <select id="outpatient" name="outpatient">
+                                <option value="YES">Available</option>
+                                <option value="NO">Not Available</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="inpatient">
+                                Inpatient Services
+                            </label>
+
+                            <select id="inpatient" name="inpatient">
+                                <option value="YES">Available</option>
+                                <option value="NO">Not Available</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="surgery">
+                                Surgery
+                            </label>
+
+                            <select id="surgery" name="surgery">
+                                <option value="YES">Available</option>
+                                <option value="NO">Not Available</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="maternity">
+                                Maternity
+                            </label>
+
+                            <select id="maternity" name="maternity">
+                                <option value="YES">Available</option>
+                                <option value="NO">Not Available</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="laboratory">
+                                Laboratory
+                            </label>
+
+                            <select id="laboratory" name="laboratory">
+                                <option value="YES">Available</option>
+                                <option value="NO">Not Available</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="pharmacy">
+                                Pharmacy
+                            </label>
+
+                            <select id="pharmacy" name="pharmacy">
+                                <option value="YES">Available</option>
+                                <option value="NO">Not Available</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     NOTES
+                     ================================================= -->
+
+                <div class="form-section">
+
+                    <hr>
+
+                    <h2>Additional Information</h2>
+
+                    <div class="form-grid">
+
+                        <div class="form-group full">
+
+                            <label for="notes">
+                                Notes
+                            </label>
+
+                            <textarea
+                                id="notes"
+                                name="notes"
+                                maxlength="2000"
+                                placeholder="Additional hospital information..."
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="reset"
+                        class="btn btn-secondary"
+                    >
+                        Clear Form
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="submitButton"
+                    >
+                        Register Hospital
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+
+<script>
+
+    /* =========================================================
+       RWANDA LOCATION DATA
+       ========================================================= */
+
+    const districts = {
+
+        KIGALI_CITY: [
+            "Gasabo",
+            "Kicukiro",
+            "Nyarugenge"
+        ],
+
+        EASTERN: [
+            "Bugesera",
+            "Gatsibo",
+            "Kayonza",
+            "Kirehe",
+            "Ngoma",
+            "Nyagatare",
+            "Rwamagana"
+        ],
+
+        NORTHERN: [
+            "Burera",
+            "Gakenke",
+            "Gicumbi",
+            "Musanze",
+            "Rulindo"
+        ],
+
+        SOUTHERN: [
+            "Gisagara",
+            "Huye",
+            "Kamonyi",
+            "Muhanga",
+            "Nyamagabe",
+            "Nyanza",
+            "Nyaruguru",
+            "Ruhango"
+        ],
+
+        WESTERN: [
+            "Karongi",
+            "Ngororero",
+            "Nyabihu",
+            "Nyamasheke",
+            "Rubavu",
+            "Rusizi",
+            "Rutsiro"
+        ]
+
+    };
+
+
+    const provinceSelect =
+        document.getElementById("province");
+
+    const districtSelect =
+        document.getElementById("district");
+
+    const sectorSelect =
+        document.getElementById("sector");
+
+
+    provinceSelect.addEventListener("change", function () {
+
+        const province = this.value;
+
+        districtSelect.innerHTML =
+            '<option value="">Select district</option>';
+
+        sectorSelect.innerHTML =
+            '<option value="">Select district first</option>';
+
+        sectorSelect.disabled = true;
+
+        if (!province || !districts[province]) {
+
+            districtSelect.disabled = true;
+
+            return;
+        }
+
+        districts[province].forEach(function (district) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = district.toUpperCase();
+
+            option.textContent = district;
+
+            districtSelect.appendChild(option);
+
+        });
+
+        districtSelect.disabled = false;
+
+    });
+
+
+    /*
+     * Sector data can later be connected to the
+     * official MediLink location database.
+     *
+     * We deliberately don't allow free-text sectors.
+     */
+
+    districtSelect.addEventListener("change", function () {
+
+        const district = this.value;
+
+        sectorSelect.innerHTML =
+            '<option value="">Select sector</option>';
+
+        if (!district) {
+
+            sectorSelect.disabled = true;
+
+            return;
+        }
+
+        /*
+         * Temporary controlled values.
+         *
+         * These can later be replaced by the complete
+         * Rwanda administrative dataset.
+         */
+
+        const sampleSectors = {
+
+            GASABO: [
+                "Remera",
+                "Kimironko",
+                "Kacyiru",
+                "Gisozi",
+                "Jabana"
+            ],
+
+            KICUKIRO: [
+                "Kicukiro",
+                "Niboye",
+                "Gikondo",
+                "Kanombe"
+            ],
+
+            NYARUGENGE: [
+                "Nyamirambo",
+                "Kigali",
+                "Muhima",
+                "Gitega"
+            ]
+
+        };
+
+        const sectors =
+            sampleSectors[district] || [];
+
+        sectors.forEach(function (sector) {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                sector.toUpperCase();
+
+            option.textContent =
+                sector;
+
+            sectorSelect.appendChild(option);
+
+        });
+
+        sectorSelect.disabled =
+            sectors.length === 0;
+
+    });
+
+
+    /* =========================================================
+       VALIDATION
+       ========================================================= */
+
+    const form =
+        document.getElementById("hospitalForm");
+
+    const message =
+        document.getElementById("formMessage");
+
+    const submitButton =
+        document.getElementById("submitButton");
+
+
+    const phoneRegex =
+        /^\+250[0-9]{9}$/;
+
+
+    const nameRegex =
+        /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
+
+
+    const hospitalNameRegex =
+        /^[A-Za-z0-9À-ÖØ-öø-ÿ&.,'()\- ]+$/;
+
+
+    function showMessage(text, type) {
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    function clearMessage() {
+
+        message.textContent = "";
+
+        message.className = "message";
+
+    }
+
+
+    function validatePhone(value, fieldName) {
+
+        if (!phoneRegex.test(value)) {
+
+            showMessage(
+                fieldName +
+                " must use the format +250XXXXXXXXX.",
+                "error"
+            );
+
+            return false;
+        }
+
+        return true;
+
+    }
+
+
+    form.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        clearMessage();
+
+
+        /*
+         * Collect values
+         */
+
+        const hospitalName =
+            document.getElementById("hospitalName")
+                .value.trim();
+
+        const hospitalType =
+            document.getElementById("hospitalType")
+                .value;
+
+        const registrationNumber =
+            document.getElementById("registrationNumber")
+                .value.trim();
+
+        const licenseNumber =
+            document.getElementById("licenseNumber")
+                .value.trim();
+
+        const status =
+            document.getElementById("status")
+                .value;
+
+        const phone =
+            document.getElementById("phone")
+                .value.trim();
+
+        const alternativePhone =
+            document.getElementById("alternativePhone")
+                .value.trim();
+
+        const email =
+            document.getElementById("email")
+                .value.trim()
+                .toLowerCase();
+
+        const website =
+            document.getElementById("website")
+                .value.trim();
+
+        const province =
+            document.getElementById("province")
+                .value;
+
+        const district =
+            document.getElementById("district")
+                .value;
+
+        const sector =
+            document.getElementById("sector")
+                .value;
+
+        const address =
+            document.getElementById("address")
+                .value.trim();
+
+        const directorName =
+            document.getElementById("directorName")
+                .value.trim();
+
+        const directorPhone =
+            document.getElementById("directorPhone")
+                .value.trim();
+
+        const bedCapacity =
+            document.getElementById("bedCapacity")
+                .value;
+
+        const emergencyService =
+            document.getElementById("emergencyService")
+                .value;
+
+        const open24Hours =
+            document.getElementById("open24Hours")
+                .value;
+
+        const ownership =
+            document.getElementById("ownership")
+                .value;
+
+
+        /*
+         * Required validation
+         */
+
+        if (!hospitalName) {
+
+            showMessage(
+                "Hospital name is required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!hospitalNameRegex.test(hospitalName)) {
+
+            showMessage(
+                "Hospital name contains invalid characters.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!hospitalType) {
+
+            showMessage(
+                "Please select a hospital type.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!status) {
+
+            showMessage(
+                "Please select hospital status.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /*
+         * Phone validation
+         */
+
+        if (!validatePhone(phone, "Main phone")) {
+            return;
+        }
+
+
+        if (
+            alternativePhone &&
+            !validatePhone(
+                alternativePhone,
+                "Alternative phone"
+            )
+        ) {
+            return;
+        }
+
+
+        if (
+            alternativePhone &&
+            alternativePhone === phone
+        ) {
+
+            showMessage(
+                "Alternative phone must be different from the main phone.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /*
+         * Email
+         */
+
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+        if (!emailRegex.test(email)) {
+
+            showMessage(
+                "Please enter a valid hospital email address.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /*
+         * Website
+         */
+
+        if (website) {
+
+            try {
+
+                new URL(website);
+
+            } catch {
+
+                showMessage(
+                    "Please enter a valid website URL.",
+                    "error"
+                );
+
+                return;
+            }
+
+        }
+
+
+        /*
+         * Location
+         */
+
+        if (!province) {
+
+            showMessage(
+                "Please select a province.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!district) {
+
+            showMessage(
+                "Please select a district.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!address || address.length < 5) {
+
+            showMessage(
+                "Please enter a valid hospital address.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /*
+         * Director validation
+         */
+
+        if (
+            directorName &&
+            !nameRegex.test(directorName)
+        ) {
+
+            showMessage(
+                "Director name can contain letters, spaces, hyphens and apostrophes only.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (
+            directorPhone &&
+            !validatePhone(
+                directorPhone,
+                "Director phone"
+            )
+        ) {
+            return;
+        }
+
+
+        /*
+         * Bed capacity
+         */
+
+        const beds =
+            Number(bedCapacity);
+
+        if (
+            !Number.isInteger(beds) ||
+            beds < 1 ||
+            beds > 10000
+        ) {
+
+            showMessage(
+                "Bed capacity must be a whole number between 1 and 10,000.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /*
+         * Controlled selections
+         */
+
+        if (!emergencyService) {
+
+            showMessage(
+                "Please specify whether emergency service is available.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!open24Hours) {
+
+            showMessage(
+                "Please specify whether the hospital provides 24-hour service.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!ownership) {
+
+            showMessage(
+                "Please select hospital ownership.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /*
+         * Prepare data
+         */
+
+        const hospitalData = {
+
+            hospitalName,
+            hospitalType,
+
+            registrationNumber:
+                registrationNumber || null,
+
+            licenseNumber:
+                licenseNumber || null,
+
+            status,
+
+            phone,
+
+            alternativePhone:
+                alternativePhone || null,
+
+            email,
+
+            website:
+                website || null,
+
+            province,
+            district,
+
+            sector:
+                sector || null,
+
+            address,
+
+            directorName:
+                directorName || null,
+
+            directorPhone:
+                directorPhone || null,
+
+            bedCapacity: beds,
+
+            emergencyService,
+
+            open24Hours,
+
+            ownership,
+
+            outpatient:
+                document.getElementById("outpatient").value,
+
+            inpatient:
+                document.getElementById("inpatient").value,
+
+            surgery:
+                document.getElementById("surgery").value,
+
+            maternity:
+                document.getElementById("maternity").value,
+
+            laboratory:
+                document.getElementById("laboratory").value,
+
+            pharmacy:
+                document.getElementById("pharmacy").value,
+
+            notes:
+                document.getElementById("notes")
+                    .value.trim() || null
+
+        };
+
+
+        /*
+         * Prevent double submission
+         */
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "Registering...";
+
+
+        try {
+
+            /*
+             * This endpoint should be created in
+             * server.js:
+             *
+             * POST /api/hospitals
+             */
+
+            const response =
+                await fetch("/api/hospitals", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(hospitalData)
+
+                });
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "Unable to register hospital."
+                );
+
+            }
+
+
+            showMessage(
+                "Hospital registered successfully. Hospital ID: " +
+                (result.hospital?.hospitalNumber || ""),
+                "success"
+            );
+
+
+            form.reset();
+
+            districtSelect.innerHTML =
+                '<option value="">Select province first</option>';
+
+            districtSelect.disabled = true;
+
+            sectorSelect.innerHTML =
+                '<option value="">Select district first</option>';
+
+            sectorSelect.disabled = true;
+
+
+            /*
+             * Redirect after successful registration
+             */
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "/pages/hospitals/";
+
+            }, 1500);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                error.message ||
+                "Something went wrong while registering the hospital.",
+                "error"
+            );
+
+        } finally {
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Register Hospital";
+
+        }
+
+    });
+
+
+    /* =========================================================
+       INPUT NORMALIZATION
+       ========================================================= */
+
+    document
+        .getElementById("phone")
+        .addEventListener("input", function () {
+
+            this.value =
+                this.value
+                    .replace(/\s/g, "")
+                    .replace(/[^0-9+]/g, "");
+
+        });
+
+
+    document
+        .getElementById("alternativePhone")
+        .addEventListener("input", function () {
+
+            this.value =
+                this.value
+                    .replace(/\s/g, "")
+                    .replace(/[^0-9+]/g, "");
+
+        });
+
+
+    document
+        .getElementById("directorPhone")
+        .addEventListener("input", function () {
+
+            this.value =
+                this.value
+                    .replace(/\s/g, "")
+                    .replace(/[^0-9+]/g, "");
+
+        });
+
+
+    /*
+     * Automatically remove leading/trailing spaces
+     */
+
+    document
+        .querySelectorAll(
+            'input[type="text"], textarea'
+        )
+        .forEach(function (input) {
+
+            input.addEventListener(
+                "blur",
+                function () {
+
+                    this.value =
+                        this.value.trim();
+
+                }
+            );
+
+        });
+
+</script>
+
+</body>
+</html>
