@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-const PORT = 9000;
+const PORT = process.env.PORT || 6000;
 
 // ======================================================
 // MIDDLEWARE
